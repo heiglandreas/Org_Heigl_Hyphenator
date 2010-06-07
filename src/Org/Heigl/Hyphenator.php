@@ -89,11 +89,11 @@
 final class Org_Heigl_Hyphenator
 {
 
-    const QUALITY_BEST   = 1;
-    const QUALITY_BETTER = 3;
-    const QUALITY_NORMAL = 5;
-    const QUALITY_POOR   = 7;
-    const QUALITY_POREST = 9;
+    const QUALITY_HIGHEST = 9;
+    const QUALITY_HIGH    = 7;
+    const QUALITY_NORMAL  = 5;
+    const QUALITY_LOW     = 3;
+    const QUALITY_LOWEST  = 1;
 
     /**
      * This is the default language to use.
@@ -234,6 +234,13 @@ final class Org_Heigl_Hyphenator
      * @var string $_customHyphen
      */
     private $_customHyphen = '--';
+
+    /**
+     * The special strings to parse as hyphenations
+     *
+     * @var array $_specialStrings
+     */
+    private $_specialStrings = array ( '-/-', '-' );
 
     /**
      * This is the static way of hyphenating a string.
@@ -597,17 +604,10 @@ final class Org_Heigl_Hyphenator
             return '';
         }
 
-        // Replace a string that marks strings not to be hyphenated with an
-        // empty string. Also replace all custom hyphenations, as the word shall
-        // not be hyphenated.
-        // Finaly return the word 'as is'.
-        if ( ( null !== $this -> _noHyphenateString ) && ( 0 === strpos ( $word, $this -> _noHyphenateString ) ) ) {
-            $string = str_replace ( $this -> _noHyphenateString, '', $word );
-            $string = str_replace ( $this -> _customHyphen, '', $string );
-            if ( null !== $this -> _customizedMarker && true === $this -> _markCustomized ) {
-                $string = $this -> getCustomizationMarker () . $string;
-            }
-            return $string;
+        // Check whether the word shall be hyphenated.
+        $result = $this -> _isNotToBeHyphenated ( $word );
+        if ( false !== $result ) {
+            return $result;
         }
 
         // If the length of the word is smaller than the minimum word-size,
@@ -624,12 +624,9 @@ final class Org_Heigl_Hyphenator
         }
 
         // Replace a custom hyphenate-string with the hyphen.
-        if ( ( null !== $this -> _customHyphen ) && ( false !== strpos ( $word, $this -> _customHyphen ) ) ) {
-            $string = str_replace ( $this -> _customHyphen, $this -> _hyphen, $word );
-            if ( null !== $this -> _customizedMarker && true === $this -> _markCustomized ) {
-                $string = $this -> getCustomizationMarker () . $string;
-            }
-            return $string;
+        $result = $this -> _replaceCustomHyphen ( $word );
+        if ( false !== $result ) {
+            return $result;
         }
 
         // If the word already contains a hyphen-character, we assume it is
@@ -638,48 +635,87 @@ final class Org_Heigl_Hyphenator
             return $word;
         }
 
-        $breakPos = strpos ( $word, '-/-' );
-        if ( false !== strpos ( $word, '-/-' ) ) {
-            // Word contains '-/-', so put a zerowidthspace after it and hyphenate
-            // the parts separated with '-'.
-            $parts   = explode ( '-/-', $word );
-            $counter = count ( $parts );
-            for ( $i = 0; $i < $counter; $i++ ) {
-                $parts[$i] = $this -> hyphenateWord ( $parts[$i] );
-            }
-            return implode ( '-/-', $parts );
-        }
-        if ( false !== strpos ( $word, '-' ) ) {
-            // Word contains '-', so put a zerowidthspace after it and hyphenate
-            // the parts separated with '-'.
-            $parts   = explode ( '-', $word );
-            $counter = count ( $parts );
-            for ( $i = 0; $i < $counter; $i++ ) {
-                $parts[$i] = $this -> hyphenateWord ( $parts[$i] );
-            }
-            return implode ( '-', $parts );
+        // Hyphenate words containing special strings for further processing, so
+        // put a zerowidthspace after it and hyphenate the parts separated by
+        // the special string.
+        $result = $this -> _handleSpecialStrings ( $word );
+        if ( false !== $result ) {
+            return $result;
         }
 
-        // And Finally the core hyphenation algorithm.
+        return $this -> _hyphenateWord ( $word );
+    }
+
+    /**
+     * Hyphenate a single word
+     *
+     * @param string $word The word to hyphenate
+     *
+     * @return string The hyphenated word
+     */
+    private function _hyphenateWord ( $word ) {
+
         $prepend = '';
         $word    = $word;
         $append  = '';
 
         $specials = '\.\:\-\,\;\!\?\/\\\(\)\[\]\{\}\"\'\+\*\#\§\$\%\&\=\@';
         // If a special character occurs in the middle of the word, simply
-        // return the word AS IS.
+        // return the word AS IS as the word can not really be hyphenated
+        // automaticaly.
         if ( preg_match ( '/[^' . $specials . ']['.$specials.'][^'.$specials.']/', $word ) ) {
             return $word;
         }
+        // If one ore more special characters appear before or after a word
+        // we take the word in between and hyphenate that asn append and prepend
+        // the special characters later on.
         if ( preg_match ( '/(['.$specials.']*)([^' . $specials . ']+)(['.$specials.']*)/', $word, $result ) ) {
             $prepend = $result [1];
             $word    = $result [2];
             $append  = $result [3];
         }
+
+        $result = array ();
+
+        $positions = $this -> _getHyphenationPositions ( $word );
+
+        $wl      = strlen ( $word );
+        $lastOne = 0;
+
+        for ( $i = 1; $i < $wl; $i++ ) {
+            // If the integer on position $i is higher than 0 and is odd,
+            // we can hyphenate at that position if the integer is lower or
+            // equal than the set quality-level.
+            // Additionaly we check whether the left and right margins are met.
+            if ( ( 0 !== $positions[$i] ) &&
+                 ( 1 === ( $positions[$i] % 2 ) ) &&
+                 ( $positions[$i] <= $this -> _quality ) &&
+                 ( $i >= $this -> _leftMin ) &&
+                 ( $i <= ( strlen ( $word ) - $this -> _rightMin ) ) ) {
+                // Begin IF.
+                $sylable = substr ( $word, $lastOne, $i - $lastOne );
+
+                $lastOne  = $i;
+                $result[] = $sylable;
+            }
+        }
+        $result [] = substr ( $word, $lastOne );
+        return $prepend . trim ( implode ( $this -> _hyphen, $result ) ) . $append;
+    }
+
+    /**
+     * Get the positions, where a hyphenation might occur and where not.
+     *
+     * @param string $word The word to hyphenate
+     *
+     * @return array The numerical positions-array
+     */
+    private function _getHyphenationPositions ( $word ) {
+
         $positions = array();
-        $result    = array();
         $w         = '_' . strtolower ( $word ) . '_';
         $wl        = strlen ( $w );
+        // Initialize an array of length of the word with 0-values.
         for ( $i = 0; $i < $wl; $i++ ) {
             $positions[$i] = 0;
         }
@@ -699,7 +735,7 @@ final class Org_Heigl_Hyphenator
                     for ( $p = 0; $p < $m; $p++ ) {
                         $v        = substr ( $values, $p, 1 );
                         $arrayKey = $i + $p - $corrector;
-                        if ( array_key_exists ( $arrayKey, $positions) && ( ( (int) $v > $positions[$arrayKey] ) ) && ( (int) $v <= $this -> _quality ) ) {
+                        if ( array_key_exists ( $arrayKey, $positions) && ( ( (int) $v > $positions[$arrayKey] ) ) ) {
                             $positions[$arrayKey] = (int) $v;
                         }
                         if ( $v > 0 ) {
@@ -709,29 +745,98 @@ final class Org_Heigl_Hyphenator
                 }
             }
         }
-        $wl      = strlen ( $word );
-        $lastOne = 0;
-        for ( $i = 1; $i < $wl; $i++ ) {
-            // If the integer on position $i is higher than 0 and is odd,
-            // we can hyphenate at that position if the integer is lower or
-            // equal than the set quality-level.
-            // Additionaly we check whether the left and right margins are met.
-            if ( ( 0 !== $positions[$i] ) &&
-                 ( 1 === ( $positions[$i] % 2 ) ) &&
-              // FIXME: This prohibits Hyphenation-Quality
-              // ( $positions[$i] <= $this -> _quality ) &&
-              // End Of FIXME!
-                 ( $i >= $this -> _leftMin ) &&
-                 ( $i <= ( strlen ( $word ) - $this -> _rightMin ) ) ) {
-                // Begin IF.
-                $sylable = substr ( $word, $lastOne, $i - $lastOne );
+        return $positions;
+    }
 
-                $lastOne  = $i;
-                $result[] = $sylable;
-            }
+    /**
+     * Check whether this string shall not be hyphenated
+     *
+     * If so, replace a string that marks strings not to be hyphenated with an
+     * empty string. Also replace all custom hyphenations, as the word shall
+     * not be hyphenated.
+     * Finaly return the word 'as is'.
+     *
+     * If the word can be hyphenated, return false
+     *
+     * @param string $word The word to be hyphenated
+     *
+     * @return string|false
+     */
+    private function _isNotToBeHyphenated ( $word ) {
+        if ( ( null === $this -> _noHyphenateString ) || ( 0 !== strpos ( $word, $this -> _noHyphenateString ) ) ) {
+            return false;
         }
-        $result [] = substr ( $word, $lastOne );
-        return $prepend . trim ( implode ( $this -> _hyphen, $result ) ) . $append;
+        $string = str_replace ( $this -> _noHyphenateString, '', $word );
+        $string = str_replace ( $this -> _customHyphen, '', $string );
+        if ( null !== $this -> _customizedMarker && true === $this -> _markCustomized ) {
+            $string = $this -> getCustomizationMarker () . $string;
+        }
+        return $string;
+    }
+
+    /**
+     * Replace a custom hyphen
+     *
+     * @param string $word The word to parse
+     *
+     * @return string|false
+     */
+    private function _replaceCustomHyphen ( $word ) {
+        if ( ( null === $this -> _customHyphen ) || ( false === strpos ( $word, $this -> _customHyphen ) ) ) {
+            return false;
+        }
+        $string = str_replace ( $this -> _customHyphen, $this -> _hyphen, $word );
+        if ( null !== $this -> _customizedMarker && true === $this -> _markCustomized ) {
+            $string = $this -> getCustomizationMarker () . $string;
+        }
+        return $string;
+    }
+
+    /**
+     * Handle special strings
+     *
+     * Hyphenate words containing special strings for further processing, so
+     * put a zerowidthspace after it and hyphenate the parts separated by
+     * the special string.
+     *
+     * @param string $word The Word to hyphenate
+     *
+     * @return string|false
+     */
+    public function _handleSpecialStrings ( $word ) {
+
+        foreach ( $this -> _specialStrings as $specialString ) {
+            if ( false === strpos ( $word, $specialString ) ) {
+                continue;
+            }
+            // Word contains a special string so put a zerowidthspace after
+            // it and hyphenate the parts separated with the special string.
+            $parts   = explode ( $specialString, $word );
+            $counter = count ( $parts );
+            for ( $i = 0; $i < $counter; $i++ ) {
+                $parts[$i] = $this -> hyphenateWord ( $parts[$i] );
+            }
+            return implode ( $specialString, $parts );
+        }
+        return false;
+    }
+
+    /**
+     * Set the special strings
+     *
+     * These are strings that can be used for further parsing of the text.
+     *
+     * For instance a string to be replaced with a soft return or any other
+     * symbol your application needs.
+     *
+     * @param array $specialStrings An array of special strings.
+     *
+     * @return Org_Heigl_Hyphenator
+     */
+    public function setSpecialStrings ( $specialStrings = array () ) {
+
+        $this -> _specialStrings = (array) $specialStrings;
+        return $this;
     }
 
     /**

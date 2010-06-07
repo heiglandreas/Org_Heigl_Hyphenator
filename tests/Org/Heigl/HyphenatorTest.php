@@ -228,6 +228,18 @@ class Org_Heigl_HyphenatorTest extends PHPUnit_Framework_TestCase
         $this -> assertEquals ( 5, $this -> readAttribute($hyph, '_quality' ) );
     }
 
+    public function testHyphenationQuality() {
+        $hyph = Org_Heigl_Hyphenator::getInstance ( 'de' );
+        $hyph -> setQuality ( Org_Heigl_Hyphenator::QUALITY_HIGHEST );
+        $poorest = $hyph -> hyphenate ( 'wortgestenreich');
+        $this -> assertEquals ( 9, $this -> readAttribute($hyph, '_quality' ) );
+        $hyph -> setQuality ( Org_Heigl_Hyphenator::QUALITY_LOWEST );
+        $best = $hyph -> hyphenate ( 'wortgestenreich');
+        $this -> assertTrue ( $poorest !== $best );
+        $this -> assertEquals ( 1, $this -> readAttribute($hyph, '_quality' ) );
+
+    }
+
     public function testHyphenatingEmptyString () {
         $hyph = Org_Heigl_Hyphenator::getInstance ( 'de' );
         $this -> assertEquals ( '', $hyph -> hyphenateWord ( '' ) );
@@ -268,6 +280,31 @@ class Org_Heigl_HyphenatorTest extends PHPUnit_Framework_TestCase
         $this -> assertEquals ( 'Butz-bach', $hyph -> hyphenateWord ( 'Butz&shy;bach' ) );
     }
 
+
+    public function testHyphenationSpeed () {
+        $hyph = Org_Heigl_Hyphenator::getInstance ( 'de' );
+        $hyph -> setWordMin ( 5 )
+              -> setLeftMin ( 2)
+              -> setRightMin ( 2 )
+              -> setQuality (9);
+        $string = file_get_contents ( 'files/bible.txt' );
+        $time = microtime ( true );
+        $hyph -> hyphenate ( $string );
+        $time = microtime ( true ) - $time;
+        $words = explode ( ' ', $string );
+        $words = count ( $words );
+        $ratio = $time / $words;
+        $this -> assertTrue ( ( $words / $time ) > 800 );
+        $string = file_get_contents ( 'files/wortberge.txt' );
+        $time = microtime ( true );
+        $hyph -> hyphenate ( $string );
+        $time = microtime ( true ) - $time;
+        $words = explode ( ' ', $string );
+        $words = count ( $words );
+        $ratio = $time / $words;
+        $this -> assertTrue ( ( $words / $time ) > 650 );
+
+    }
     public function setup () {
         $file = dirname ( __FILE__ ) . DIRECTORY_SEPARATOR . 'org_heigl_hyphenator_de_DE_cache';
         if ( file_exists ( $file ) ) {
