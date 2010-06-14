@@ -725,7 +725,7 @@ final class Org_Heigl_Hyphenator
             for ( $l = $this -> _shortestPattern; $l <= $maxl && $l <= $this -> _longestPattern; $l++ ) {
                 $part   = substr ( $window, 0, $l );
                 $values = null;
-                if ( array_key_exists ( $part, $this -> _pattern ) ) {
+                if ( isset ( $this -> _pattern[$part] ) ) {
                     // We found a pattern for this part.
                     $values    = (string) $this -> _pattern [$part];
                     $i         = $s;

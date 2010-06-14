@@ -301,8 +301,8 @@ class Org_Heigl_HyphenatorTest extends PHPUnit_Framework_TestCase
         $time = microtime ( true ) - $time;
         $words = explode ( ' ', $string );
         $words = count ( $words );
-        $ratio = $time / $words;
-        $this -> assertTrue ( ( $words / $time ) > 650 );
+        $ratio = $words / $time;
+        $this -> assertTrue ( ( $words / $time ) > 700 );
 
     }
     public function setup () {
