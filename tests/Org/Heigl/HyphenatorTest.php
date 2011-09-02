@@ -280,6 +280,19 @@ class Org_Heigl_HyphenatorTest extends PHPUnit_Framework_TestCase
         $this -> assertEquals ( 'Butz-bach', $hyph -> hyphenateWord ( 'Butz&shy;bach' ) );
     }
 
+    public function testSettingParsedFileDir ()
+    {
+        $tmp = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'org_heigl_hyphenator';
+        $this->assertAttributeEquals($tmp,'_defaultParsedFileDir','Org_Heigl_Hyphenator');
+        $this->assertEquals($tmp, Org_Heigl_Hyphenator::getDefaultParsedFileDir());
+        Org_Heigl_Hyphenator::setDefaultParsedFileDir('/test');
+        $this->assertAttributeEquals($tmp,'_defaultParsedFileDir','Org_Heigl_Hyphenator');
+        $this->assertEquals($tmp, Org_Heigl_Hyphenator::getDefaultParsedFileDir());
+        $cacheDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'test';
+        Org_Heigl_Hyphenator::setDefaultParsedFileDir($cacheDir);
+        $this->assertAttributeEquals($cacheDir,'_defaultParsedFileDir','Org_Heigl_Hyphenator');
+        $this->assertEquals($cacheDir, Org_Heigl_Hyphenator::getDefaultParsedFileDir());
+    }
 
     public function testHyphenationSpeed () {
         $hyph = Org_Heigl_Hyphenator::getInstance ( 'de' );

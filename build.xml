@@ -57,6 +57,7 @@
 
 
     <target name="phpdoc">
+        <mkdir dir="${basedir}/doc/api"/>
         <exec executable="phpdoc" dir="${basedir}" failonerror="on">
             <arg line=" --directory src
                         --target doc/api
@@ -72,6 +73,7 @@
                         --javadocdesc off" />
 
         </exec>
+        <!-- exec executable="docblox" dir="${basedir}" failonerror="on"/-->
     </target>
     
     <target name="distribute">
