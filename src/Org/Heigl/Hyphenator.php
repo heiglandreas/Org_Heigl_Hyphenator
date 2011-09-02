@@ -225,7 +225,7 @@ final class Org_Heigl_Hyphenator
     /**
      * The currently set quality for hyphenation
      *
-     * The lower the number, the better the hyphenation is
+     * The higher the number, the better the hyphenation is
      *
      * @var int $_quality
      */
@@ -410,7 +410,7 @@ final class Org_Heigl_Hyphenator
                     $patternint .= '0';
                 }
             }
-            $patternstring = preg_replace ( '/[0-9]/', '', $pattern );
+            $patternstring = preg_replace ( array('/[0-9]/','/\'/'), array('','\\’'), $pattern );
             if ( $patternstring != '' ) {
                 fwrite ( $fh, '$pattern[\'' . $patternstring . '\'] = \'' . $patternint . '\';' . "\n" );
             }
@@ -672,7 +672,6 @@ final class Org_Heigl_Hyphenator
         $result = array ();
 
         $positions = $this -> _getHyphenationPositions ( $word );
-
         $wl      = strlen ( $word );
         $lastOne = 0;
 
@@ -694,7 +693,8 @@ final class Org_Heigl_Hyphenator
             }
         }
         $result [] = substr ( $word, $lastOne );
-        return $prepend . trim ( implode ( $this -> _hyphen, $result ) ) . $append;
+        $return = $prepend . trim ( implode ( $this -> _hyphen, $result ) ) . $append;
+        return $return;
     }
 
     /**
