@@ -56,6 +56,8 @@
  * So here is an example for the usage of the class:
  * <code>
  * <?php
+ * // Place all parsed files in the given folder instead of the default one
+ * Org_Heigl_Hyphenator::setDefaultParsedFileDir('/tmp/hyphenator');
  * $hyphenator = Org_Heigl_Hyphenator::getInstance ( 'de' );
  * $hyphenator -> setHyphen ( '-' )
  *             // Minimum 5 characters before the first hyphenation
@@ -313,11 +315,7 @@ final class Org_Heigl_Hyphenator
                     . 'files'
                     . DIRECTORY_SEPARATOR
                     . Org_Heigl_Hyphenator::getTexFile ( $language );
-        $parsedFile = dirname ( __FILE__ )
-                    . DIRECTORY_SEPARATOR
-                    . 'Hyphenator'
-                    . DIRECTORY_SEPARATOR
-                    . 'parsedFiles'
+        $parsedFile = self::getDefaultParsedFileDir()
                     . DIRECTORY_SEPARATOR
                     . $language
                     . '.php';
@@ -523,11 +521,7 @@ final class Org_Heigl_Hyphenator
             $lang [] = substr ( $language, 0, $pos );
         }
         foreach ( $lang as $language ) {
-            $parsedFile = dirname ( __FILE__ )
-                        . DIRECTORY_SEPARATOR
-                        . 'Hyphenator'
-                        . DIRECTORY_SEPARATOR
-                        . 'parsedFiles'
+            $parsedFile = self::getDefaultParsedFileDir()
                         . DIRECTORY_SEPARATOR
                         . $language
                         . '.php';
@@ -1075,4 +1069,77 @@ final class Org_Heigl_Hyphenator
     public function getCustomizationMarker () {
         return (string) $this -> _customizedMarker;
     }
+
+    /**
+     * Set the default directory for parsed files
+     *
+     * This is the place where the precompiled hyphenation-files are stored.
+     * The directory will be created, if possible. If the directory does not
+     * exist and can not be created, the default temporary directory
+     * identified by 'get_sys_temp_dir' will be used.
+     *
+     * If that directory can not be retrieved, an Exception will be raised.
+     *
+     * @param string $path
+     *
+     * @throws InvalidArgumentException
+     * @return void
+     */
+    public static function setDefaultParsedFileDir($path)
+    {
+        if(false === realpath($path)){
+            self::mkdir($path,0777);
+        }
+        if(false === realpath($path)){
+            $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'org_heigl_hyphenator';
+            @mkdir($path,0777);
+        }
+        if(false === realpath($path)){
+            throw new InvalidArgumentException('The given folder could not be retrieved');
+        }
+        self::$_defaultParsedFileDir = $path;
+    }
+
+    /**
+     * Store the default parsedFileDir
+     *
+     * @var string $_defaultParsedFileDir
+     */
+    protected static $_defaultParsedFileDir = null;
+
+    /**
+     * Get the default parsedFile directory
+     *
+     * @return string
+     */
+    public static function getDefaultParsedFileDir()
+    {
+        return self::$_defaultParsedFileDir;
+    }
+
+    /**
+     * Recursively create a directory including all it's parents
+     *
+     * @param string $folder
+     * @param int $right
+     *
+     * @return
+     */
+    public static function mkdir($folder, $right=0777)
+    {
+        $parent = dirname($folder);
+        if (!$parent){
+            return;
+        }
+        $self   = basename($folder);
+        if ( ! file_exists($parent)){
+            self::mkdir($parent, $right);
+        }
+        if ( ! file_exists($folder)){
+            @mkdir($folder, $right );
+        }
+        return true;
+    }
 }
+
+Org_Heigl_Hyphenator::setDefaultParsedFileDir( sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'org_heigl_hyphenator');
