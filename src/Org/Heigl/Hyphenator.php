@@ -356,6 +356,9 @@ final class Org_Heigl_Hyphenator
         $fc         = preg_replace ( array('/"a/', '/"o/', '/"u/', '/\\./' ), array ( 'ä', 'ö', 'ü', '_' ), $fc );
         $array      = preg_split ( '/\\s+/', $fc );
         $fh         = fopen ( $parsedFile, 'w+' );
+        if ( !$fh ) {
+            throw new Exception ( 'Unable to open file for writing: ' . $parsedFile );
+        }
         $fileheader = '<?php
 /**
  * $'.'Id'.'$
