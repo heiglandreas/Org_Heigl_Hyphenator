@@ -453,7 +453,7 @@ final class Org_Heigl_Hyphenator
                          'ee' => 'eehyph.tex',
                          'ga' => 'gahyph.tex',
                          ' ' => 'hypht1.tex',
-                         'ne' => 'nehyph.tex',
+                         'nl' => 'nehyph.tex',
                          'pt' => 'pt8hyph.tex',
                          'sr' => 'srhyphc.tex',
                          'de_OLD' => 'dehypht.tex',
