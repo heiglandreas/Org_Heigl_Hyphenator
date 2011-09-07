@@ -1091,7 +1091,7 @@ final class Org_Heigl_Hyphenator
             self::mkdir($path,0777);
         }
         if(false === realpath($path)){
-            $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'org_heigl_hyphenator';
+            $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'org_heigl_hyphenator_' . get_current_user();
             @mkdir($path,0777);
         }
         if(false === realpath($path)){
@@ -1142,4 +1142,4 @@ final class Org_Heigl_Hyphenator
     }
 }
 
-Org_Heigl_Hyphenator::setDefaultParsedFileDir( sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'org_heigl_hyphenator');
+Org_Heigl_Hyphenator::setDefaultParsedFileDir( sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'org_heigl_hyphenator_' . get_current_user());
