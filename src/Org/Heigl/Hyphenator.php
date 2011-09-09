@@ -571,7 +571,7 @@ final class Org_Heigl_Hyphenator
                 return $result;
             }
         }
-        $array = explode ( ' ', $string );
+        $array = preg_split ( '[\s]', $string );
         $size  = count ( $array );
         for ( $i = 0; $i < $size; $i++ ) {
             $array[$i] = $this -> hyphenateWord ( $array[$i] );
