@@ -67,7 +67,7 @@
  *             // Set some special characters
  *             -> setSpecialChars ( 'äöüß' )
  *             // Only Hyphenate with the best quality
- *             -> setQuality ( Org_Heigl_Hyphenate::QUALITY_BEST )
+ *             -> setQuality ( Org_Heigl_Hyphenate::QUALITY_HIGHEST )
  *             // Words that shall not be hyphenated have to start with this string
  *             -> setNoHyphenateMarker ( 'nbr:' )
  *             // Words that contain this string are custom hyphenated
@@ -363,7 +363,7 @@ final class Org_Heigl_Hyphenator
         $fc         = preg_replace ( array('/"a/', '/"o/', '/"u/', '/\\./' ), array ( 'ä', 'ö', 'ü', '_' ), $fc );
         $array      = preg_split ( '/\\s+/', $fc );
         $fh         = fopen ( $parsedFile, 'w+' );
-        if ( !$fh ) {
+        if ( ! $fh ) {
             throw new Exception ( 'Unable to open file for writing: ' . $parsedFile );
         }
         $fileheader = '<?php
@@ -568,7 +568,11 @@ final class Org_Heigl_Hyphenator
                 return $result;
             }
         }
-        $array = preg_split ( '/([\s])/', $string, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+
+        if ( $html )
+            $array = preg_split ( '/([\s<>])/', $string, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+        else
+            $array = preg_split ( '/([\s])/', $string, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
         $size  = count ( $array );
 
         // HTML
@@ -578,24 +582,22 @@ final class Org_Heigl_Hyphenator
             $skip = $this->getSkipTags();
             $skipEnd = $this->getSkipTagsEnd();
             for ( $i = 0; $i < $size; $i++ ) {
-                if ( substr( $array[$i], 0, 1 ) == '<' )
+                if ( ! $inTag and substr( $array[$i], 0, 1 ) == '<' )
                     $inTag = True;
-                if ( in_array($array[$i], $skip ) )
-                {
+                # XXX This isn't perfect (But kinda works for now)
+                if ( ! $inSkip and $i+2 < $size and in_array($array[$i] . $array[$i+1], $skip ) )
                     $inSkip = True;
-                    #print 'S[' . $array[$i] . ']';
-                }
 
-                if ( !$inTag and !$inSkip)
+                if ( ! $inTag and ! $inSkip
+                    and ! ( ( substr( $array[$i], 0, 1 ) == '&' and substr( $array[$i], -1, 1 ) == ';' ) )
+                ) {
                     $array[$i] = $this -> hyphenateWord ( $array[$i] );
+                }
 
                 if ( substr( $array[$i], -1, 1 ) == '>' )
                     $inTag = False;
-                if ( in_array($array[$i], $skipEnd ) )
-                {
+                if ( $i+2 < $size and in_array($array[$i] . $array[$i+1] . $array[$i+2] , $skipEnd ) )
                     $inSkip = False;
-                    #print 'E[' . $array[$i] . ']';
-                }
             }
         }
         // Plain text
@@ -1158,16 +1160,20 @@ final class Org_Heigl_Hyphenator
      */
     public static function setDefaultParsedFileDir($path)
     {
-        if(false === realpath($path)){
-            self::mkdir($path,0777);
+        if ( false === realpath($path) ) {
+            self::mkdir( $path, 0777 );
         }
-        if(false === realpath($path)){
-            $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'org_heigl_hyphenator_' . get_current_user();
-            @mkdir($path,0777);
+        if ( false === realpath( $path ) ) {
+            $path = sys_get_temp_dir()
+                    . DIRECTORY_SEPARATOR
+                    . 'org_heigl_hyphenator_'
+                    . get_current_user();
+            @mkdir( $path, 0777 );
         }
-        if(false === realpath($path)){
-            throw new InvalidArgumentException('The given folder could not be retrieved');
+        if ( false === realpath( $path ) ) {
+            throw new InvalidArgumentException( 'The given folder could not be retrieved' );
         }
+
         self::$_defaultParsedFileDir = $path;
     }
 
@@ -1196,18 +1202,18 @@ final class Org_Heigl_Hyphenator
      *
      * @return
      */
-    public static function mkdir($folder, $right=0777)
+    public static function mkdir( $folder, $right=0777 )
     {
-        $parent = dirname($folder);
-        if (!$parent){
+        $parent = dirname( $folder );
+        if ( ! $parent ) {
             return;
         }
-        $self   = basename($folder);
-        if ( ! file_exists($parent)){
+        $self = basename( $folder );
+        if ( ! file_exists( $parent ) ) {
             self::mkdir($parent, $right);
         }
-        if ( ! file_exists($folder)){
-            @mkdir($folder, $right );
+        if ( ! file_exists( $folder ) ) {
+            @mkdir( $folder, $right );
         }
         return true;
     }
