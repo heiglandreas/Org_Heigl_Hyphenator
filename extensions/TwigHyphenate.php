@@ -37,10 +37,9 @@
  * This actually hyphenates the text
  *
  * @param string $text Text to hyphenate
- * @param string $language De taal om te gebruiken -- Let op: Nederlands is 
- * 'ne', niet 'nl' ...
+ * @param string $language Language to use
  */
-function Hyphenate($text, $language='nl')
+function Hyphenate($text, $language='en')
 {
 	if (!class_exists('Org_Heigl_Hyphenator'))
 		include_once('hyphenator/Hyphenator.php');
