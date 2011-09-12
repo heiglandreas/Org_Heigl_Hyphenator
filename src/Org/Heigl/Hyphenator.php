@@ -245,6 +245,13 @@ final class Org_Heigl_Hyphenator
     private $_specialStrings = array ( '-/-', '-' );
 
     /**
+     * Tags to completly skip when treating text as HTML
+     *
+     * @var array $_skipTags
+     */
+    private $_skipTags = array( 'head', 'script', 'style', 'code', 'pre' );
+
+    /**
      * This is the static way of hyphenating a string.
      *
      * This method gets the appropriate Hyphenator-object and calls the method
@@ -431,49 +438,39 @@ final class Org_Heigl_Hyphenator
      * @return string
      */
     public static function getTexFile ( $language ) {
-        $files = array ( 'ba' => 'bahyph.tex',
-                         'ca' => 'cahyph.tex',
-                         'dk' => 'dkhyphen.tex',
-                         'fi' => 'fi8hyph.tex',
-                         'hu' => 'huhyph.tex',
-                         'it' => 'ithyph.tex',
-                         'no' => 'nohyphbc.tex',
-                         'si' => 'sihyph23.tex',
-                         'dk' => 'dkspecial.tex',
-                         'fi' => 'fihyph.tex',
-                         'hu' => 'huhyphn.tex',
-                         'la' => 'lahyph.tex',
-                         ' ' => 'nohyphbx.tex',
-                         'sk' => 'skhyph.tex',
-                         'cz' => 'czhyph.tex',
-                         ' ' => 'dumyhyph.tex',
-                         'fr' => 'frhyph.tex',
-                         'en' => 'hyphen.tex',
-                         'mn' => 'mnhyphen.tex',
-                         'pl' => 'plhyph.tex',
-                         'sk' => 'skhyph2e.tex',
-                         'de' => 'dehyphn.tex',
-                         'ee' => 'eehyph.tex',
-                         'ga' => 'gahyph.tex',
-                         ' ' => 'hypht1.tex',
-                         'nl' => 'nehyph.tex',
-                         'pt' => 'pt8hyph.tex',
-                         'sr' => 'srhyphc.tex',
-                         'de_OLD' => 'dehypht.tex',
-                         'eo' => 'eohyph.tex',
-                         'gr' => 'grhyph.tex',
-                         'ic' => 'icehyph.tex',
-                         ' ' => 'nohyph.tex',
-                         'ro' => 'rohyphen.tex',
-                         'tr' => 'trhyph.tex',
-                         'dk' => 'dkcommon.tex',
-                         'es' => 'eshyph.tex',
-                         'hr' => 'hrhyph.tex',
-                         'in' => 'inhyph.tex',
-                         ' ' => 'nohyphb.tex',
-                         'se' => 'sehyph.tex',
-                         ' ' => 'zerohyph.tex',
-                );
+        $files = array (
+            ' '  => 'zerohyph.tex',
+            'ba' => 'bahyph.tex',
+            'ca' => 'cahyph.tex',
+            'de' => 'dehyphn.tex',
+            'de_OLD' => 'dehypht.tex',
+            'dk' => 'dkcommon.tex',
+            'ee' => 'eehyph.tex',
+            'en' => 'hyphen.tex',
+            'eo' => 'eohyph.tex',
+            'es' => 'eshyph.tex',
+            'fi' => 'fihyph.tex',
+            'fr' => 'frhyph.tex',
+            'ga' => 'gahyph.tex',
+            'gr' => 'grhyph.tex',
+            'hr' => 'hrhyph.tex',
+            'hu' => 'huhyph.tex',
+            'ic' => 'icehyph.tex',
+            'in' => 'inhyph.tex',
+            'it' => 'ithyph.tex',
+            'la' => 'lahyph.tex',
+            'mn' => 'mnhyphen.tex',
+            'nl' => 'nehyph.tex',
+            'no' => 'nohyph.tex',
+            'pl' => 'plhyph.tex',
+            'pt' => 'pt8hyph.tex',
+            'ro' => 'rohyphen.tex',
+            'se' => 'sehyph.tex',
+            'si' => 'sihyph23.tex',
+            'sk' => 'skhyph2e.tex',
+            'sr' => 'srhyphc.tex',
+            'tr' => 'trhyph.tex',
+        );
         if ( array_key_exists ( $language, $files ) ) {
             return $files[$language];
         }
@@ -560,7 +557,7 @@ final class Org_Heigl_Hyphenator
      *
      * @return string The hyphenated string
      */
-    public function hyphenate ( $string ) {
+    public function hyphenate ( $string, $html=False ) {
 
         $this -> _rawWord = array ();
         // If caching is enabled and the string is already cached, return the
@@ -571,12 +568,44 @@ final class Org_Heigl_Hyphenator
                 return $result;
             }
         }
-        $array = preg_split ( '[\s]', $string );
+        $array = preg_split ( '/([\s])/', $string, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
         $size  = count ( $array );
-        for ( $i = 0; $i < $size; $i++ ) {
-            $array[$i] = $this -> hyphenateWord ( $array[$i] );
+
+        // HTML
+        if ( $html ) {
+            $inTag = False;
+            $inSkip = False;
+            $skip = $this->getSkipTags();
+            $skipEnd = $this->getSkipTagsEnd();
+            for ( $i = 0; $i < $size; $i++ ) {
+                if ( substr( $array[$i], 0, 1 ) == '<' )
+                    $inTag = True;
+                if ( in_array($array[$i], $skip ) )
+                {
+                    $inSkip = True;
+                    #print 'S[' . $array[$i] . ']';
+                }
+
+                if ( !$inTag and !$inSkip)
+                    $array[$i] = $this -> hyphenateWord ( $array[$i] );
+
+                if ( substr( $array[$i], -1, 1 ) == '>' )
+                    $inTag = False;
+                if ( in_array($array[$i], $skipEnd ) )
+                {
+                    $inSkip = False;
+                    #print 'E[' . $array[$i] . ']';
+                }
+            }
         }
-        $hyphenatedString = implode ( ' ', $array );
+        // Plain text
+        else
+        {
+            for ( $i = 0; $i < $size; $i++ ) {
+               $array[$i] = $this -> hyphenateWord ( $array[$i] );
+            }
+        }
+        $hyphenatedString = implode ( '', $array );
 
         // If caching is enabled, write the hyphenated string to the cache.
         if ( $this -> isCachingEnabled () ) {
@@ -598,7 +627,7 @@ final class Org_Heigl_Hyphenator
 
         // If the Word is empty, return an empty string.
         if ( '' === trim ( $word ) ) {
-            return '';
+            return $word;
         }
 
         // Check whether the word shall be hyphenated.
@@ -1063,6 +1092,45 @@ final class Org_Heigl_Hyphenator
         $this -> _customizedMarker = (string) $marker;
         return $this;
     }
+
+    /**
+     * Set list of tags to completly skip when treating text as HTML.
+     *
+     * @param array $tags
+     *
+     * @return Org_Heigl_Hyphenator
+     */
+    public function setSkipTags ($tags) {
+        $this -> _skipTags = $tags;
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function getSkipTags () {
+        $array = array();
+        foreach ($this -> _skipTags as $t)
+        {
+            $array[] = '<' . $t . '>';
+            $array[] = '<' . $t;
+        }
+
+        return $array;
+    }
+
+    /**
+     *
+     */
+    public function getSkipTagsEnd () {
+        $array = array();
+        foreach ($this -> _skipTags as $t)
+            $array[] = '</' . $t . '>';
+
+        return $array;
+    }
+
 
     /**
      * Get the string that shall be prepend to a customized word.

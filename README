@@ -52,6 +52,6 @@ echo $hyphenated;
 ?>
 
  +----------------------------------------------------------------------------+
- | Documentation:                                                              |
+ | Extensions:                                                                |
  +----------------------------------------------------------------------------+
-Use the included documentation from the 'doc/api'-folder
+An extension for Twig is included in the extensions/ folder.

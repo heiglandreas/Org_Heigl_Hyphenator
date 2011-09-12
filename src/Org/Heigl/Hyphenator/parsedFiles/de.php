@@ -34,8 +34,8 @@
  * @copyright  2008-2010 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version    1.0
- * @since      17.06.2009
- */ 
+ * @since      12.09.2011
+ */
 $pattern['_aal'] = '00060';
 $pattern['_abas'] = '0003040';
 $pattern['_abei'] = '000300';
