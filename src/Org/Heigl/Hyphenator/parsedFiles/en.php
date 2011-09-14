@@ -1,6 +1,6 @@
 <?php
 /**
- *$Id$
+ * $Id$
  *
  * Copyright (c) 2008-2010 Andreas Heigl<andreas@heigl.org>
  *
@@ -31,10 +31,10 @@
  * @package    Org_Heigl_Hyphenator
  * @subpackage HyphenationFiles
  * @author     Org_Heigl_Hyphenator
- * @copyright  (c)2008-2009 Andreas Heigl<andreas@heigl.org>
+ * @copyright  2008-2010 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version    1.0
- * @since      06.06.2010
+ * @since      12.09.2011
  */
 $pattern['_ach'] = '00004';
 $pattern['_adder'] = '0004000';

@@ -39,7 +39,7 @@ $hyphenator -> setHyphen ( '-' )
             // Set some special characters
             -> setSpecialChars ( 'äöüß' )
             // Only Hyphenate with the best quality
-            -> setQuality ( Org_Heigl_Hyphenate::QUALITY_BEST )
+            -> setQuality ( Org_Heigl_Hyphenator::QUALITY_HIGHEST )
             // Words that shall not be hyphenated have to start with this string
             -> setNoHyphenateMarker ( 'nbr:' )
             // Words that contain this string are custom hyphenated
@@ -52,6 +52,6 @@ echo $hyphenated;
 ?>
 
  +----------------------------------------------------------------------------+
- | Documentation:                                                              |
+ | Extensions:                                                                |
  +----------------------------------------------------------------------------+
-Use the included documentation from the 'doc/api'-folder
+An extension for Twig is included in the extensions/ folder.
