@@ -47,12 +47,10 @@
 
     <target name="test">
         <mkdir dir="${basedir}/build/logs"/>
-        <exec executable="phpunit" dir="${basedir}/tests" failonerror="on">
-            <arg line="--log-junit ${basedir}/build/logs/phpunit.xml
-                       --coverage-clover  ${basedir}/build/logs/phpunit.coverage.xml
-                       --coverage-html ${basedir}/doc/coverage
-                       AllTests" />
-        </exec>
+        <exec executable="phpunit" dir="${basedir}/tests" failonerror="on"/>
+    	<exec executable="${basedir}/tools/removeBasePath.sh" dir="${basedir}/build/phpunit/coverage" failonerror="true">
+    		<arg line="${basedir}/src/"/>
+    	</exec>
     </target>
 
 
