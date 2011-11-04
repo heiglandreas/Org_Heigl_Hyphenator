@@ -26,7 +26,7 @@
  * @author    Andreas Heigl <andreas@heigl.org>
  * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   2.0
+ * @version   2.0.alpha
  * @since     02.11.2011
  */
 
@@ -48,7 +48,7 @@ require_once 'Org/Heigl/Hyphenator/Options/Options.php';
  * @author    Andreas Heigl <andreas@heigl.org>
  * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   2.0
+ * @version   2.0.alpha
  * @since     02.11.2011
  */
 class OptionsTest extends \PHPUnit_Framework_TestCase

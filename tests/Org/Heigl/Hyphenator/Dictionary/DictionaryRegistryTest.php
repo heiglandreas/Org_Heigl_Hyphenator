@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2008-2009 Andreas Heigl<andreas@heigl.org>
+ * Copyright (c) 2008-2011 Andreas Heigl<andreas@heigl.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
  * @author    Andreas Heigl <andreas@heigl.org>
  * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   2.0
+ * @version   2.0.alpha
  * @since     02.11.2011
  */
 
@@ -51,7 +51,7 @@ require_once 'Org/Heigl/Hyphenator/Dictionary/Dictionary.php';
  * @author    Andreas Heigl <andreas@heigl.org>
  * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   2.0
+ * @version   2.0.alpha
  * @since     02.11.2011
  */
 class DictionaryRegistryTest extends \PHPUnit_Framework_TestCase

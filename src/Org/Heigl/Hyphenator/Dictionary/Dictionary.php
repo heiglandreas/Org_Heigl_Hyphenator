@@ -26,7 +26,7 @@
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    2.0
+ * @version    2.0.alpha
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      01.11.2011
  */
@@ -42,7 +42,7 @@ namespace Org\Heigl\Hyphenator\Dictionary;
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    2.0
+ * @version    2.0.alpha
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      01.11.2011
  */

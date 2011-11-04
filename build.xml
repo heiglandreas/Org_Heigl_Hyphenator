@@ -3,7 +3,7 @@
 /**
  * $Id$
  *
- * Copyright (c) 2008-2010 Andreas Heigl<andreas@heigl.org>
+ * Copyright (c) 2008-2011 Andreas Heigl<andreas@heigl.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,9 @@
  * @category  Org_Heigl
  * @package   Org_Heigl_Hyphenator
  * @author    Andreas Heigl <andreas@heigl.org>
- * @copyright 2008-2010 Andreas Heigl<andreas@heigl.org>
+ * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   GIT: $Revision$
+ * @version   2.0.alpha
  * @since     12.06.2008
  */
 -->

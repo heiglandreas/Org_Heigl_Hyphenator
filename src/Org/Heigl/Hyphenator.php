@@ -2,7 +2,7 @@
 /**
  * $Id: Hyphenator.php 1114 2009-07-10 08:48:44Z heiglandreas $
  *
- * Copyright (c) 2008-2009 Andreas Heigl<andreas@heigl.org>
+ * Copyright (c) 2008-2011 Andreas Heigl<andreas@heigl.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
  * @author    Andreas Heigl <andreas@heigl.org>
  * @copyright 2008 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   SVN: $Revision: 1114 $
+ * @version   2.0.alpha
  * @since     12.06.2008
  */
 
@@ -81,9 +81,9 @@
  * @category  Org_Heigl
  * @package   Org_Heigl_Hyphenator
  * @author    Andreas Heigl <a.heigl@wdv.de>
- * @copyright 2008-2010 Andreas Heigl
+ * @copyright 2008-2011 Andreas Heigl
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   SVN: $Revision: 1114 $
+ * @version   2.0.alpha
  * @see       http://code.google.com/p/hyphenator
  * @see       http://www.tug.org/docs/liang/liang-thesis.pdf
  * @since     12.06.2008
@@ -360,7 +360,7 @@ final class Org_Heigl_Hyphenator
 /**
  * $'.'Id'.'$
  *
- * Copyright (c) 2008-2010 Andreas Heigl<andreas@heigl.org>
+ * Copyright (c) 2008-2011 Andreas Heigl<andreas@heigl.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -389,9 +389,9 @@ final class Org_Heigl_Hyphenator
  * @package    Org_Heigl_Hyphenator
  * @subpackage HyphenationFiles
  * @author     Org_Heigl_Hyphenator
- * @copyright  2008-2010 Andreas Heigl<andreas@heigl.org>
+ * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    1.0
+ * @version    2.0.alpha
  * @since      ' . date ( 'd.m.Y' ) . '
  */
 ';
