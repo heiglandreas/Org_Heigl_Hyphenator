@@ -20,33 +20,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @category  Hyphenation
- * @package   Org_Heigl_Hyphenator
- * @author    Andreas Heigl <andreas@heigl.org>
- * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   SVN: $Revision: 1114 $
- * @since     12.06.2008
+ * @category   Hyphenation
+ * @package    Org_Heigl_Hyphenator
+ * @subpackage Exception
+ * @author     Andreas Heigl <andreas@heigl.org>
+ * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
+ * @version    2.0
+ * @link       http://github.com/heiglandreas/Hyphenator
+ * @since      02.11.2011
  */
+
+namespace Org\Heigl\Hyphenator\Exception;
 
 /** Org_Heigl_Hyphenator_Exception */
 require_once 'Org/Heigl/Hyphenator/Exception.php';
 
 /**
- * This class describes an InvalidArguemtnException
+ * This class describes an Exception that occurs when not all rewuirements are
+ * met
  *
- * @category  Hyphenation
- * @package   Org_Heigl_Hyphenator
- * @author    Andreas Heigl <a.heigl@wdv.de>
- * @copyright 2008-2010 Andreas Heigl
- * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   SVN: $Revision: 1114 $
- * @see       http://code.google.com/p/hyphenator
- * @see       http://www.tug.org/docs/liang/liang-thesis.pdf
- * @since     12.06.2008
+ * @category   Hyphenation
+ * @package    Org_Heigl_Hyphenator
+ * @subpackage Exception
+ * @author     Andreas Heigl <a.heigl@wdv.de>
+ * @copyright  2008-2010 Andreas Heigl
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
+ * @version    2.0
+ * @link       http://github.com/heiglandreas/Hyphenator
+ * @since      02.11.2011
  */
-class Org_Heigl_Hyphenator_Exception_RequirementsNotMetxception
-extends InvalidArgumentException
-implements Org_Heigl_Hyphenator_Exception
+class RequirementsNotMetxception
+extends \InvalidArgumentException
+implements \Org\Heigl\Hyphenator\Exception
 {
 }

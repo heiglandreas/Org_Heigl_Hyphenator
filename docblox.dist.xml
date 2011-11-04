@@ -13,7 +13,7 @@
         <extensions>
             <extension>php</extension>
         </extensions>
-        <visibility></visibility>
+        <visibility>public</visibility>
     </parser>
     <transformer>
         <target>doc/api/</target>

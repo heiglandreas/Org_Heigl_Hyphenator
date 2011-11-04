@@ -43,7 +43,7 @@
     </target>
 
     <target name="build"
-              depends="clean, phpdoc, test, distribute" />
+              depends="clean, doc, test, distribute" />
 
     <target name="test">
         <mkdir dir="${basedir}/build/logs"/>
@@ -54,24 +54,9 @@
     </target>
 
 
-    <target name="phpdoc">
+    <target name="doc">
         <mkdir dir="${basedir}/doc/api"/>
-        <exec executable="phpdoc" dir="${basedir}" failonerror="on">
-            <arg line=" --directory src
-                        --target doc/api
-                        --quiet off
-                        --undocumentedelements on
-                        --title 'Org_Heigl_Hyphenator'
-                        --parseprivate off
-                        --defaultpackagename 'Wdv_Org_Hyphenator'
-                        --output HTML:frames:DOM/earthli.de.utf8
-                        --readmeinstallchangelog INSTALL,README,CHANGELOG,LICENSE
-                        --filename INSTALL,README,CHANGELOG,LICENSE
-                        --sourcecode on
-                        --javadocdesc off" />
-
-        </exec>
-        <!-- exec executable="docblox" dir="${basedir}" failonerror="on"/-->
+        <exec executable="docblox" dir="${basedir}" failonerror="on"/>
     </target>
     
     <target name="distribute">

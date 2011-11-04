@@ -22,30 +22,42 @@
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
- * @subpackage Exception
+ * @subpackage Tokenizer
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version    2.0
  * @link       http://github.com/heiglandreas/Hyphenator
- * @since      02.11.2011
+ * @since      04.11.2011
  */
 
-namespace Org\Heigl\Hyphenator;
+namespace Org\Heigl\Hyphenator\Tokeinzer;
 
 /**
- * This Interface describes an Exception from the Org_Heigl_Hyphenator-Bundle
+ * This Interface describes methods any tokenizer has to implement
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
- * @subpackage Exception
- * @author     Andreas Heigl <a.heigl@wdv.de>
- * @copyright  2008-2010 Andreas Heigl
+ * @subpackage Tokenizer
+ * @author     Andreas Heigl <andreas@heigl.org>
+ * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version    2.0
  * @link       http://github.com/heiglandreas/Hyphenator
- * @since      02.11.2011
+ * @since      04.11.2011
  */
-interface Exception
+interface Tokenizer
 {
+    /**
+     * Split the given input into tokens.
+     *
+     * The input can be a string or an already tokenized array. If the input is
+     * an array each item will be tokenized.
+     *
+     * @param string|\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $input The
+     * input to be tokenized
+     *
+     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
+     */
+    public function run($input);
 }

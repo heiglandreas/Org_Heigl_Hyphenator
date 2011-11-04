@@ -21,31 +21,32 @@
  * THE SOFTWARE.
  *
  * @category   Hyphenation
- * @package    Org_Heigl_Hyphenator
- * @subpackage Exception
+ * @package    Org\Heigl\Hyphenator
+ * @subpackage Filter
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version    2.0
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      02.11.2011
+ * @todo       Implement!
  */
 
-namespace Org\Heigl\Hyphenator;
+namespace Org\Heigl\Hyphenator\Filter;
 
 /**
- * This Interface describes an Exception from the Org_Heigl_Hyphenator-Bundle
+ * This class provides a registry for storing multiple filters
  *
  * @category   Hyphenation
- * @package    Org_Heigl_Hyphenator
- * @subpackage Exception
- * @author     Andreas Heigl <a.heigl@wdv.de>
- * @copyright  2008-2010 Andreas Heigl
+ * @package    Org\Heigl\Hyphenator
+ * @subpackage Filter
+ * @author     Andreas Heigl <andreas@heigl.org>
+ * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version    2.0
  * @link       http://github.com/heiglandreas/Hyphenator
- * @since      02.11.2011
+ * @since      02.11.2011s
  */
-interface Exception
+class FilterRegistry
 {
 }
