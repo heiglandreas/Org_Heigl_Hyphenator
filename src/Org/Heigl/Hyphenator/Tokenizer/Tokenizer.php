@@ -31,7 +31,7 @@
  * @since      04.11.2011
  */
 
-namespace Org\Heigl\Hyphenator\Tokeinzer;
+namespace Org\Heigl\Hyphenator\Tokenizer;
 
 /**
  * This Interface describes methods any tokenizer has to implement

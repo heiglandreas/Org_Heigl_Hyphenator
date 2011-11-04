@@ -31,7 +31,7 @@
  * @since      04.11.2011
  */
 
-namespace Org\Heigl\Hyphenator\Tokeninzer;
+namespace Org\Heigl\Hyphenator\Tokenizer;
 
 /**
  * This Class describes a default Token
