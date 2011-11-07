@@ -24,6 +24,9 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
+require_once 'Org/Heigl/Hyphenator/Hyphenator.php';
+\Org\Heigl\Hyphenator\Hyphenator::registerAutoload();
+
 class UnitTestHelper
 {
     /**
