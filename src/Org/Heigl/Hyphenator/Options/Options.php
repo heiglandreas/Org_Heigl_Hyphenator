@@ -35,9 +35,6 @@ namespace Org\Heigl\Hyphenator\Options;
 
 use \Org\Heigl\Hyphenator\Exception;
 
-/** \Org\Heigl\Hyphenator\Exception\InvalidArgumentException */
-require_once 'Org/Heigl/Hyphenator/Exception/InvalidArgumentException.php';
-
 /**
  * This class provides Options for the Hyphenator.
  *

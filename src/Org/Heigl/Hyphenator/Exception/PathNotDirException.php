@@ -33,9 +33,6 @@
 
 namespace Org\Heigl\Hyphenator\Exception;
 
-/** Org_Heigl_Hyphenator_Exception */
-require_once 'Org/Heigl/Hyphenator/Exception.php';
-
 /**
  * This class describes an Exception to be triggered when a path is not a
  * directory
