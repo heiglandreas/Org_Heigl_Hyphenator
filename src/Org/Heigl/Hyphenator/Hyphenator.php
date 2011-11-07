@@ -32,12 +32,6 @@
 
 namespace Org\Heigl\Hyphenator;
 
-/** \Org\Heigl\Hyphenator\Dictionary\DictionaryRegistry */
-require_once 'Org/Heigl/Hyphenator/Dictionary/DictionaryRegistry.php';
-
-/** \Org\Heigl\Hyphenator\Filter\FilterRegistry */
-require_once 'Org/Heigl/Hyphenator/Filter/FilterRegistry.php';
-
 /**
  * This class implements word-hyphenation
  *
@@ -45,45 +39,57 @@ require_once 'Org/Heigl/Hyphenator/Filter/FilterRegistry.php';
  * Franklin Mark Liang for LaTeX as described in his dissertation at the department
  * of computer science at stanford university.
  *
- * This package is based on an idea of Mathias Nater<mnater@mac.com> who
+ * The idea to this package came from Mathias Nater <mnater@mac.com> who
  * implemented this word-hyphenation-algorithm for javascript.
  *
- * Hyphenating means in this case, that all possible hypheantions in a word are
- * marked using the soft-hyphen character (ASCII-Caracter 173) or any other
- * character set via the setHyphen() method.
+ * After Implementing that algorithm for the first Hyphenator-Version I stumbled
+ * over the Informations of LÁSZLÓ NÉMETH from OpenOffice.org.
  *
- * A complete text will first be divided into words via a regular expression
- * that takes all characters that the \w-Special-Character specifies as well as
- * the '@'-Character and possible other - language-specific - characters that
- * can be set via the setSpecialChars() method.
+ * That brought me to change three things for the next Version of the
+ * Hyphenator.
+ * <ol>
+ * <li>Use the Dictionary files from OpenOffice.org instead of the ones directly
+ * from Tex because the OOo-Files are already stripped of the unnecessary
+ * Informations</li>
+ * <li>Add the possibility to use non-standard hyphenations</li>
+ * <li>Add the possibility to add better word-tokenising</li>
+ * </ol>
  *
- * Hyphenation is done using a set of files taken from a current TeX-Distribution
- * that are matched using the method getTexFile().
+ * Beside those changes there are some other changes between the first and the
+ * second version of the Hyphenator.
  *
- * So here is an example for the usage of the class:
+ * So Version 2 of the Hyphenator<ul>
+ * <li>requires PHP5.3 as it uses namespaces.</li>
+ * <li>aims to 100% Code-Coverage via Unit-Tests</li>
+ * <li>removes some unnecessary options</li>
+ * <li>is completely rewritten from scratch</li>
+ * </ul>
+ *
+ * So here is the smalest example for the usage of the class:
  * <code>
- * <?php
- * // Place all parsed files in the given folder instead of the default one
- * Org_Heigl_Hyphenator::setDefaultParsedFileDir('/tmp/hyphenator');
- * $hyphenator = Org_Heigl_Hyphenator::getInstance ( 'de' );
- * $hyphenator -> setHyphen ( '-' )
- *             // Minimum 5 characters before the first hyphenation
- *             -> setLeftMin ( 5 )
- *             // Hyphenate only words with more than 4 characters
- *             -> setWordMin ( 5 )
- *             // Set some special characters
- *             -> setSpecialChars ( 'äöüß' )
- *             // Only Hyphenate with the best quality
- *             -> setQuality ( Org_Heigl_Hyphenate::QUALITY_BEST )
- *             // Words that shall not be hyphenated have to start with this string
- *             -> setNoHyphenateMarker ( 'nbr:' )
- *             // Words that contain this string are custom hyphenated
- *             -> setCustomHyphen ( '--' );
+ * &lt;?php
+ * use \Org\Heigl\Hyphenator as h;
+ * // First set the path to the configuration file
+ * h\Hyphenator::setConfigFile('/path/to/the/config/file.properties');
  *
- * // Hyphenate the string $string
- * $hyphenated = $hyphenator -> hyphenate ( $text );
- * ?>
+ * // Then create a hyphenator-instance for a given locale
+ * $hyphenator = h\Hyphenator::factory('de_DE');
+ *
+ * // And finaly Hyphenate a given string
+ * $hyphenatedText = $hyphenator->hyphenate($string);
  * </code>
+ * Registering the autoloader is essential before the first call to the
+ * Hyphenator
+ * <code language="php">
+ * &lt;?php
+ * require_once '/path/to/Org/Heigl/Hyphenator/Hyphenator.php';
+ * spl_autoload_register('\Org\Heigl\Hyphenator\Hyphenator::__autoload');
+ * </code>
+ * Of course the Hyphenator can be adapted to the most requirements via an
+ * Options-Object. And the tokenisation in this small example uses the simple
+ * WhiteSpace-Tokenizer. Other more complex Tokenizers are available.
+ *
+ * Examples for those can be found at http://github.com/heiglandreas/Hyphenator
  *
  * @category  Org_Heigl
  * @package   Org_Heigl_Hyphenator
@@ -105,6 +111,31 @@ final class Hyphenator
     const QUALITY_NORMAL  = 5;
     const QUALITY_LOW     = 3;
     const QUALITY_LOWEST  = 1;
+
+    /**
+     * Storage for the Home-path.
+     *
+     * The configuration file is searched in different places.
+     * <ol><li>Location given via the constant HYPHENATOR_HOME</li>
+     * <li>Location set via \Org\Heigl\Hyphenator\Hyphenator::setDefaultHome()</li>
+     * <li>Location set via \Org\Heigl\Hyphenator\Hyphenator::setHome()</li>
+     * <li>The 'share'-Folder inside the Hyphenator-Package</li>
+     * </ol>
+     *
+     * The configoration-object can also be obtained using the
+     * \Org\Heigl\hypghenator::getConfig()-Method and can then be adapted
+     * according to ones needs.
+     *
+     * @var string $_homePath
+     */
+    private $_homePath = null;
+
+    /**
+     * Storage of the default Home-Path
+     *
+     * @var string $_defaultHomePath
+     */
+    private static $_defaultHomePath = null;
 
     /**
      * Storage for the Options-Object.
@@ -158,7 +189,7 @@ final class Hyphenator
      *
      * @return Org\Heigl\Hyphenator\Hyphenator
      */
-    public function addDictionary(Org\Heigl\Hyphenator\Dictionary\Dictionary $dictionary)
+    public function addDictionary(\Org\Heigl\Hyphenator\Dictionary\Dictionary $dictionary)
     {
         $this->_dicts->add($dictionary);
         return $this;
@@ -173,7 +204,7 @@ final class Hyphenator
      * @link http://hunspell.sourceforge.net/tb87nemeth.pdf
      * @return Org\Heigl\Hyphenator\Hyphenator
      */
-    public function addFilter(Org\Heigl\Hyphenator\Filter\Filter $filter)
+    public function addFilter(\Org\Heigl\Hyphenator\Filter\Filter $filter)
     {
         $this->_filters->add($filter);
         return $this;
@@ -510,5 +541,121 @@ final class Hyphenator
             return implode($specialString, $parts);
         }
         return false;
+    }
+
+    /**
+     * Set the default home-Path
+     *
+     * @param string $homePath The defaubnt Hyphenator Home-path.
+     *
+     * @throws Exception\PathNotFoundException
+     * @throws Exception\PathNotDirException
+     * @return void
+     */
+    public static function setDefaultHomePath($homePath)
+    {
+        if ( ! file_exists($homePath)) {
+            throw new Exception\PathNotFoundException($homePath . ' does not exist' );
+        }
+        if ( ! is_Dir($homePath)) {
+            throw new Exception\PathNotDirException($homePath . ' is not a directory' );
+        }
+
+        self::$_defaultHomePath = realpath($homePath);
+    }
+
+    /**
+     * Get the default Home-Path
+     *
+     * @return string
+     */
+    public static function getDefaultHomePath()
+    {
+        if ( is_Dir(self::$_defaultHomePath) )     {
+            return self::$_defaultHomePath;
+        }
+        if ( defined('HYPHENATOR_HOME') && is_Dir(HYPHENATOR_HOME) ) {
+            return realpath(HYPHENATOR_HOME);
+        }
+        if ( $home = getenv('HYPHENATOR_HOME')) {
+            if ( is_Dir($home) ) {
+                return $home;
+            }
+        }
+        return __DIR__ . '/share';
+    }
+
+    /**
+     * Set the instance-home-Path
+     *
+     * @param string $homePath This instances home-path.
+     *
+     * @throws Exception\PathNotFoundException
+     * @throws Exception\PathNotDirException
+     * @return \Org\Heigl\Hyphenator\Hyphenator
+     */
+    public function setHomePath($homePath)
+    {
+        if ( ! file_exists($homePath)) {
+            throw new Exception\PathNotFoundException($homePath . ' does not exist' );
+        }
+        if ( ! is_Dir($homePath)) {
+            throw new Exception\PathNotDirException($homePath . ' is not a directory' );
+        }
+
+        $this->_homePath = realpath($homePath);
+
+        return $this;
+    }
+
+    /**
+     * Get this instances Home-Path.
+     *
+     * If no homePath is set for this instance this method will return the
+     * result of the \Org\HEigl\Hyphenator\Hyphenator::getdefaultzHomePath()
+     * Method
+     *
+     * @return string
+     */
+    public function getHomePath()
+    {
+        if ( ! is_dir($this->_homePath) ) {
+            return self::getDefaultHomePath();
+        }
+        return $this->_homePath;
+    }
+
+    /**
+     * autoload classes.
+     *
+     * @param string $className the name of the class to load
+     *
+     * @return void
+     */
+    public static function __autoload($className)
+    {
+        if ( 0 !== strpos($className, 'Org\\Heigl\\Hyphenator') ) {
+            return false;
+        }
+        $className = substr($className,strlen('Org\\Heigl\\Hyphenator\\'));
+        $file = str_replace('\\', '/', $className) . '.php';
+        $fileName = __DIR__ . DIRECTORY_SEPARATOR . $file;
+        if ( ! file_exists(realpath($fileName)) ) {
+            return false;
+        }
+        if ( ! @include_once $fileName ) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Register this packages autoloader with the autoload-stack
+     *
+     * @return void
+     */
+    public static function registerAutoload()
+    {
+        return spl_autoload_register(array('\Org\Heigl\Hyphenator\Hyphenator', '__autoload'));
     }
 }

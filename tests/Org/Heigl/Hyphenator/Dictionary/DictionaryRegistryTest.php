@@ -34,15 +34,6 @@ namespace Org\Heigl\HyphenatorTest\Dictionary;
 use \Org\Heigl\Hyphenator\Dictionary\DictionaryRegistry;
 use \Org\Heigl\Hyphenator\Dictionary as d;
 
-/** PHPUnit_Framework_TestCase */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/** \Org\Heigl\Hyphenator\Dictionary\DictionaryRegistry */
-require_once 'Org/Heigl/Hyphenator/Dictionary/DictionaryRegistry.php';
-
-/** \Org\Heigl\Hyphenator\Dictionary\Dictionary */
-require_once 'Org/Heigl/Hyphenator/Dictionary/Dictionary.php';
-
 /**
  * This class tests the functionality of the class Org_Heigl_Hyphenator
  *

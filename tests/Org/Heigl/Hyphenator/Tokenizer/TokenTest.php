@@ -36,12 +36,6 @@ use \Org\Heigl\Hyphenator\Tokenizer\WordToken;
 use \Org\Heigl\Hyphenator\Tokenizer\NonWordToken;
 use \Org\Heigl\Hyphenator\Tokenizer\WhitespaceToken;
 
-/** PHPUnit_Framework_TestCase */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/** Org_Heigl_Hyphenator */
-require_once 'Org/Heigl/Hyphenator/Tokenizer/Token.php';
-
 /**
  * This class tests the functionality of the class Token
  *
@@ -57,12 +51,13 @@ class TokenTest extends \PHPUnit_Framework_TestCase
 {
     public function testTokenReturnsCorrectClass()
     {
+        new Token('test');
         $tokenA = new WordToken('a');
-        $this->assertEquals('WordToken',$tokenA->getType());
+        $this->assertEquals('Org\Heigl\Hyphenator\Tokenizer\WordToken',$tokenA->getType());
         $tokenB = new NonWordToken('a');
-        $this->assertEquals('NonWordToken',$tokenB->getType());
+        $this->assertEquals('Org\Heigl\Hyphenator\Tokenizer\NonWordToken',$tokenB->getType());
         $tokenC = new WhitespaceToken('a');
-        $this->assertEquals('WhitespaceToken',$tokenC->getType());
+        $this->assertEquals('Org\Heigl\Hyphenator\Tokenizer\WhitespaceToken',$tokenC->getType());
     }
 
     public function testTokenReturnsCorrectValues()

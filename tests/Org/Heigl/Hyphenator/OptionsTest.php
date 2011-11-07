@@ -34,11 +34,6 @@ namespace Org\Heigl\HyphenatorTest;
 
 use \Org\Heigl\Hyphenator\Options\Options;
 
-/** PHPUnit_Framework_TestCase */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/** Org_Heigl_Hyphenator */
-require_once 'Org/Heigl/Hyphenator/Options/Options.php';
 
 /**
  * This class tests the functionality of the class Org_Heigl_Hyphenator

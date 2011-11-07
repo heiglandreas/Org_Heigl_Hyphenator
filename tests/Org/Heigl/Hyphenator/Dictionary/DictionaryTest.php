@@ -33,12 +33,6 @@ namespace Org\Heigl\HyphenatorTest\Dictionary;
 
 use Org\Heigl\Hyphenator\Dictionary\Dictionary;
 
-/** PHPUnit_Framework_TestCase */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/** Org_Heigl_Hyphenator */
-require_once 'Org/Heigl/Hyphenator/Dictionary/Dictionary.php';
-
 /**
  * This class tests the functionality of the class Org_Heigl_Hyphenator
  *
