@@ -1,0 +1,11 @@
+noHyphenateString = test
+hyphen = "test"
+leftMin = 5
+rightMin = 5
+wordMin = 5
+quality = 5
+customHyphen = "test"
+defaultLocale = "test"
+tokenizers = "test1,test2"
+filters = "test3,test4"
+foo = 'bar'

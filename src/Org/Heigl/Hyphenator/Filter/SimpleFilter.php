@@ -22,42 +22,77 @@
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
- * @subpackage Tokenizer
+ * @subpackage Filter
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version    2.0.alpha
  * @link       http://github.com/heiglandreas/Hyphenator
- * @since      04.11.2011
+ * @since      02.11.2011
+ * @todo       Implement!
  */
 
-namespace Org\Heigl\Hyphenator\Tokenizer;
+namespace Org\Heigl\Hyphenator\Filter;
+
+use \Org\Heigl\Hyphenator\Tokenizer as t;
 
 /**
- * This Interface describes methods any tokenizer has to implement
+ * This class provides a filter for non-standard hyphenation-patterns
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
- * @subpackage Tokenizer
+ * @subpackage Filter
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version    2.0.alpha
  * @link       http://github.com/heiglandreas/Hyphenator
- * @since      04.11.2011
+ * @since      02.11.2011s
  */
-interface Tokenizer
+class SimpleFilter extends Filter
 {
+
     /**
-     * Split the given input into tokens.
+     * Implements interface Filter
      *
-     * The input can be a string or a tokenRegistry. If the input is a
-     * TokenRegistry, each item will be tokenized.
+     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $token The registry
+     * to act upon
      *
-     * @param string|\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $input The
-     * input to be tokenized
-     *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
+     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
+     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
      */
-    public function run($input);
+    public function run(t\TokenRegistry $tokens)
+    {
+        foreach ( $tokens as $token ) {
+            if ( ! $token instanceof t\WordToken ) {
+                continue;
+            }
+            $string = $token->getFilteredContent();
+            $pattern = $token->getMergedPattern();
+            $length  = $token->length();
+            $lastOne = 0;
+            $result = array();
+            for ( $i = 1; $i <= $length; $i++ ) {
+                $currPattern = mb_substr($pattern, $i, 1);
+                if ( $i < $this->_options->getLeftMin() ) {
+                    continue;
+                }
+                if ( $i > $length - $this->_options->getRightMin() ) {
+                    continue;
+                }
+                if ( 0 == $currPattern ) {
+                    continue;
+                }
+                if ( 0 === (int) $currPattern % 2 ) {
+                    continue;
+                }
+                $sylable = mb_substr($string, $lastOne, $i-$lastOne);
+                $lastOne = $i;
+                $result[] = $sylable;
+            }
+            $result [] = mb_substr($string, $lastOne);
+            $token->setFilteredContent(implode($this->_options->getHyphen(), $result));
+        }
+        return $tokens;
+    }
 }

@@ -87,59 +87,6 @@ class Options
     protected $_rightMin = 2;
 
     /**
-     * Whether to mark User-Hyphenations or not.
-     *
-     * User-Hyphenations will result in a word not being hyphenated automaticaly
-     *
-     * When this is set to true, the string defined in $_customizedMarker will
-     * be prepend to the word in question.
-     *
-     * This is turned off by default!
-     *
-     * @var boolean $_markCustomized
-     */
-    protected $_markCustomized = false;
-
-    /**
-     * Customize-Marker.
-     *
-     * When customizations shall be used, what string shall be prepend to the
-     * word that contains customizations.
-     *
-     * @var string|null $_customizedMarker
-     */
-    protected $_customizedMarker = '<!--cm-->';
-
-    /**
-     * The shortest pattern length to use for Hyphenating.
-     *
-     * @var int $_shortestPattern
-     */
-    protected $_shortestPattern = 2;
-
-    /**
-     * The longest pattern length to use for hyphenating.
-     *
-     * Using a high number (like '10') almost every pattern should be used
-     *
-     * @var int $_longestPattern
-     */
-    protected $_longestPattern = 10;
-
-    /**
-     * Special Character to use.
-     *
-     * This property defines some spechial Characters for a language that need
-     * to be taken into account for the definition of a word.
-     *
-     * These Characters will be taken into account when splitting a text into
-     * words as word-characters
-     *
-     * @var string $_specialChars
-     */
-    protected $_specialChars = '';
-
-    /**
      * Minimum Word length for Hyphenation.
      *
      * This defaults to 6 Characters.
@@ -165,11 +112,25 @@ class Options
     protected $_customHyphen = '--';
 
     /**
-     * The special strings to parse as hyphenations.
+     * The filters to be used to postprocess the hyphenations.
      *
-     * @var array $_specialStrings
+     * @var array $_filters
      */
-    protected $_specialStrings = array ( '&shy;', '&#173;', '-/-', '-' );
+    protected $_filters = array ();
+
+    /**
+     * The tokenizers to use
+     *
+     * @var array $_tokenizers
+     */
+    protected $_tokenizers = array();
+
+    /**
+     * THe locale to be used.
+     *
+     * @var string $_locale
+     */
+    protected $_defaultLocale = 'en_EN';
 
     /**
      * Set the String that marks a word as not to be hyphenated
@@ -177,7 +138,7 @@ class Options
      * @param string $noHyphenateString The string that marks a word not to be
      * hyphenated
      *
-     * @return Org_Heigl_Hyphenator_Options
+     * @return \Org\Heigl\Hyphenator\Options
      */
     public function setNoHyphenateString($noHyphenateString)
     {
@@ -200,7 +161,7 @@ class Options
      *
      * @param string $hyphen The hyphen to use
      *
-     * @return Org_Heigl_Hyphenator_Options
+     * @return \Org\Heigl\Hyphenator\Options
      */
     public function setHyphen($hyphen)
     {
@@ -223,7 +184,7 @@ class Options
      *
      * @param int $leftMin Left minimum Chars
      *
-     * @return Org_Heigl_Hyphenator_Options
+     * @return \Org\Heigl\Hyphenator\Options
      */
     public function setLeftMin($leftMin)
     {
@@ -246,7 +207,7 @@ class Options
      *
      * @param int $rightMin Right minimum Characters
      *
-     * @return Org_Heigl_Hyphenator_Options
+     * @return \Org\Heigl\Hyphenator\Options
      */
     public function setRightMin($rightMin)
     {
@@ -265,117 +226,42 @@ class Options
     }
 
     /**
-     * Set whether to mark customized words
-     *
-     * @param boolean $markCustomized Shall we mark customized words
-     *
-     * @return Org_Heigl_Hyphenator_Options
-     */
-    public function markCustomized($markCustomized)
-    {
-        $this->_markCustomized = (bool) $markCustomized;
-        return $this;
-    }
-
-    /**
-     * Check whehter customized words shall be marked
-     *
-     * @return bool
-     */
-    public function isMarkCustomized()
-    {
-        return (bool) $this->_markCustomized;
-    }
-
-    /**
-     * Set the mark for pre-hyphenated words
-     *
-     * @param string $customizedMark Mark for customizations
-     *
-     * @return Org_Heigl_Hyphenator_Options
-     */
-    public function setCustomizedMark($customizedMark)
-    {
-        $this->_customizedMarker = $customizedMark;
-        return $this;
-    }
-
-    /**
-     * Get the customized mark
-     *
-     * @return string
-     */
-    public function getCustomizedMark()
-    {
-
-        if (!$this->isMarkCustomized()) {
-            return '';
-        }
-        return $this->_customizedMarker;
-    }
-
-    /**
-     * Set the size of the shortest pattern
-     *
-     * @param int $minPatternSize set a minimum pattern size.
-     *
-     * @todo remove this  - This is not needed!
-     * @return Org_Heigl_Hyphenator_Option
-     */
-    public function setMinPatternSize($minPatternSize)
-    {
-        $this->_shortestPattern = (int) $minPatternSize;
-        return $this;
-    }
-
-    /**
-     * Get the size of the shortest possible pattern
-     *
-     * @todo Remove this - this is not needed!
-     * @return int
-     */
-    public function getMinPatternSize()
-    {
-        return (int) $this->_shortestPattern;
-    }
-
-    /**
-     * Set the size of the longest pattern
-     *
-     * @param int $maxPatternSize Set a maximum Pattern-Size
-     *
-     * @todo Remove this - this is not needed!
-     * @return Org_Heigl_Hyphenator_Options
-     */
-    public function setMaxPatternSize($maxPatternSize)
-    {
-        $this->_longestPattern = (int) $maxPatternSize;
-        return $this;
-    }
-
-    /**
-     * Get the size of the longest possible pattern
-     *
-     * @todo Remove this - this is not needed!
-     * @return int
-     */
-    public function getMaxPatternSize()
-    {
-        return (int) $this->_longestPattern;
-    }
-
-    /**
      * Set the minimum size of a word to be hyphenated
      *
      * Words with less characters (not byte!) are not to be hyphenated
      *
      * @param int $minLength Minimum Word-Length
      *
-     * @return Org_Heigl_Hyphenator_Options
+     * @return \Org\Heigl\Hyphenator\Options
      */
     public function setMinWordLength($minLength)
     {
         $this->_wordMin = (int) $minLength;
+        return $this;
+    }
+
+    /**
+     * This is a wrapper for setMinWordLength
+     *
+     * @param int $wordLength The minimum word Length
+     *
+     * @return \Org\Heigl\Hyphenator\Options\Options
+     */
+    public function setWordMin($wordLength)
+    {
+        return $this->setMinWordLength($wordLength);
+    }
+
+    /**
+     * Set the hyphenation quality
+     *
+     * @param int $level
+     *
+     * @return \Org\Heigl\Hyphenator\Options\Options
+     */
+    public function setQuality($quality)
+    {
+        $this->_quality = (int) $quality;
         return $this;
     }
 
@@ -390,43 +276,174 @@ class Options
     }
 
     /**
-     * Set strings that are treated as Custom Hyphenations
+     * Set the string that is treated as a custom Hyphenation
      *
      * These will be replaced by the set hyphenation character
      *
-     * @param array $customHyphens The custom hyphenation-characters
+     * @param array $customHyphen The custom hyphenation-character
      *
-     * @return Org_Heigl_Hyphenator_Options
+     * @return \Org\Heigl\Hyphenator\Options
      */
-    public function setCustomHyphens(array $customHyphens)
+    public function setCustomHyphen( $customHyphen)
     {
-        $this->_specialStrings = array ();
-        foreach ($customHyphens as $customHyphen) {
-            $this->addCustomHyphen($customHyphen);
+        $this->_customHyphen = (string) $customHyphen;
+        return $this;
+    }
+
+    /**
+     * Get the custom Hyphen
+     *
+     * @return string
+     */
+    public function getCustomHyphen()
+    {
+        return $this->_customHyphen;
+    }
+
+    /**
+     * Set the filters
+     *
+     * @param string|array $filters The filters to use as comma separated list
+     *                              or array
+     *
+     * @return \Org\Heigl\Hyphenator\Options
+     */
+    public function setFilters($filters)
+    {
+        $this->_filters = array ();
+        if ( ! is_array($filters) ) {
+            $filters = explode(',', $filters);
+        }
+        foreach ( $filters as $filter ) {
+            $this->addFilter($filter);
         }
         return $this;
     }
 
     /**
-     * Add a string to the list of custom Hyphenations
+     * Add a filter to the options-array
      *
-     * @param string $customHyphen A custom hyphenation-character
+     * @param string $filter The filter to be added
      *
-     * @return Org_Heigl_Hyphenator_Options
+     * @return \Org\Heigl\Hyphenator\Options
      */
-    public function addCustomHyphen($customHyphen)
+    public function addFilter($filter)
     {
-        $this->_specialStrings[] = (string) $customHyphen;
+        $filter = trim($filter);
+        if ( ! $filter ) {
+            return $this;
+        }
+        $this->_filters[] = $filter;
         return $this;
     }
 
     /**
-     * Get the custom Hyphens
+     * Get all the filters
      *
      * @return array
      */
-    public function getCustomHyphens()
+    public function getFilters()
     {
-        return $this->_specialStrings;
+        return $this->_filters;
     }
+
+    /**
+     * Set the tokenizers to use
+     *
+     * @param string|array $tokenizers The Tokenizers to use
+     *
+     * @return \Org\Heigl\Hyphenator\Options
+     */
+    public function setTokenizers($tokenizers)
+    {
+        $this->_tokenizers = array();
+        if ( ! is_array($tokenizers) ) {
+            $tokenizers = explode(',', $tokenizers);
+        }
+        foreach ( $tokenizers as $tokenizer ) {
+            $this->addTokenizer($tokenizer);
+        }
+        return $this;
+    }
+
+    /**
+     * Add a tokenizer to the tomeizer-list
+     *
+     * @param string $tokenizer The tokenizer to add
+     *
+     * @return \Org\Heigl\Hyphenator\Options
+     */
+    public function addTokenizer($tokenizer)
+    {
+        $tokenizer = trim($tokenizer);
+        if ( ! $tokenizer ) {
+            return $this;
+        }
+        $this->_tokenizers[] = $tokenizer;
+        return $this;
+    }
+
+    /**
+     * Get all the tokenizers
+     *
+     * @return array
+     */
+    public function getTokenizers()
+    {
+        return $this->_tokenizers;
+    }
+
+    /**
+     * Create an Option-Object by parsing a given file.
+     *
+     * @param string $file The config-file to be parsed
+     *
+     * @return \Org\Heigl\Hyphenator\Options\Options
+     */
+    public static function factory($file)
+    {
+        if ( ! file_Exists($file) ) {
+            $file = $file . '.dist';
+            if ( ! file_exists($file) ) {
+                throw new \Org\Heigl\Hyphenator\Exception\PathNotFoundException($file);
+            }
+        }
+        $params = parse_ini_file($file);
+        if ( ! is_array($params) || 1 > count($params) ) {
+            throw new \Org\Heigl\Hyphenator\Exception\InvalidArgumentException($file . ' is not a parseable file');
+        }
+
+        $option = new Options();
+        foreach ( $params as $key => $val ) {
+            if ( ! method_Exists($option,'set' . $key) ) {
+                continue;
+            }
+            call_user_Func(array($option,'set' . $key), $val);
+        }
+        return $option;
+    }
+
+    /**
+     * Set the default locale for this instance
+     *
+     * @param string $locale The locale to be set
+     *
+     * @return \Org\Heigl\Hyphenator\Options\Options
+     */
+    public function setDefaultLocale($locale)
+    {
+        $this->_defaultLocale = (string) $locale;
+        return $this;
+    }
+
+    /**
+     * Get the default locale for this instance
+     *
+     * @return string
+     */
+    public function getDefaultLocale()
+    {
+        return $this->_defaultLocale;
+    }
+
 }

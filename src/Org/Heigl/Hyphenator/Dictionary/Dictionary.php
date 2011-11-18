@@ -128,13 +128,14 @@ class Dictionary
         $file = $path . 'hyph_' . $locale . '.dic';
         if ( ! file_exists($file) ) {
             $iterator = new \DirectoryIterator($path);
-            foreach ($iterator as $file) {
-                if ( 0 !== strpos($file->getFileName(), 'hyph_' . $locale)) {
+            foreach ($iterator as $f) {
+                if ( 0 !== strpos($f->getFileName(), 'hyph_' . $locale)) {
                     continue;
                 }
-                $file = $file->getPathName();
+                $file = $f->getPathName();
             }
         }
+
         $items = file($file);
         $source = trim($items[0]);
         if (0===strpos($source, 'ISO8859')) {

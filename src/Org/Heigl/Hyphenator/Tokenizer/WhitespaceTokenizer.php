@@ -28,13 +28,13 @@
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version    2.0.alpha
  * @link       http://github.com/heiglandreas/Hyphenator
- * @since      04.11.2011
+ * @since      11.11.2011
  */
 
 namespace Org\Heigl\Hyphenator\Tokenizer;
 
 /**
- * This Interface describes methods any tokenizer has to implement
+ * Use Whitespace to split any input into tokens
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
@@ -46,10 +46,10 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      04.11.2011
  */
-interface Tokenizer
+class WhitespaceTokenizer implements Tokenizer
 {
     /**
-     * Split the given input into tokens.
+     * Split the given input into tokens using whitespace as splitter
      *
      * The input can be a string or a tokenRegistry. If the input is a
      * TokenRegistry, each item will be tokenized.
@@ -59,5 +59,53 @@ interface Tokenizer
      *
      * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
      */
-    public function run($input);
+    public function run($input)
+    {
+        if ( $input instanceof TokenRegistry ) {
+            // Tokenize a TokenRegistry
+            foreach ( $input as $token ) {
+                if ( $token instanceof WhitespaceToken ) {
+                    continue;
+                }
+                $newTokens = $this->_tokenize($token->get());
+                if ( $newTokens == array($token) ) {
+                    continue;
+                }
+                $input->replace($token,$newTokens);
+            }
+            return $input ;
+        }
+
+        // Tokenize a simple string.
+        $array =  $this->_tokenize($input);
+        $registry = new TokenRegistry();
+        foreach ( $array as $item ) {
+            $registry->add($item);
+        }
+        return $registry;
+    }
+
+    /**
+     * Split the given string into tokens using whitespace.
+     *
+     * Each whitespace is placed in a WhitespaceToken and everything else is
+     * placed in a WordToken-Object
+     *
+     * @param string $input
+     *
+     * @return Token
+     */
+    protected function _tokenize($input)
+    {
+        $tokens = array ();
+        $splits = preg_split('/([\s]+)/u',$input,-1,PREG_SPLIT_DELIM_CAPTURE);
+        foreach ( $splits as $split ) {
+            if ( '' == trim($split)) {
+                $tokens[] = new WhitespaceToken($split);
+                continue;
+            }
+            $tokens[] = new WordToken($split);
+        }
+        return $tokens;
+    }
 }

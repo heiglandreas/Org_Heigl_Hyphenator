@@ -64,10 +64,44 @@ class TokenRegistry implements \Iterator, \Countable
      */
     public function add(Token $token)
     {
-        if ( ! in_array($token, $this->_registry)) {
+        //if ( ! in_array($token, $this->_registry)) {
             $this->_registry[] = $token;
-        }
+        //}
         return $this;
+    }
+
+    /**
+     * Replace a given token with an array of new tokens
+     *
+     * This will be used when a tokenizer has to replace a token that has been
+     * divided into multiple tokens.
+     *
+     * @param Token   $oldToken  The token to be replaced
+     * @param Token[] $newTokens The array of tokens replacing the old one
+     *
+     * @return TokenRegistry
+     */
+    public function replace(Token $oldToken, array $newTokens)
+    {
+        // Get the current key of the element.
+        $key = array_search($oldToken, $this->_registry, true);
+        if ( false === $key ) {
+            return $this;
+        }
+        $replacement = array ();
+
+        // Check for any non-token-elements and remove them.
+        foreach ( $newTokens as $token ) {
+            if ( ! $token instanceof Token ) {
+                continue;
+            }
+            $replacement[] = $token;
+        }
+
+        // Replace the old element with the newly created array
+        array_splice($this->_registry, $key, 1, $replacement);
+        return $this;
+
     }
 
     /**
@@ -86,6 +120,22 @@ class TokenRegistry implements \Iterator, \Countable
     }
 
 
+    /**
+     * Concatenate the contained tokens.
+     *
+     * The values are concatenated using the Tokenizer\Token::getFilteredValue()
+     * method
+     *
+     * @return string
+     */
+    public function concatenate()
+    {
+        $string = '';
+        foreach ( $this as $token ) {
+            $string .= $token->getFilteredContent();
+        }
+        return $string;
+    }
 
     /**
      * Implementation of \Iterator

@@ -21,34 +21,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
  +----------------------------------------------------------------------------+
+ | Requirements:                                                              |
+ +----------------------------------------------------------------------------+
+
+This package has the following requirements:
+* PHP-Version >= 5.3
+* Multibyte-Extension loaded
+* Input has to be UTF8-encoded.
+
+On loading the \Org\Heigl\Hyphenator\Hyphenator-class the internal encoding for
+the Multibyte-String-Extension will be set to UTF8. 
+
+ +----------------------------------------------------------------------------+
  | Installation:                                                              |
  +----------------------------------------------------------------------------+
  
-Copy the 'Org'-folder somewhere to your PHP-include-directory
+Copy at least the 'Hyphenator'-folder somewhere to your PHP-include-directory
 
  +----------------------------------------------------------------------------+
- | Usage:                                                              |
+ | Usage:                                                                     |
  +----------------------------------------------------------------------------+
 <?php
-$hyphenator = Org_Heigl_Hyphenator::getInstance ( 'de' );
-$hyphenator -> setHyphen ( '-' )
-            // Minimum 5 characters before the first hyphenation
-            -> setLeftMin ( 5 )
-            // Hyphenate only words with more than 4 characters
-            -> setWordMin ( 5 )
-            // Set some special characters
-            -> setSpecialChars ( 'äöüß' )
-            // Only Hyphenate with the best quality
-            -> setQuality ( Org_Heigl_Hyphenate::QUALITY_BEST )
-            // Words that shall not be hyphenated have to start with this string
-            -> setNoHyphenateMarker ( 'nbr:' )
-            // Words that contain this string are custom hyphenated
-            -> setCustomHyphen ( '--' );
+use \Org\Heigl\Hyphenator as h;
+// Create a hyphenator-instance based on a given config-file
+$hyphenator = h\Hyphenator::factory('/path/to/the/config/file.properties');
 
-// Hyphenate the string $string
-$hyphenated = $hyphenator -> hyphenate ( $text );
+// And hyphenate a given string
+$hyphenatedText = $hyphenator->hyphenate($string);
 
-echo $hyphenated;
+echo $hyphenatedText;
 ?>
 
  +----------------------------------------------------------------------------+

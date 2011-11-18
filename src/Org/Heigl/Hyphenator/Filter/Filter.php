@@ -34,8 +34,10 @@
 
 namespace Org\Heigl\Hyphenator\Filter;
 
+use \Org\Heigl\Hyphenator\Tokenizer as t;
+
 /**
- * This class provides a filter for non-standard hyphenation-patterns
+ * This nterface provides a filter for non-standard hyphenation-patterns
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
@@ -47,6 +49,36 @@ namespace Org\Heigl\Hyphenator\Filter;
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      02.11.2011s
  */
-class Filter
+abstract class Filter
 {
+    /**
+     * Storage of the options-object
+     *
+     * @var \Org\Heigl\Hyphenator\Options\Options $_options
+     */
+    protected $_options = null;
+
+    /**
+     * Set the options-object for this filter
+     *
+     * @param \Org\Heigl\Hyphenator\Options\Options $options The options to set
+     *
+     * @return Filter
+     */
+    public function setOptions(\Org\Heigl\Hyphenator\Options\Options $options)
+    {
+        $this->_options=$options;
+        return $this;
+    }
+
+    /**
+     * Run the filter over the given Token
+     *
+     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
+     * to apply the filter to
+     *
+     *  @return \Org\Heigl\Hyphenator\Filter\Filter
+     */
+    public abstract function run(t\TokenRegistry $tokens);
+
 }

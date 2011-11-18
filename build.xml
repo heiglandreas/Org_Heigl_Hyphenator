@@ -47,7 +47,12 @@
 
     <target name="test">
         <mkdir dir="${basedir}/build/logs"/>
-        <exec executable="phpunit" dir="${basedir}/tests" failonerror="on"/>
+    	<delete includeemptydirs="true" verbose="false">
+            <fileset dir="${basedir}/build/phpunit/coverage">
+                <include name="**/*" />
+            </fileset>
+    	</delete>
+    	<exec executable="phpunit" dir="${basedir}/tests" failonerror="on"/>
     	<exec executable="${basedir}/tools/removeBasePath.sh" dir="${basedir}/build/phpunit/coverage" failonerror="true">
     		<arg line="${basedir}/src/"/>
     	</exec>

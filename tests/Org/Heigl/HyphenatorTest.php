@@ -50,6 +50,9 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
     {
         $hyphenator = new h\Hyphenator();
         $this->assertInstanceOf('\Org\Heigl\Hyphenator\Hyphenator', $hyphenator);
+        $this->assertAttributeInstanceof('\Org\Heigl\Hyphenator\Dictionary\DictionaryRegistry', '_dicts', $hyphenator);
+        $this->assertAttributeInstanceof('\Org\Heigl\Hyphenator\Filter\FilterRegistry', '_filters', $hyphenator);
+        $this->assertAttributeInstanceof('\Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry', '_tokenizers', $hyphenator);
     }
 
     public function testSettingOptions()
@@ -68,6 +71,15 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeInstanceof('\Org\Heigl\Hyphenator\Dictionary\DictionaryRegistry', '_dicts', $hyphenator);
         $dict = new h\Dictionary\Dictionary('de');
         $hyphenator->addDictionary($dict);
+
+    }
+    public function  testSettingTokenizers()
+    {
+        $hyphenator = new h\Hyphenator();
+        $dict = new h\Tokenizer\WhitespaceTokenizer();
+        $hyphenator->addTokenizer($dict);
+        $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry', $hyphenator->getTokenizers());
+        $this->assertSame($dict, $hyphenator->getTokenizers()->getTokenizerWithKey(0));
 
     }
 
@@ -156,6 +168,15 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         $this->assertContains(array('Org\Heigl\Hyphenator\Hyphenator', '__autoload'),spl_autoload_functions());
     }
 
+    public function testHyphenatorInvocationSimple()
+    {
+        $h = h\Hyphenator::factory(__DIR__ . '/share/test1');
+        $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry', $h->getTokenizers());
+        $t = $h->getTokenizers();
+        $this->assertAttributeEquals(array(new h\Tokenizer\WhitespaceTokenizer(), new h\Tokenizer\PunktuationTokenizer()),'_registry', $t);
+        $this->assertEquals('test-word', $h->hyphenate('testword') );
+        unlink(__DIR__ . '/share/test1/files/dictionaries/de_DE.ini');
+    }
 
     public function setup ()
     {

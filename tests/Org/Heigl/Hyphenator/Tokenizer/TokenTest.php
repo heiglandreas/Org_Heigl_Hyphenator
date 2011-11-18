@@ -29,7 +29,7 @@
  * @since     02.11.2011
  */
 
-namespace Org\Heigl\HyphenatorTest\Dictionary;
+namespace Org\Heigl\HyphenatorTest\Tokenizer;
 
 use \Org\Heigl\Hyphenator\Tokenizer\Token;
 use \Org\Heigl\Hyphenator\Tokenizer\WordToken;
@@ -70,5 +70,40 @@ class TokenTest extends \PHPUnit_Framework_TestCase
         $tokenA->setHyphenatedContent(array('a','B'));
         $this->assertAttributeEquals(array('a','B'), '_hyphenatedContent', $tokenA);
         $this->assertEquals(array('a','B'),$tokenA->getHyphenatedContent());
+    }
+
+    /**
+     * @dataProvider tokenLengthProvider
+     */
+    public function testTokenLength($string,$length)
+    {
+        $t = new Token($string);
+        $this->assertEquals($length,$t->length());
+    }
+
+    public function tokenLengthProvider()
+    {
+        return array (
+            array ('test', 4),
+            array ('täßt', 4),
+            array ('täßtärø¥', 8),
+
+        );
+    }
+
+    /**
+     * @dataProvider filteredContentProvider
+     */
+    public function testFilteredContent($value, $expected)
+    {
+        $t = new Token($value);
+        $this->assertEquals($expected, $t->getFilteredContent());
+    }
+
+    public function filteredContentProvider()
+    {
+        return array (
+            array ('test','test'),
+        );
     }
 }

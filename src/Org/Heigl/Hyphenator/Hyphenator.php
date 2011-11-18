@@ -69,13 +69,10 @@ namespace Org\Heigl\Hyphenator;
  * <code>
  * &lt;?php
  * use \Org\Heigl\Hyphenator as h;
- * // First set the path to the configuration file
- * h\Hyphenator::setConfigFile('/path/to/the/config/file.properties');
+ * // Create a hyphenator-instance based on a given config-file
+ * $hyphenator = h\Hyphenator::factory('/path/to/the/config/file.properties');
  *
- * // Then create a hyphenator-instance for a given locale
- * $hyphenator = h\Hyphenator::factory('de_DE');
- *
- * // And finaly Hyphenate a given string
+ * // And hyphenate a given string
  * $hyphenatedText = $hyphenator->hyphenate($string);
  * </code>
  * Registering the autoloader is essential before the first call to the
@@ -115,15 +112,15 @@ final class Hyphenator
     /**
      * Storage for the Home-path.
      *
-     * The configuration file is searched in different places.
+     * The hyphenation-files iare searched in different places.
      * <ol><li>Location given via the constant HYPHENATOR_HOME</li>
      * <li>Location set via \Org\Heigl\Hyphenator\Hyphenator::setDefaultHome()</li>
      * <li>Location set via \Org\Heigl\Hyphenator\Hyphenator::setHome()</li>
      * <li>The 'share'-Folder inside the Hyphenator-Package</li>
      * </ol>
      *
-     * The configoration-object can also be obtained using the
-     * \Org\Heigl\hypghenator::getConfig()-Method and can then be adapted
+     * The configuration-object can also be obtained using the
+     * \Org\Heigl\Hyphenator::getConfig()-Method and can then be adapted
      * according to ones needs.
      *
      * @var string $_homePath
@@ -159,6 +156,13 @@ final class Hyphenator
     private $_filters = null;
 
     /**
+     * Storage for the tokenizers
+     *
+     * @var \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry $_tokenizers
+     */
+    private $_tokenizers = null;
+
+    /**
      * Set the Options
      *
      * @param \Org\Heigl\Hyphenator\Options\Options $options The options to set
@@ -168,8 +172,14 @@ final class Hyphenator
     public function setOptions(Options\Options $options)
     {
         $this->_options = $options;
+        $this->_tokenizers->cleanup();
+        foreach ( $this->_options->getTokenizers() as $tokenizer ) {
+            $this->addTokenizer($tokenizer);
+        }
         return $this;
     }
+
+    /**
 
     /**
      * Get the Options
@@ -178,6 +188,10 @@ final class Hyphenator
      */
     public function getOptions()
     {
+        if ( null === $this->_options ) {
+            $optFile = $this->getHomePath() . DIRECTORY_SEPARATOR . 'Hyphenator.properties';
+            $this->setOptions(Options\Options::factory($optFile));
+        }
         return $this->_options;
     }
 
@@ -189,8 +203,12 @@ final class Hyphenator
      *
      * @return Org\Heigl\Hyphenator\Hyphenator
      */
-    public function addDictionary(\Org\Heigl\Hyphenator\Dictionary\Dictionary $dictionary)
+    public function addDictionary($dictionary)
     {
+        if ( ! $dictionary instanceof \Org\Heigl\Hyphenator\Dictionary\Dictionary ) {
+            \Org\Heigl\Hyphenator\Dictionary\Dictionary::setFileLocation($this->getHomePath() . '/files/dictionaries');
+            $dictionary = \Org\Heigl\Hyphenator\Dictionary\Dictionary::factory($dictionary);
+        }
         $this->_dicts->add($dictionary);
         return $this;
     }
@@ -198,56 +216,48 @@ final class Hyphenator
     /**
      * Add a Filter to the Hyphenator
      *
-     * @param \Org\Heigl\Hyphenator\Filter\Filter $filter The Filter with
+     * @param \Org\Heigl\Hyphenator\Filter\Filter|string $filter The Filter with
      * non-standard-hyphenation-patterns
      *
      * @link http://hunspell.sourceforge.net/tb87nemeth.pdf
      * @return Org\Heigl\Hyphenator\Hyphenator
      */
-    public function addFilter(\Org\Heigl\Hyphenator\Filter\Filter $filter)
+    public function addFilter($filter)
     {
+        if ( ! $filter instanceof \Org\Heigl\Hyphenator\Filter\Filter ) {
+            $filter = '\\Org\\Heigl\\Hyphenator\\Filter\\' . ucfirst($filter) . 'Filter';
+            $filter = new $filter();
+        }
+        $filter->setOptions($this->getOptions());
         $this->_filters->add($filter);
         return $this;
     }
 
     /**
-     * This method gets the hyphenator-instance for the language <var>$language</var>
+     * Add a tokenizer to the tokenizer-registry
      *
-     * If no instance exists, it is created and stored.
+     * @param Tokenizer\Tokenizer|string $tokenizer The tokenizer to add
      *
-     * @param string $language The language to use for hyphenating
-     *
-     * @return Org\Heigl\Hyphenator\Hyphenator A Hyphenator-Object
-     * @throws Exception\InvalidArgumentException
+     * @return Hyphenator
      */
-    public static function getInstance ( $language = 'en' )
+    public function addTokenizer( $tokenizer)
     {
-        $file       = dirname(__FILE__)
-                    . DIRECTORY_SEPARATOR
-                    . 'Hyphenator'
-                    . DIRECTORY_SEPARATOR
-                    . 'files'
-                    . DIRECTORY_SEPARATOR
-                    . Hyphenator::getTexFile($language);
-        $parsedFile = self::getDefaultParsedFileDir()
-                    . DIRECTORY_SEPARATOR
-                    . $language
-                    . '.php';
-        if ( ! file_exists($parsedFile)) {
-            Hyphenator::parseTexFile($file, $parsedFile, $language);
+        if ( ! $tokenizer instanceof \Org\Heigl\Hyphenator\Tokenizer\Tokenizer ) {
+            $tokenizer = '\\Org\\Heigl\Hyphenator\\Tokenizer\\' . ucfirst($tokenizer) . 'Tokenizer';
+            $tokenizer = new $tokenizer();
         }
-        if ( ! file_exists($parsedFile)) {
-            throw new Exception\InvalidArgumentException('file ' . $language . '.php does not exist');
-            return false;
-        }
-        if ( ( count(Hyphenator::$_store) <= 0 ) ||
-             ( ! array_key_exists($language, Hyphenator::$_store)) ||
-             ( ! is_object(Hyphenator::$_store[$language]))||
-             ( ! Hyphenator::$_store[$language] instanceof Hyphenator)) {
-            // Begin IF.
-            Hyphenator::$_store[$language] = new Hyphenator($language);
-        }
-        return Hyphenator::$_store[$language];
+        $this->_tokenizers->add($tokenizer);
+        return $this;
+    }
+
+    /**
+     * GET the tokenizers
+     *
+     * @return Tokenizer\TokenizerRegistry
+     */
+    public function getTokenizers()
+    {
+        return $this->_tokenizers;
     }
 
     /**
@@ -259,6 +269,7 @@ final class Hyphenator
     {
         $this->_dicts = new Dictionary\DictionaryRegistry();
         $this->_filters = new Filter\FilterRegistry();
+        $this->_tokenizers = new Tokenizer\TokenizerRegistry();
     }
 
     /**
@@ -281,272 +292,69 @@ final class Hyphenator
     public function hyphenate ( $string )
     {
 
-        $this->_rawWord = array ();
-        // If caching is enabled and the string is already cached, return the
-        // cached version.
-        if ( $this->isCachingEnabled()) {
-            $result = $this->cacheRead($string);
-            if ( false !== $result ) {
-                return $result;
-            }
-        }
-        $array = explode(' ', $string);
-        $size  = count($array);
-        for ( $i = 0; $i < $size; $i++ ) {
-            $array[$i] = $this->hyphenateWord($array[$i]);
-        }
-        $hyphenatedString = implode(' ', $array);
-
-        // If caching is enabled, write the hyphenated string to the cache.
-        if ( $this->isCachingEnabled()) {
-            $this->cacheWrite($string, $hyphenatedString);
-        }
-
-        // Return the hyphenated string.
-        return $hyphenatedString;
+        $tokens = $this->_tokenizers->tokenize($string);
+        $tokens = $this->getHyphenationPattern($tokens);
+        $tokens = $this->filter($tokens);
+        return $tokens->concatenate();
     }
 
     /**
-     * This method hyphenates a single word
+     * Get the hyphenation pattern for the contained tokens
      *
-     * @param string $word The Word to hyphenate
+     * Use the dictionaties and options of the given Hyphenator-Object
      *
-     * @return string the hyphenated word
+     * @param Hyphenator $hyphenator The Hyphenator object containing the
+     *                               dictionaries and options
+     *
+     * @return Tokenizer\TokenRegistry
      */
-    public function hyphenateWord ( $word )
+    public function getHyphenationPattern(Tokenizer\TokenRegistry $registry)
     {
-
-        // If the Word is empty, return an empty string.
-        if ( '' === trim($word) ) {
-            return '';
-        }
-
-        // Check whether the word shall be hyphenated.
-        $result = $this->_isNotToBeHyphenated($word);
-        if ( false !== $result ) {
-            return $result;
-        }
-
-        // If the length of the word is smaller than the minimum word-size,
-        // return the word.
-        if ( $this->_wordMin > strlen($word)) {
-            return $word;
-        }
-
-        // Character 173 is the unicode char 'Soft Hyphen' wich may  not be
-        // visible in some editors!
-        // HTML-Entity for soft hyphenation is &shy;!
-        if ( false !== strpos($word, '&shy;')) {
-            return str_replace('&shy;', $this->_hyphen, $word);
-        }
-
-        // Replace a custom hyphenate-string with the hyphen.
-        $result = $this->_replaceCustomHyphen($word);
-        if ( false !== $result ) {
-            return $result;
-        }
-
-        // If the word already contains a hyphen-character, we assume it is
-        // already hyphenated and return the word 'as is'.
-        if ( false !== strpos($word, $this->_hyphen)) {
-            return $word;
-        }
-
-        // Hyphenate words containing special strings for further processing, so
-        // put a zerowidthspace after it and hyphenate the parts separated by
-        // the special string.
-        $result = $this->_handleSpecialStrings($word);
-        if ( false !== $result ) {
-            return $result;
-        }
-
-        return $this->_hyphenateWord($word);
-    }
-
-    /**
-     * Hyphenate a single word
-     *
-     * @param string $word The word to hyphenate
-     *
-     * @return string The hyphenated word
-     */
-    private function _hyphenateWord ( $word )
-    {
-
-        $prepend = '';
-        $word    = $word;
-        $append  = '';
-
-        $specials = '\.\:\-\,\;\!\?\/\\\(\)\[\]\{\}\"\'\+\*\#\§\$\%\&\=\@';
-        // If a special character occurs in the middle of the word, simply
-        // return the word AS IS as the word can not really be hyphenated
-        // automaticaly.
-        if ( preg_match('/[^' . $specials . ']['.$specials.'][^'.$specials.']/', $word)) {
-            return $word;
-        }
-        // If one ore more special characters appear before or after a word
-        // we take the word in between and hyphenate that asn append and prepend
-        // the special characters later on.
-        if ( preg_match('/(['.$specials.']*)([^' . $specials . ']+)(['.$specials.']*)/', $word, $result)) {
-            $prepend = $result [1];
-            $word    = $result [2];
-            $append  = $result [3];
-        }
-
-        $result = array ();
-
-        $positions = $this->_getHyphenationPositions($word);
-        $wl      = strlen($word);
-        $lastOne = 0;
-
-        for ( $i = 1; $i < $wl; $i++ ) {
-            // If the integer on position $i is higher than 0 and is odd,
-            // we can hyphenate at that position if the integer is lower or
-            // equal than the set quality-level.
-            // Additionaly we check whether the left and right margins are met.
-            if ( ( 0 !== $positions[$i] ) &&
-                 ( 1 === ( $positions[$i] % 2 ) ) &&
-                 ( $positions[$i] <= $this->_quality ) &&
-                 ( $i >= $this->_leftMin ) &&
-                 ( $i <= ( strlen($word) - $this->_rightMin ) ) ) {
-                // Begin IF.
-                $sylable = substr($word, $lastOne, $i - $lastOne);
-
-                $lastOne  = $i;
-                $result[] = $sylable;
-            }
-        }
-        $result [] = substr($word, $lastOne);
-        $return = $prepend . trim(implode($this->_hyphen, $result)) . $append;
-        return $return;
-    }
-
-    /**
-     * Get the positions, where a hyphenation might occur and where not.
-     *
-     * @param string $word The word to hyphenate
-     *
-     * @return array The numerical positions-array
-     */
-    private function _getHyphenationPositions( $word )
-    {
-
-        $positions = array();
-        $w         = '_' . strtolower($word) . '_';
-        $wl        = strlen($w);
-        // Initialize an array of length of the word with 0-values.
-        for ( $i = 0; $i < $wl; $i++ ) {
-            $positions[$i] = 0;
-        }
-        for ( $s = 0; $s < $wl -1; $s++ ) {
-            $maxl   = $wl - $s;
-            $window = substr($w, $s);
-            for ( $l = $this->_shortestPattern; $l <= $maxl && $l <= $this->_longestPattern; $l++ ) {
-                $part   = substr($window, 0, $l);
-                $values = null;
-                if ( isset($this->_pattern[$part])) {
-                    // We found a pattern for this part.
-                    $values    = (string) $this->_pattern[$part];
-                    $i         = $s;
-                    $v         = null;
-                    $m         = strlen($values);
-                    $corrector = 1;
-                    for ( $p = 0; $p < $m; $p++ ) {
-                        $v        = substr($values, $p, 1);
-                        $arrayKey = $i + $p - $corrector;
-                        if ( array_key_exists($arrayKey, $positions) && ( ( (int) $v > $positions[$arrayKey] ))) {
-                            $positions[$arrayKey] = (int) $v;
-                        }
-                        if ( $v > 0 ) {
-                            $corrector++;
-                        }
-                    }
-                }
-            }
-        }
-        return $positions;
-    }
-
-    /**
-     * Check whether this string shall not be hyphenated
-     *
-     * If so, replace a string that marks strings not to be hyphenated with an
-     * empty string. Also replace all custom hyphenations, as the word shall
-     * not be hyphenated.
-     * Finaly return the word 'as is'.
-     *
-     * If the word can be hyphenated, return false
-     *
-     * @param string $word The word to be hyphenated
-     *
-     * @return string|false
-     */
-    private function _isNotToBeHyphenated($word)
-    {
-        if ( ( null === $this->_noHyphenateString ) || ( 0 !== strpos($word, $this->_noHyphenateString))) {
-            return false;
-        }
-        $string = str_replace($this->_noHyphenateString, '', $word);
-        $string = str_replace($this->_customHyphen, '', $string);
-        if ( null !== $this->_customizedMarker && true === $this->_markCustomized ) {
-            $string = $this->getCustomizationMarker() . $string;
-        }
-        return $string;
-    }
-
-    /**
-     * Replace a custom hyphen
-     *
-     * @param string $word The word to parse
-     *
-     * @return string|false
-     */
-    private function _replaceCustomHyphen ( $word )
-    {
-        if ( ( null === $this->_customHyphen ) || ( false === strpos($word, $this->_customHyphen)) ) {
-            return false;
-        }
-        $string = str_replace($this->_customHyphen, $this->_hyphen, $word);
-        if ( null !== $this->_customizedMarker && true === $this->_markCustomized) {
-            $string = $this->getCustomizationMarker() . $string;
-        }
-        return $string;
-    }
-
-    /**
-     * Handle special strings
-     *
-     * Hyphenate words containing special strings for further processing, so
-     * put a zerowidthspace after it and hyphenate the parts separated by
-     * the special string.
-     *
-     * @param string $word The Word to hyphenate
-     *
-     * @return string|false
-     */
-    private function _handleSpecialStrings ( $word )
-    {
-
-        foreach ( $this->_specialStrings as $specialString ) {
-            if ( false === strpos($word, $specialString)) {
+        $options = $this->getOptions();
+        foreach ( $registry as $token ) {
+            if ( ! $token instanceof \Org\Heigl\Hyphenator\Tokenizer\WordToken ) {
                 continue;
             }
-            // Word contains a special string so put a zerowidthspace after
-            // it and hyphenate the parts separated with the special string.
-            $parts   = explode($specialString, $word);
-            $counter = count($parts);
-            for ( $i = 0; $i < $counter; $i++ ) {
-                $parts[$i] = $this->hyphenateWord($parts[$i]);
+            if ( $options->getMinWordLength() > $token->length() ) {
+                continue;
             }
-            return implode($specialString, $parts);
+            $this->getPatternForToken($token);
         }
-        return false;
+        return $registry;
+    }
+
+    /**
+     * Filter the content of the given TokenRegistry
+     *
+     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The tokens to
+     * filter
+     *
+     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
+     */
+    public function filter(\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $registry)
+    {
+        return $this->_filters->filter($registry);
+    }
+
+    /**
+     * Hyphenate a Token-Object
+     *
+     * @param Tokenizer\Token $token The token to hyphenate
+     *
+     * @return Tokenizer\Token
+     */
+    public function getPatternForToken(Tokenizer\WordToken $token)
+    {
+        foreach ( $this->_dicts as $dictionary ) {
+            $token->addPattern($dictionary->getPatternsForWord($token->get()));
+        }
+        return $token;
     }
 
     /**
      * Set the default home-Path
      *
-     * @param string $homePath The defaubnt Hyphenator Home-path.
+     * @param string $homePath The default Hyphenator Home-path.
      *
      * @throws Exception\PathNotFoundException
      * @throws Exception\PathNotDirException
@@ -625,6 +433,39 @@ final class Hyphenator
         return $this->_homePath;
     }
 
+
+    /**
+     * Create a new Hyphenator-Object for a certain locale
+     *
+     * To determine the storage of the dictionaries we either use the set
+     * default configuration-file or we take the provided file and set the
+     * home-path from the information within that file.
+     *
+     * @param string $locale The locale to be used
+     * @param string $path   The path to the configuration-file to use
+     *
+     * @return Hyphenator
+     */
+    public static function factory($path = null, $locale = null)
+    {
+        $hyphenator = new Hyphenator();
+        if ( null !== $path && file_Exists($path) ) {
+            $hyphenator->setHomePath($path);
+        }
+        if ( null !== $locale ) {
+            $hyphenator->getOptions()->setDefaultLocale($locale);
+        }
+        foreach ( $hyphenator->getOptions()->getTokenizers() as $tokenizer) {
+            $hyphenator->addTokenizer($tokenizer);
+        }
+
+        foreach ( $hyphenator->getOptions()->getFilters() as $filter) {
+            $hyphenator->addFilter($filter);
+        }
+        $hyphenator->addDictionary($hyphenator->getOptions()->getDefaultLocale());
+        return $hyphenator;
+    }
+
     /**
      * autoload classes.
      *
@@ -659,3 +500,11 @@ final class Hyphenator
         return spl_autoload_register(array('\Org\Heigl\Hyphenator\Hyphenator', '__autoload'));
     }
 }
+
+/*
+ * Check for requirements and if these are not met throw an exception
+ */
+if ( ! extension_loaded('mbstring') ) {
+    throw new \Exception ( '\Org\Heigl\Hyphenator requires the mbstring-extension to be loaded');
+}
+mb_internal_encoding ('UTF-8');

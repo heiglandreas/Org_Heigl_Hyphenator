@@ -22,42 +22,37 @@
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
- * @subpackage Tokenizer
+ * @subpackage Filter
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version    2.0.alpha
  * @link       http://github.com/heiglandreas/Hyphenator
- * @since      04.11.2011
+ * @since      02.11.2011
+ * @todo       Implement!
  */
 
-namespace Org\Heigl\Hyphenator\Tokenizer;
+namespace Org\Heigl\Hyphenator\Filter;
+
+use \Org\Heigl\Hyphenator\Tokenizer as t;
 
 /**
- * This Interface describes methods any tokenizer has to implement
+ * This class provides a filter for non-standard hyphenation-patterns
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
- * @subpackage Tokenizer
+ * @subpackage Filter
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version    2.0.alpha
  * @link       http://github.com/heiglandreas/Hyphenator
- * @since      04.11.2011
+ * @since      02.11.2011s
  */
-interface Tokenizer
+class CustomMarkupFilter extends Filter
 {
-    /**
-     * Split the given input into tokens.
-     *
-     * The input can be a string or a tokenRegistry. If the input is a
-     * TokenRegistry, each item will be tokenized.
-     *
-     * @param string|\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $input The
-     * input to be tokenized
-     *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
-     */
-    public function run($input);
+    public function run(t\TokenRegistry $tokens)
+    {
+        return $tokens;
+    }
 }

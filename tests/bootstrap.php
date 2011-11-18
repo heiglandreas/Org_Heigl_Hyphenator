@@ -24,6 +24,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
+mb_internal_encoding('UTF-8');
 require_once 'Org/Heigl/Hyphenator/Hyphenator.php';
 \Org\Heigl\Hyphenator\Hyphenator::registerAutoload();
 

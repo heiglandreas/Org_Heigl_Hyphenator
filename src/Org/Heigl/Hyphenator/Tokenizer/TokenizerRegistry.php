@@ -78,12 +78,23 @@ class TokenizerRegistry implements \Iterator, \Countable
      *
      * @return \Org\Heigl\Hyphenator\Tokenizer\Tokenizer
      */
-    public function getokenizerWithKey($key)
+    public function getTokenizerWithKey($key)
     {
         if ( array_key_exists($key, $this->_registry)) {
             return $this->_registry[$key];
         }
         return null;
+    }
+
+    /**
+     * Cleanup the registry
+     *
+     * @return Tokenizer\TokenizerRegistry
+     */
+    public function cleanup()
+    {
+        $this->_registry = array ();
+        return $this;
     }
 
     /**

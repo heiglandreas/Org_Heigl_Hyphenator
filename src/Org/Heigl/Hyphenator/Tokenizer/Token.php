@@ -55,12 +55,21 @@ class Token
      */
     protected $_content = '';
 
+    protected $_filteredContent = '';
+
     /**
      * The hyphenated token.
      *
      * @var array $_hyphenatedContent
      */
     protected $_hyphenatedContent = array();
+
+    /**
+     * The hyphenation patterns for this token.
+     *
+     * @var array $_pattern
+     */
+    protected $_pattern = array();
 
     /**
      * Create the Token
@@ -117,25 +126,44 @@ class Token
     {
         return get_class($this);
     }
+
+    /**
+     * Get the already filtered content of the token.
+     *
+     * @return string
+     */
+    public function getFilteredContent()
+    {
+        if ( ! $this->_filteredContent ) {
+            return $this->_content;
+        }
+        return $this->_filteredContent;
+    }
+
+    /**
+     * Set the filtered content
+     *
+     * @param string $content
+     *
+     * @return Token
+     */
+    public function setFilteredContent($content)
+    {
+        $this->_filteredContent = $content;
+    }
+
+    /**
+     * Get the length of the contained (unhyphenated) token
+     *
+     * @return int
+     */
+    public function length()
+    {
+        return mb_strlen($this->_content);
+    }
+
 }
 
-/**
- * This Class describes a Token representing a word
- *
- * @category   Hyphenation
- * @package    Org_Heigl_Hyphenator
- * @subpackage Tokenizer
- * @author     Andreas Heigl <andreas@heigl.org>
- * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
- * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    2.0.alpha
- * @link       http://github.com/heiglandreas/Hyphenator
- * @since      04.11.2011
- */
-class WordToken extends Token
-{
-    //
-}
 /**
  * This Class describes a Token represeonting something that is not a word.
  *
