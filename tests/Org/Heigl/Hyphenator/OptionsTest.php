@@ -204,4 +204,13 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals('test', '_defaultLocale', $o);
 
     }
+
+    public function testDefaultLocale()
+    {
+        $o = new Options();
+        $this->assertEquals('en_EN', $o->getDefaultLocale());
+        $this->assertSame($o,$o->setDefaultLocale('test'));
+        $this->assertAttributeEquals('test','_defaultLocale', $o);
+        $this->assertEquals('test', $o->getDefaultLocale());
+    }
 }

@@ -98,6 +98,8 @@ class TokenTest extends \PHPUnit_Framework_TestCase
     {
         $t = new Token($value);
         $this->assertEquals($expected, $t->getFilteredContent());
+        $this->assertSame($t,$t->setFilteredContent('test'));
+        $this->assertEquals('test', $t->getFilteredContent());
     }
 
     public function filteredContentProvider()

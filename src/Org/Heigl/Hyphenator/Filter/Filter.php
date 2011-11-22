@@ -72,12 +72,22 @@ abstract class Filter
     }
 
     /**
+     * Get the currently defined Options
+     *
+     * @return \Org\Heigl\Hyphenator\Options\Options
+     */
+    public function getOptions()
+    {
+        return $this->_options;
+    }
+
+    /**
      * Run the filter over the given Token
      *
      * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
      * to apply the filter to
      *
-     *  @return \Org\Heigl\Hyphenator\Filter\Filter
+     *  @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
      */
     public abstract function run(t\TokenRegistry $tokens);
 

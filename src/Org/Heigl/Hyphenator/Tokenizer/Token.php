@@ -150,6 +150,7 @@ class Token
     public function setFilteredContent($content)
     {
         $this->_filteredContent = $content;
+        return $this;
     }
 
     /**
