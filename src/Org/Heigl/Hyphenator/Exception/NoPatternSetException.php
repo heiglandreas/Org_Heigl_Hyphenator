@@ -22,46 +22,32 @@
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
- * @subpackage Filter
+ * @subpackage Exception
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version    2.0.alpha
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      02.11.2011
- * @todo       Implement!
  */
 
-namespace Org\Heigl\Hyphenator\Filter;
-
-use \Org\Heigl\Hyphenator\Tokenizer as t;
+namespace Org\Heigl\Hyphenator\Exception;
 
 /**
- * This class provides a filter for non-standard hyphenation-patterns
+ * This class describes an InvalidArgumentException
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
- * @subpackage Filter
- * @author     Andreas Heigl <andreas@heigl.org>
- * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
+ * @subpackage Exception
+ * @author     Andreas Heigl <a.heigl@wdv.de>
+ * @copyright  2008-2011 Andreas Heigl
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version    2.0.alpha
  * @link       http://github.com/heiglandreas/Hyphenator
- * @since      02.11.2011s
+ * @since      02.11.2011
  */
-class CustomMarkupFilter extends Filter
+class NoPatternSetException
+extends \InvalidArgumentException
+implements \Org\Heigl\Hyphenator\Exception
 {
-    /**
-     * Exteends the abstract Filter::run()
-     *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
-     * to act upon
-     *
-     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
-     */
-    public function run(t\TokenRegistry $tokens)
-    {
-        return $tokens;
-    }
 }

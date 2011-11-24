@@ -103,10 +103,39 @@ namespace Org\Heigl\Hyphenator;
 final class Hyphenator
 {
 
+    /**
+     * The highest possible hyphernation quality
+     *
+     * @const int QUALITY_HIGHEST
+     */
     const QUALITY_HIGHEST = 9;
+
+    /**
+     * A high hyphernation quality
+     *
+     * @const int QUALITY_HIGH
+     */
     const QUALITY_HIGH    = 7;
+
+    /**
+     * A medium hyphernation quality
+     *
+     * @const int QUALITY_NORMAL
+     */
     const QUALITY_NORMAL  = 5;
+
+    /**
+     * A low hyphernation quality
+     *
+     * @const int QUALITY_LOW
+     */
     const QUALITY_LOW     = 3;
+
+    /**
+     * The lowest possible hyphernation quality
+     *
+     * @const int QUALITY_LOWEST
+     */
     const QUALITY_LOWEST  = 1;
 
     /**
@@ -251,13 +280,33 @@ final class Hyphenator
     }
 
     /**
-     * GET the tokenizers
+     * Get the tokenizers
      *
      * @return Tokenizer\TokenizerRegistry
      */
     public function getTokenizers()
     {
         return $this->_tokenizers;
+    }
+
+    /**
+     * Get the dictionaries
+     *
+     * @return Dictionaries\DictionaryRegistry
+     */
+    public function getDictionaries()
+    {
+        return $this->_dicts;
+    }
+
+    /**
+     * Get the filters
+     *
+     * @return Filter\FilterRegistry
+     */
+    public function getFilters()
+    {
+        return $this->_filters;
     }
 
     /**
@@ -303,8 +352,8 @@ final class Hyphenator
      *
      * Use the dictionaties and options of the given Hyphenator-Object
      *
-     * @param Hyphenator $hyphenator The Hyphenator object containing the
-     *                               dictionaries and options
+     * @param Tokenizer\TokenRegistry $registry The Hyphenator object containing the
+     * dictionaries and options
      *
      * @return Tokenizer\TokenRegistry
      */
@@ -326,12 +375,12 @@ final class Hyphenator
     /**
      * Filter the content of the given TokenRegistry
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The tokens to
-     * filter
+     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $registry The tokens
+     * to filter
      *
      * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
      */
-    public function filter(\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $registry)
+    public function filter(Tokenizer\TokenRegistry $registry)
     {
         return $this->_filters->filter($registry);
     }
@@ -441,8 +490,8 @@ final class Hyphenator
      * default configuration-file or we take the provided file and set the
      * home-path from the information within that file.
      *
-     * @param string $locale The locale to be used
      * @param string $path   The path to the configuration-file to use
+     * @param string $locale The locale to be used
      *
      * @return Hyphenator
      */

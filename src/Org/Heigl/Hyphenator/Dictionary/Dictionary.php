@@ -81,7 +81,7 @@ class Dictionary
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -111,7 +111,10 @@ class Dictionary
         if ( ! file_exists($file) ) {
             $this->_parseFile($locale);
         }
-        $this->_dictionary = parse_ini_file($file);
+        $this->_dictionary = array();
+        foreach ( parse_ini_file($file) as $key => $val ) {
+            $this->_dictionary[str_replace('@:','',$key)] = $val;
+        }
         return $this;
     }
 
@@ -144,23 +147,36 @@ class Dictionary
         unset ($items[0]);
         $fh = fopen($path . $locale . '.ini', 'w+');
         foreach ($items as $item) {
-            $item = trim($item);
-            $item = mb_convert_Encoding($item, 'UTF-8', $source);
-            $strlen = mb_strlen($item);
-            $patternint = '';
-            for ( $i = 0; $i < $strlen; $i++ ) {
-                if ( ( ( $i ) <= $strlen ) && preg_match('/[0-9]/u', mb_substr($item, $i, 1)) ) {
-                    $patternint .= mb_substr($item, $i, 1);
-                    $i++;
-                } else {
-                    $patternint .= '0';
-                }
+            if ( '#' == mb_substr($item,0,1)) {
+                continue;
             }
-            $patternstring = preg_replace(array('/[0-9]/u','/\'/u'), array('','\\’'), $item);
-            $string = $patternstring . ' = "' . $patternint . '"' . "\n";
+            if ( '' == trim($item) ) {
+                continue;
+            }
+            if ( $item === strtoupper($item) ) {
+                continue;
+            }
+            $item = mb_convert_Encoding($item, 'UTF-8', $source);
+            $result = $this->_parseTeXPattern($item);
+            $string = '@:' . $result->getText() . ' = "' . $result->getPattern() . '"' . "\n";
             fwrite($fh, $string);
         }
         fclose($fh);
+    }
+
+    /**
+     * Parse a TeX-Hyphenation-Pattern
+     *
+     * This returns an array containing the textual pattern as firstv and the
+     * hyphenation-pattern as second item
+     *
+     * @param \string $pattern The pattern to parse
+     *
+     * @return \array
+     */
+    protected function _parseTeXPattern($pattern)
+    {
+        return Pattern::factory($pattern);
     }
 
     /**

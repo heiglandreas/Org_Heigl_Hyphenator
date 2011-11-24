@@ -51,14 +51,14 @@ class WordToken extends Token
     /**
      * The hyphenation patterns for this token.
      *
-     * @var array $_pattern
+     * @var \array $_pattern
      */
     protected $_pattern = array();
 
     /**
      * Add a substring=>pattern array to the already existing ones
      *
-     * @param array $patterns The new patterns to add
+     * @param \array $pattern The new patterns to add
      *
      * @return Token
      */
@@ -73,7 +73,7 @@ class WordToken extends Token
      *
      * THis will prepend and append a dot to the content for better hyphenation
      *
-     * @return string
+     * @return \string
      */
     public function getHyphenateContent()
     {
@@ -85,7 +85,7 @@ class WordToken extends Token
      *
      * This is done using the given quality value.
      *
-     * @param int $quality The hyphenation quality to use
+     * @param \int $quality The hyphenation quality to use
      *
      * @return Token
      */

@@ -63,6 +63,20 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         $hyphenator->setOptions($options);
         $this->assertAttributeSame($options, '_options', $hyphenator);
         $this->assertSame($options,$hyphenator->getOptions());
+        $this->assertEquals(0,$hyphenator->getTokenizers()->count());
+        $options->addTokenizer('whitespace');
+        $this->assertSame($hyphenator,$hyphenator->setOptions($options));
+        $this->assertAttributeSame($options, '_options', $hyphenator);
+        $this->assertEquals(1,$hyphenator->getTokenizers()->count());
+
+    }
+
+    public function testGettingOption()
+    {
+        $h = new h\Hyphenator();
+        $o = $h->getOptions();
+        $this->assertInstanceOf('\ORg\Heigl\Hyphenator\Options\Options', $o);
+        $this->assertSame($o,$h->getOptions());
     }
 
     public function  testSettingDictionaries()
@@ -70,7 +84,10 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         $hyphenator = new h\Hyphenator();
         $this->assertAttributeInstanceof('\Org\Heigl\Hyphenator\Dictionary\DictionaryRegistry', '_dicts', $hyphenator);
         $dict = new h\Dictionary\Dictionary('de');
-        $hyphenator->addDictionary($dict);
+        $this->assertSame($hyphenator,$hyphenator->addDictionary($dict));
+        $this->assertEquals(1,$hyphenator->getDictionaries()->count());
+        $this->assertSame($hyphenator,$hyphenator->addDictionary('en_US'));
+        $this->assertEquals(2,$hyphenator->getDictionaries()->count());
 
     }
     public function  testSettingTokenizers()
@@ -80,6 +97,22 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         $hyphenator->addTokenizer($dict);
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry', $hyphenator->getTokenizers());
         $this->assertSame($dict, $hyphenator->getTokenizers()->getTokenizerWithKey(0));
+
+    }
+    public function  testSettingFilters()
+    {
+        $h = new h\Hyphenator();
+        $f = new h\Filter\SimpleFilter();
+        $this->assertInstanceof('\Org\Heigl\Hyphenator\Filter\FilterRegistry', $h->getFilters());
+        $this->assertEquals(0,$h->getFilters()->count());
+        $this->assertSame($h,$h->addFilter($f));
+        $this->assertInstanceof('\Org\Heigl\Hyphenator\Filter\FilterRegistry', $h->getFilters());
+        $this->assertEquals(1,$h->getFilters()->count());
+        $this->assertSame($f, $h->getFilters()->getFilterWithKey(0));
+        $this->assertSame($h,$h->addFilter('CustomMarkup'));
+        $this->assertInstanceof('\Org\Heigl\Hyphenator\Filter\FilterRegistry', $h->getFilters());
+        $this->assertEquals(2,$h->getFilters()->count());
+        $this->assertInstanceof('\Org\Heigl\Hyphenator\Filter\CustomMarkupFilter', $h->getFilters()->getFilterWithKey(1));
 
     }
 
@@ -170,12 +203,13 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
 
     public function testHyphenatorInvocationSimple()
     {
-//        $h = h\Hyphenator::factory(__DIR__ . '/share/test1');
-//        $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry', $h->getTokenizers());
- //       $t = $h->getTokenizers();
-//        $this->assertAttributeEquals(array(new h\Tokenizer\WhitespaceTokenizer(), new h\Tokenizer\PunktuationTokenizer()),'_registry', $t);
-//        $this->assertEquals('test-word', $h->hyphenate('testword') );
-//        unlink(__DIR__ . '/share/test1/files/dictionaries/de_DE.ini');
+        $h = h\Hyphenator::factory(__DIR__ . '/share/test2');
+        $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry', $h->getTokenizers());
+        $t = $h->getTokenizers();
+        $this->assertAttributeEquals(array(new h\Tokenizer\WhitespaceTokenizer(), new h\Tokenizer\PunktuationTokenizer()),'_registry', $t);
+        $this->assertEquals('Do-nau-dampf-schiff-fahrt', $h->hyphenate('Donaudampfschifffahrt') );
+        $this->assertEquals('Gü-ter-mäd-chen', $h->hyphenate('Gütermädchen') );
+        unlink(__DIR__ . '/share/test2/files/dictionaries/de_DE.ini');
     }
 
     public function setup ()

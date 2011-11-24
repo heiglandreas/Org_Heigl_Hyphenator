@@ -255,7 +255,7 @@ class Options
     /**
      * Set the hyphenation quality
      *
-     * @param int $level
+     * @param int $quality
      *
      * @return \Org\Heigl\Hyphenator\Options\Options
      */

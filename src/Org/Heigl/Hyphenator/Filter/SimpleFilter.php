@@ -55,7 +55,7 @@ class SimpleFilter extends Filter
     /**
      * Implements interface Filter
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $token The registry
+     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
      * to act upon
      *
      * @see Org\Heigl\Hyphenator\Filter\Filter::run()

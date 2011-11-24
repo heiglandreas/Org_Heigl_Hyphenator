@@ -51,32 +51,37 @@ class Token
     /**
      * The content of the token.
      *
-     * @var string $_content
+     * @var \string $_content
      */
     protected $_content = '';
 
+    /**
+     * The filtered content of the token.
+     *
+     * @var \string $_filteredContent
+     */
     protected $_filteredContent = '';
 
     /**
      * The hyphenated token.
      *
-     * @var array $_hyphenatedContent
+     * @var \array $_hyphenatedContent
      */
     protected $_hyphenatedContent = array();
 
     /**
      * The hyphenation patterns for this token.
      *
-     * @var array $_pattern
+     * @var \array $_pattern
      */
     protected $_pattern = array();
 
     /**
      * Create the Token
      *
-     * @param string $content The content to be stored in the token.
+     * @param \string $content The content to be stored in the token.
      *
-     * @return void
+     * @return \void
      */
     public function __construct($content)
     {
@@ -87,7 +92,7 @@ class Token
     /**
      * Get the tokens content
      *
-     * @return string
+     * @return \string
      */
     public function get()
     {
@@ -97,9 +102,9 @@ class Token
     /**
      * Set the tokens hyphenated content
      *
-     * @param array $hyphenatedContent all possible hyphenations
+     * @param \array $hyphenatedContent all possible hyphenations
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @return Token
      */
     public function setHyphenatedContent (array $hyphenatedContent)
     {
@@ -110,7 +115,7 @@ class Token
     /**
      * Get the hyphenated content
      *
-     * @return array
+     * @return \array
      */
     public function getHyphenatedContent()
     {
@@ -120,7 +125,7 @@ class Token
     /**
      * Get the type of this token
      *
-     * @return string
+     * @return \string
      */
     public function getType()
     {
@@ -130,7 +135,7 @@ class Token
     /**
      * Get the already filtered content of the token.
      *
-     * @return string
+     * @return \string
      */
     public function getFilteredContent()
     {
@@ -143,7 +148,7 @@ class Token
     /**
      * Set the filtered content
      *
-     * @param string $content
+     * @param \string $content
      *
      * @return Token
      */
@@ -156,7 +161,7 @@ class Token
     /**
      * Get the length of the contained (unhyphenated) token
      *
-     * @return int
+     * @return \int
      */
     public function length()
     {

@@ -31,7 +31,8 @@
 
 namespace Org\Heigl\HyphenatorTest\Dictionary;
 
-use Org\Heigl\Hyphenator\Dictionary\Dictionary;
+use Org\Heigl\Hyphenator\Dictionary\Pattern;
+use Org\Heigl\Hyphenator\Exception as e;
 
 /**
  * This class tests the functionality of the class Org_Heigl_Hyphenator
@@ -44,38 +45,48 @@ use Org\Heigl\Hyphenator\Dictionary\Dictionary;
  * @version   2.0.alpha
  * @since     02.11.2011
  */
-class DictionaryTest extends \PHPUnit_Framework_TestCase
+class PatternTest extends \PHPUnit_Framework_TestCase
 {
-    public function testSettingDefaultFilePath()
+    public function testSettingPattern()
     {
-        $this->assertAttributeEquals('','_fileLocation', '\Org\Heigl\Hyphenator\Dictionary\Dictionary');
-        Dictionary::setFileLocation('foo');
-        $this->assertAttributeEquals('foo','_fileLocation', '\Org\Heigl\Hyphenator\Dictionary\Dictionary');
+        $p = new Pattern();
+        $this->assertAttributeEquals('','_text',$p);
+        $this->assertAttributeEquals('','_pattern',$p);
+        try{
+            $p->getText();
+            $this->fail('No Exception raised');
+        }catch(e\NoPatternSetException $e) {
+            $this->assertTrue(true);
+        }
+        try{
+            $p->getPattern();
+            $this->fail('No Exception raised');
+        }catch(e\NoPatternSetException $e) {
+            $this->assertTrue(true);
+        }
+        $this->assertSame($p, $p->setPattern('te8st'));
+        $this->assertAttributeEquals('test', '_text', $p);
+        $this->assertAttributeEquals('00800', '_pattern', $p);
     }
 
-    public function testParsingOnDictionaryCreationWorks()
+    /**
+     * @dataProvider patternCreationProvider
+     */
+    public function testPatternCreation($input, $text, $pattern)
     {
-        Dictionary::setFileLocation(__DIR__ . '/share/');
-        @unlink(__DIR__.'/share/de.ini');
-        $dict = Dictionary::factory('de');
-        $this->assertTrue(file_Exists(__DIR__ . '/share/de.ini'));
-        $this->assertTrue('UTF-8' == mb_detect_encoding(file_get_contents(__DIR__ . '/share/de.ini')));
+        $p = Pattern::factory($input);
+        $this->assertAttributeEquals($text,'_text',$p);
+        $this->assertAttributeEquals($pattern,'_pattern',$p);
+        $this->assertEquals($text, $p->getText());
+        $this->assertEquals($pattern, $p->getPattern());
     }
 
-    public function testGettingPatterns()
+    public function patternCreationProvider()
     {
-        Dictionary::setFileLocation(__DIR__ . '/share/');
-        $dict = Dictionary::factory('de');
-        $result = $dict->getPatternsForWord('täßterei');
-        $this->assertEquals(array('täßt'=>'00020'),$result);
+        return array(
+            array('te8st', 'test','00800'),
+            array('øre5sœnd', 'øresœnd', '00050000'),
+        );
     }
-
-    public function testSettingPatterns()
-    {
-        $dictionary = new Dictionary();
-        $dictionary->addPattern('test', '01234');
-        $this->assertAttributeEquals(array('test'=>'01234'),'_dictionary',$dictionary);
-    }
-
 
 }
