@@ -203,7 +203,7 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
 
     public function testHyphenatorInvocationSimple()
     {
-        $h = h\Hyphenator::factory(__DIR__ . '/share/test2');
+        $h = h\Hyphenator::factory(__DIR__ . '/share/test2','de_DE');
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry', $h->getTokenizers());
         $t = $h->getTokenizers();
         $this->assertAttributeEquals(array(new h\Tokenizer\WhitespaceTokenizer(), new h\Tokenizer\PunktuationTokenizer()),'_registry', $t);
