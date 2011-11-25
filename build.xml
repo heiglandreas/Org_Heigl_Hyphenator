@@ -79,9 +79,17 @@
     </target>
 
 	<target name="docbook">
-		<mkdir dir="${basedir}/build/doc"/>
+        <mkdir dir="${basedir}/build/doc"/>
+		<delete includeemptydirs="true" verbose="true">
+            <fileset dir="${basedir}/build/doc">
+                <include name="**/*" />
+            </fileset>
+        </delete>
 		<exec executable="xsltproc" dir="${basedir}">
-			  <arg line="--xinclude --output build/doc/index.html --stringparam html.stylesheet http://www.heigl.org/docbook/css/heigl.css doc/main.xml "/>
+			  <arg line="--xinclude --output build/doc/index.html --stringparam html.stylesheet css/style.css doc/main.xml "/>
 		</exec>
+		<copy todir="${basedir}/build/doc/">
+			<fileset dir="${basedir}/doc/inc/"/>
+		</copy>
 	</target>
 </project>
