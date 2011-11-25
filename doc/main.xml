@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.heigl.org/docbook/xsl/html/chunk.xsl" ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://www.heigl.org/docbook/dtd/docbookx.dtd"[
+<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY installation SYSTEM "installation.xml">
+<!ENTITY licenses SYSTEM "license.xml">
+]>
+<book id="hyphenator" lang="en">
+    <title>Org\Heigl\Hyphenator</title>
+	&introduction;
+	&installation;
+	&licenses;
+</book>

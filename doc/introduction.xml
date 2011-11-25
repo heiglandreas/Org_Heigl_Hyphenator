@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+
+ -->
+<chapter id="hyphenator.introduction">
+    <title>Introduction</title>
+    <para>
+        <classname>Org\Heigl\Hyphenator</classname> is a package to enable 
+        word-hyphenation in PHP. It uses the algorithms described by Marc Liang
+        in his thesis Word Hyphenation by computer and the extensions described
+        by ?? in his work ??. 
+    </para>
+    <para>
+        These algorithms are based on matching words against certain patterns 
+        that describe places inside a word where hyphenation is possible or 
+        must not occur. This Hyphenator uses the pattern-files from OpenOffice
+        which are based on the pattern-files created for TeX.
+    </para> 
+</chapter>

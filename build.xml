@@ -31,7 +31,7 @@
  * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version   2.0.alpha
- * @since     12.06.2008
+ * @since     24.11.2011
  */
 -->
 <project name="Org_Heigl_Hyphenator" default="build" basedir=".">
@@ -60,7 +60,7 @@
 
 
     <target name="doc">
-        <mkdir dir="${basedir}/doc/api"/>
+        <mkdir dir="${basedir}/build/api"/>
         <exec executable="docblox" dir="${basedir}" failonerror="on"/>
     </target>
     
@@ -77,4 +77,11 @@
         </zip>
         <antcall target="clean"/>
     </target>
+
+	<target name="docbook">
+		<mkdir dir="${basedir}/build/doc"/>
+		<exec executable="xsltproc" dir="${basedir}">
+			  <arg line="--xinclude --output build/doc/index.html doc/src/main.xml "/>
+		</exec>
+	</target>
 </project>
