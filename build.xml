@@ -58,7 +58,6 @@
     	</exec>
     </target>
 
-
     <target name="doc">
         <mkdir dir="${basedir}/build/api"/>
         <exec executable="docblox" dir="${basedir}" failonerror="on"/>
@@ -82,7 +81,7 @@
 	<target name="docbook">
 		<mkdir dir="${basedir}/build/doc"/>
 		<exec executable="xsltproc" dir="${basedir}">
-			  <arg line="--xinclude --output build/doc/index.html doc/src/main.xml "/>
+			  <arg line="--xinclude --output build/doc/index.html --stringparam html.stylesheet http://www.heigl.org/docbook/css/heigl.css doc/main.xml "/>
 		</exec>
 	</target>
 </project>
