@@ -69,7 +69,8 @@
         <property file="build.number" />
         <mkdir dir="${basedir}/dist"/>
         <zip destfile="dist/Org_Heigl_Hyphenator-Build_${build.number}.zip">
-            <zipfileset dir="doc" prefix="doc" />
+            <zipfileset dir="build/api" prefix="doc/api" />
+            <zipfileset dir="build/doc" prefix="doc/manuals" />
             <zipfileset dir="src" />
             <fileset dir="." includes="CHANGELOG" />
             <fileset dir="." includes="LICENSE" />
