@@ -32,7 +32,7 @@
 
 namespace Org\Heigl\HyphenatorTest;
 
-use \Org\Heigl\Hyphenator\Options\Options;
+use \Org\Heigl\Hyphenator\Options;
 
 
 /**
@@ -189,9 +189,9 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
             $this->assertTrue(true);
         }
         $o = Options::factory(__DIR__ . '/../share/onlydist.ini');
-        $this->assertInstanceof('\Org\Heigl\Hyphenator\Options\Options', $o );
+        $this->assertInstanceof('\Org\Heigl\Hyphenator\Options', $o );
         $o = Options::factory(__DIR__ . '/../share/parseable.ini');
-        $this->assertInstanceof('\Org\Heigl\Hyphenator\Options\Options', $o );
+        $this->assertInstanceof('\Org\Heigl\Hyphenator\Options', $o );
         $this->assertAttributeEquals('test', '_hyphen', $o);
         $this->assertAttributeEquals('test', '_noHyphenateString', $o);
         $this->assertAttributeEquals(5, '_leftMin', $o);

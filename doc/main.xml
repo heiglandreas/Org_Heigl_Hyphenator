@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="http://www.heigl.org/docbook/xsl/html/chunk.xsl" ?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://www.heigl.org/docbook/dtd/docbookx.dtd"[
-<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY prerequisites SYSTEM "prerequisites.xml">
 <!ENTITY installation SYSTEM "installation.xml">
+<!ENTITY examples SYSTEM "examples.xml">
+<!ENTITY configuration SYSTEM "configuration.xml">
 <!ENTITY licenses SYSTEM "license.xml">
 ]>
 <book id="hyphenator" lang="en">
-    <title>Org\Heigl\Hyphenator</title>
-	&introduction;
-	&installation;
-	&licenses;
+    <bookinfo>
+        <title>Org\Heigl\Hyphenator - Manual</title>
+        <author><firstname>Andreas</firstname><surname>Heigl</surname></author>
+        <copyright><year>2011</year><holder>Andreas Heigl</holder></copyright>
+    </bookinfo>
+    <chapter id="hyphenator.introduction">
+    <title>Introduction</title>
+    <para>
+        <classname>Org\Heigl\Hyphenator</classname> is a package to enable 
+        word-hyphenation in PHP. It uses the algorithms described by Marc Liang
+        in his thesis Word Hyphenation by computer and the extensions described
+        by ?? in his work ??. 
+    </para>
+    <para>
+        These algorithms are based on matching words against certain patterns 
+        that describe places inside a word where hyphenation is possible or 
+        must not occur. This Hyphenator uses the pattern-files from OpenOffice
+        which are based on the pattern-files created for TeX.
+    </para> 
+</chapter>
+    &prerequisites;
+    &installation;
+    &examples;
+    &configuration;
+    &licenses;
+    
 </book>

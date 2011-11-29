@@ -54,18 +54,18 @@ abstract class Filter
     /**
      * Storage of the options-object
      *
-     * @var \Org\Heigl\Hyphenator\Options\Options $_options
+     * @var \Org\Heigl\Hyphenator\Options $_options
      */
     protected $_options = null;
 
     /**
      * Set the options-object for this filter
      *
-     * @param \Org\Heigl\Hyphenator\Options\Options $options The options to set
+     * @param \Org\Heigl\Hyphenator\Options $options The options to set
      *
      * @return Filter
      */
-    public function setOptions(\Org\Heigl\Hyphenator\Options\Options $options)
+    public function setOptions(\Org\Heigl\Hyphenator\Options $options)
     {
         $this->_options=$options;
         return $this;
@@ -74,7 +74,7 @@ abstract class Filter
     /**
      * Get the currently defined Options
      *
-     * @return \Org\Heigl\Hyphenator\Options\Options
+     * @return \Org\Heigl\Hyphenator\Options
      */
     public function getOptions()
     {

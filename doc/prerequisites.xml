@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+
+ -->
+<chapter id="hyphenator.prerequisites">
+    <title>Prerequisites</title>
+    <para>
+        This Hyphenation-Package has the following requirements:
+        <itemizedlist>
+            <listitem>PHP >= 5.3</listitem>
+            <listitem>mbstring-extension</listitem>
+            <listitem>Currently all input has to be UTF-8 encoded</listitem>
+        </itemizedlist> 
+    </para>
+</chapter>

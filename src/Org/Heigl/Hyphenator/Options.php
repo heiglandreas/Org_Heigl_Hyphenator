@@ -31,7 +31,7 @@
  * @since      07.09.2011
  */
 
-namespace Org\Heigl\Hyphenator\Options;
+namespace Org\Heigl\Hyphenator;
 
 use \Org\Heigl\Hyphenator\Exception;
 
@@ -245,7 +245,7 @@ class Options
      *
      * @param int $wordLength The minimum word Length
      *
-     * @return \Org\Heigl\Hyphenator\Options\Options
+     * @return \Org\Heigl\Hyphenator\Options
      */
     public function setWordMin($wordLength)
     {
@@ -257,7 +257,7 @@ class Options
      *
      * @param int $quality
      *
-     * @return \Org\Heigl\Hyphenator\Options\Options
+     * @return \Org\Heigl\Hyphenator\Options
      */
     public function setQuality($quality)
     {
@@ -398,7 +398,7 @@ class Options
      *
      * @param string $file The config-file to be parsed
      *
-     * @return \Org\Heigl\Hyphenator\Options\Options
+     * @return \Org\Heigl\Hyphenator\Options
      */
     public static function factory($file)
     {
@@ -428,7 +428,7 @@ class Options
      *
      * @param string $locale The locale to be set
      *
-     * @return \Org\Heigl\Hyphenator\Options\Options
+     * @return \Org\Heigl\Hyphenator\Options
      */
     public function setDefaultLocale($locale)
     {

@@ -1,6 +1,6 @@
 README:
 
-Copyright (c) 2009 Andreas Heigl<andreas@heigl.org>
+Copyright (c) 2011 Andreas Heigl<andreas@heigl.org>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,13 +30,13 @@ This package has the following requirements:
 * Input has to be UTF8-encoded.
 
 On loading the \Org\Heigl\Hyphenator\Hyphenator-class the internal encoding for
-the Multibyte-String-Extension will be set to UTF8. 
+the Multibyte-String-Extension will be set to UTF8.
 
  +----------------------------------------------------------------------------+
  | Installation:                                                              |
  +----------------------------------------------------------------------------+
  
-Copy at least the 'Hyphenator'-folder somewhere to your PHP-include-directory
+Copy the 'Org/Heigl/Hyphenator'-folder somewhere to your PHP-include-directory
 
  +----------------------------------------------------------------------------+
  | Usage:                                                                     |
@@ -55,4 +55,4 @@ echo $hyphenatedText;
  +----------------------------------------------------------------------------+
  | Documentation:                                                              |
  +----------------------------------------------------------------------------+
-Use the included documentation from the 'doc/api'-folder
+More documentation can be found in the 'documentation'-folder

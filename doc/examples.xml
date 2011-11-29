@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="hyphenator.examples">
+    <title>Usage-Examples</title>
+    <sect1>
+        <title>Simple Example</title>
+        <para>
+            <programlisting language="php" id="example.simple">
+                <![CDATA[use \Org\Heigl\Hyphenator as h;
+$hyphenator = h\Hyphenator::factory();
+$result = $hyphenator->hyphenate('This is your text to be hyphenated');]]>
+            </programlisting>
+        </para>
+        <para>
+            Plainly create a <classname>Hyphenator</classname>-Object via the
+            factory-method and invoke its <methodname>hyphenate</methodname>-method. 
+        </para>
+        <para>
+            It will be hard to make it more simple.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Simple example with non-standard Hyphenator-Home-folder</title>
+        <para>
+	        <programlisting language="php"><![CDATA[use \Org\Heigl\Hyphenator as h;
+$hyphenator = h\Hyphenator::factory('/path/to/home/directory');
+$result = $hyphenator->hyphenate('This is your text to be hyphenated');]]></programlisting>
+        </para>
+        <para>
+            Of course the Hyphenators home-folder has to be available in the 
+            given location and has to be writeable to hte user executing the
+            hyphenator (normaly the webserver-user).
+        </para>
+    </sect1>
+</chapter>

@@ -38,15 +38,20 @@
 
     <!-- This target deletes all temporary files from the directory -->
     <target name="clean">
-        <delete dir="doc/" />
-        <delete dir="build" />
+        <delete includeemptydirs="true">
+            <fileset dir="${basedir}/build">
+                <include name="**/*" />
+            </fileset>
+        </delete>
     </target>
 
     <target name="build"
-              depends="clean, doc, test, distribute" />
+              depends="clean, doc, test, docbook, distribute" />
 
     <target name="test">
         <mkdir dir="${basedir}/build/logs"/>
+        <mkdir dir="${basedir}/build/phpunit"/>
+        <mkdir dir="${basedir}/build/phpunit/coverage"/>
     	<delete includeemptydirs="true" verbose="false">
             <fileset dir="${basedir}/build/phpunit/coverage">
                 <include name="**/*" />
@@ -68,9 +73,10 @@
         <property file="build.number" />
         <mkdir dir="${basedir}/dist"/>
         <zip destfile="dist/Org_Heigl_Hyphenator-Build_${build.number}.zip">
-            <zipfileset dir="build/api" prefix="doc/api" />
-            <zipfileset dir="build/doc" prefix="doc/manuals" />
-            <zipfileset dir="src" />
+            <zipfileset dir="build/api" prefix="documentation/api" />
+            <zipfileset dir="build/doc" prefix="documentation/manual" />
+            <zipfileset dir="build/phpunit/coverage" prefix="documentation/coverage" />
+            <zipfileset dir="src/Org/Heigl/Hyphenator" prefix="library/Org/Heigl/Hyphenator"/>
             <fileset dir="." includes="CHANGELOG" />
             <fileset dir="." includes="LICENSE" />
             <fileset dir="." includes="README" />
@@ -86,7 +92,7 @@
             </fileset>
         </delete>
 		<exec executable="xsltproc" dir="${basedir}">
-			  <arg line="--xinclude --output build/doc/index.html --stringparam html.stylesheet css/style.css doc/main.xml "/>
+			<arg line="--output build/doc/index.html doc/hyphenator.xsl doc/main.xml "/>
 		</exec>
 		<copy todir="${basedir}/build/doc/">
 			<fileset dir="${basedir}/doc/inc/"/>

@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="hyphenator.installation">
     <title>Installation</title>
-    <sect1 id="hyphenator.installation.reauirements">
-        <title>Requirements</title>
-    </sect1>
-    <sect1 id="hyphenator.installation.installation">
-        <title>Installation</title>
-    </sect1>
+    <para>
+        Installation is fairly simple. 
+        <orderedlist>
+            <listitem>Take the <filename>Org</filename>-Folder and place it somewhere 
+            your include-path reaches it.</listitem>
+            <listitem>Make the folder <filename>Org/Heigl/Hyphenator/shared</filename>
+            writeable. As an alternative you can also copy that folder to any 
+            location you like and set the <varname>HYPHERNATOR_HOME</varname>-Environment 
+            Variable or PHP-constant to that path before invoking the Hyphenator
+            for the first time.
+            </listitem>
+            <listitem>
+                Register the autoloader by calling <code>Org\Heigl\Hyphenator\Hyphenator::registerAutoload()</code>
+            </listitem>
+            <listitem>
+                Hyphenate!
+            </listitem>
+        </orderedlist>
+    </para>
 </chapter>

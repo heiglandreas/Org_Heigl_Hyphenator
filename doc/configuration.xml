@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="hyphenator.configuration">
+    <title>Configuration-Options</title>
+    <para>
+        The <classname>Org\Heigl\Hyphenator</classname>-Package can be configured 
+        using the <filename>Hyphenator.properties</filename>-File inside
+        the defined <varname>HYPHENATOR_HOME</varname>-Directory.
+    </para>
+    <para>
+        The <varname>HYPHENATOR_HOME</varname>-Directory will be retrieved on 
+        Instantiation of the <package>Hyphenator</package> by checking 
+        the following possibilities.
+        <orderedlist>
+            <listitem>Check for a folder defined via <methodname>Org\Heigl\Hyphenator::setDefaultHomePath</methodname>.</listitem>
+            <listitem>Check for a PHP-constant <varname>HYPHENATOR_HOME</varname>.</listitem>
+            <listitem>Check for an environment-variable <varname>HYPHENATOR_HOME</varname>.</listitem>
+            <listitem>Use the in the package included <filename>share</filename>-folder</listitem>
+        </orderedlist>
+    </para>
+    <para>
+        You can also configure the <package>Hyphenator</package> via an 
+        <classname>Org\Heigl\Hyphenator\Options\Options</classname>-Instance 
+        that can either be retrieved from or replace an existing 
+        Options-Instance in an existing Hyphenator-Object;
+        <programlisting language="php" id="hyphenator.configuration.setorgetoptions"><![CDATA[$hyphenator = Hyphenator::factory();
+// Retrieve an existing Options-Instance
+$options = $hyphenator->getOptions();
+// Set an Options
+$options->setLeftMin(3);
+// You can also cascade that.
+$hyphenator->getOptions()->setLeftMin(3);
+// Or you can create a new Options-Object
+$options = new \Org\Heigl\Hyphenator\Options\Options();
+$options->setLeftMin(3);
+$hyphenator->setOptions($options);
+// CAVEAT: This will also set all other Options to the default values!]]></programlisting>
+    </para>
+    <para>
+        The following configuration-Options can be used in the 
+    </para>
+    <para>
+        These are 
+    </para>
+    <definitionlist>
+        <listitem></listitem>
+    </definitionlist>
+</chapter>

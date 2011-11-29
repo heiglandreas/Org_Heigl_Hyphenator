@@ -2,6 +2,7 @@
 <chapter id="hyphenator.license">
     <title>Licenses</title>
     <sect1 id="hyphenator.license.package">
+    <title>Hyphenator-Package</title>
     <para>
         <classname>Org\Heigl\Hyphenator</classname> is released unter the 
         <ulink url="http://www.opensource.org/licenses/mit-license.php">
@@ -35,6 +36,7 @@
     </para>
     </sect1>
     <sect1 id="hyphenator.license.pattern">
+        <title>Hyphenation-Patterns</title>
         <para>
             The pattern files located in the folder share/files/dictionaries
             are licensed under the <ulink url="http://www.opensource.org/licenses/lgpl-license.php">

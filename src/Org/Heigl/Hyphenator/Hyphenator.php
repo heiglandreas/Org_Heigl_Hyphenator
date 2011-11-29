@@ -166,7 +166,7 @@ final class Hyphenator
     /**
      * Storage for the Options-Object.
      *
-     * @var Options\Options $_options
+     * @var Options $_options
      */
     private $_options = null;
 
@@ -194,11 +194,11 @@ final class Hyphenator
     /**
      * Set the Options
      *
-     * @param \Org\Heigl\Hyphenator\Options\Options $options The options to set
+     * @param \Org\Heigl\Hyphenator\Options $options The options to set
      *
      * @return \Org\Heigl\Hyphenator\Hyphenator
      */
-    public function setOptions(Options\Options $options)
+    public function setOptions(Options $options)
     {
         $this->_options = $options;
         $this->_tokenizers->cleanup();
@@ -213,13 +213,13 @@ final class Hyphenator
     /**
      * Get the Options
      *
-     * @return \Org\Heigl\Hyphenator\Options\Options
+     * @return \Org\Heigl\Hyphenator\Options
      */
     public function getOptions()
     {
         if ( null === $this->_options ) {
             $optFile = $this->getHomePath() . DIRECTORY_SEPARATOR . 'Hyphenator.properties';
-            $this->setOptions(Options\Options::factory($optFile));
+            $this->setOptions(Options::factory($optFile));
         }
         return $this->_options;
     }

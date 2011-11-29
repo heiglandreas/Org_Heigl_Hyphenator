@@ -35,26 +35,21 @@ PRE.PROGRAMLISTING
 {
         font-family:monospace;
         white-space: pre;
-        width: 100%;
-        background-color: #ffffcc;
+        background-color: #dddddd;
         border:solid;
         color: #000000;
-        border-color: #009999;
-        border-left: solid #009999 2px;
-        border-right: solid #009999 2px;
-        border-top: solid #009999 2px;
-        border-bottom: solid #009999 2px;
-
-        padding-left: 15pt;
+        border: 1px solid #888888;
+        padding: 1em;
 }
 
-H1
-{
+h1{
         color: #cccccc;
-        background-color: #ffffff;
+        background-color: #000000;
         font-variant: small-caps;
-        padding: 0.5em;
+        line-height: 1.5em;
+            padding-left:0.5em;
 }
+.book h1 {background-color: transparent;}
 
 H1.TITLE
 {
@@ -85,7 +80,7 @@ h2
         color: #cccccc ;
         font-style: italic;
         background-color: #ffffff;
-        padding: 0.5em
+        padding: 0.5em 0;
 }
 
 TABLE.IMPORTANT
@@ -144,7 +139,7 @@ DIV.VARIABLELIST {
         PADDING: 1px
 }
 a{
-	text-decoration:none;
+    text-decoration:none;
     color: inherit;
 }
 a:link{
@@ -211,22 +206,22 @@ hr {
 }
 
 div.navfooter td[align=right] a,div.navheader td[align=right] a {
-	background: transparent url(../img/right.png) right center no-repeat;
-	text-indent:-10000px;
-	display:inline-block;
-	height:20px;
-	width:20px;
-	color:transparent;
-	text-shadow: transparent 0 0 0;
+    background: transparent url(../img/right.png) right center no-repeat;
+    text-indent:-10000px;
+    display:inline-block;
+    height:20px;
+    width:20px;
+    color:transparent;
+    text-shadow: transparent 0 0 0;
 }
 div.navfooter td[align=left] a,div.navheader td[align=left] a {
-	background: transparent url(../img/left.png) right center no-repeat;
-	text-indent:-10000px;
-	display:inline-block;
-	height:20px;
-	width:20px;
-	color:transparent;
-	text-shadow: transparent 0 0 0;
+    background: transparent url(../img/left.png) right center no-repeat;
+    text-indent:-10000px;
+    display:inline-block;
+    height:20px;
+    width:20px;
+    color:transparent;
+    text-shadow: transparent 0 0 0;
 }
 
 DIV.NUKEFOOTER {
@@ -264,36 +259,49 @@ DIV.EXAMPLE{
 }
 
 div.toc{
-	background-color:transparent;
-	padding: 10px;
+    background-color:transparent;
+    padding: 10px;
 }
 
 div.toc dl {
-	padding-left: 10px;
+    padding-left: 10px;
 }
 
 div.chapter .toc {
-        margin-left: 20px;
-        margin-bottom: 20px;
-        width: 150px;
-        position:absolute;
-        top: 0;
-        right:0;
-        background-color: lightgoldenrodyellow;
-        border: 1px solid gray;
+    display:none;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    width: 150px;
+    position:absolute;
+    top: 0;
+    right:0;
+    background-color: lightgoldenrodyellow;
+    border: 1px solid gray;
 }
 
-UL  {
-        list-style: url("images/tux-bullet.png") disc;
+div.titlepage .copyright, div.titlepage div.author{
+    padding: 0 2em;
+}
+
+UL, OL, DL  {
+        list-style-position: inside;
+}
+ul,ol {
+        padding-left: 2em;
+        text-indent:-2em;
     }
-    
-div.chapter {
+ul {
+        list-style-type: circle;
+}
+
+div.chapter,  div.toc {
     position:relative;
     top:0;
     left: 0;
+    padding: 1em 2em;
 }
     
 div.chapter p {
-    padding: 0.5em 20px;
+    padding: 0.5em 0;
     line-height: 1.3em;
 }

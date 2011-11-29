@@ -58,7 +58,7 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
     public function testSettingOptions()
     {
         $hyphenator = new h\Hyphenator();
-        $options = new h\Options\Options();
+        $options = new h\Options();
         $this->assertAttributeEquals(null,'_options', $hyphenator);
         $hyphenator->setOptions($options);
         $this->assertAttributeSame($options, '_options', $hyphenator);
@@ -75,7 +75,7 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
     {
         $h = new h\Hyphenator();
         $o = $h->getOptions();
-        $this->assertInstanceOf('\ORg\Heigl\Hyphenator\Options\Options', $o);
+        $this->assertInstanceOf('\ORg\Heigl\Hyphenator\Options', $o);
         $this->assertSame($o,$h->getOptions());
     }
 

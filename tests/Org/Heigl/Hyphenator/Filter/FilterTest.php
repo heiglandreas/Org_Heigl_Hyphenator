@@ -33,7 +33,7 @@
 namespace Org\Heigl\HyphenatorTest\Filter;
 
 use \Org\Heigl\Hyphenator\Filter\Filter;
-use \Org\Heigl\Hyphenator\Options\Options;
+use \Org\Heigl\Hyphenator\Options;
 use \Org\Heigl\Hyphenator\Tokenizer as t;
 
 /**

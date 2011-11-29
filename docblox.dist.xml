@@ -4,7 +4,7 @@
         <directory>src/</directory>
     </files>
     <parser>
-        <target>doc/api/</target>
+        <target>build/api/</target>
         <markers>
             <item>TODO</item>
             <item>FIXME</item>  
@@ -16,13 +16,13 @@
         <visibility>public</visibility>
     </parser>
     <transformer>
-        <target>doc/api/</target>
+        <target>build/api/</target>
     </transformer>
     <logging>
         <level>warn</level>
         <paths>
-            <default>{APP_ROOT}/doc/api/docblox.{DATE}.log</default>
-            <errors>{APP_ROOT}/doc/api/docblox.{DATE}.errors.log</errors>
+            <default>{APP_ROOT}/build/api/docblox.{DATE}.log</default>
+            <errors>{APP_ROOT}/build/api/docblox.{DATE}.errors.log</errors>
         </paths>
     </logging>
     <transformations>
