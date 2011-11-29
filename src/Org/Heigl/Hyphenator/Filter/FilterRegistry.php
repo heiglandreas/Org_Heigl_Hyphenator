@@ -50,10 +50,10 @@ namespace Org\Heigl\Hyphenator\Filter;
 class FilterRegistry implements \Iterator, \Countable
 {
     /**
-    * Storage for the Tokenizers.
-    *
-    * @var \Org\Heigl\Hyphenator\Filter\Filter[] $_registry
-    */
+     * Storage for the Tokenizers.
+     *
+     * @var \Org\Heigl\Hyphenator\Filter\Filter[] $_registry
+     */
     protected $_registry = array ();
 
     /**

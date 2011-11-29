@@ -157,7 +157,7 @@ final class Hyphenator
     private $_homePath = null;
 
     /**
-     * Storage of the default Home-Path
+     * Storage of the default Home-Path.
      *
      * @var string $_defaultHomePath
      */
@@ -185,7 +185,7 @@ final class Hyphenator
     private $_filters = null;
 
     /**
-     * Storage for the tokenizers
+     * Storage for the tokenizers.
      *
      * @var \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry $_tokenizers
      */
@@ -207,8 +207,6 @@ final class Hyphenator
         }
         return $this;
     }
-
-    /**
 
     /**
      * Get the Options
@@ -412,10 +410,10 @@ final class Hyphenator
     public static function setDefaultHomePath($homePath)
     {
         if ( ! file_exists($homePath)) {
-            throw new Exception\PathNotFoundException($homePath . ' does not exist' );
+            throw new Exception\PathNotFoundException($homePath . ' does not exist');
         }
         if ( ! is_Dir($homePath)) {
-            throw new Exception\PathNotDirException($homePath . ' is not a directory' );
+            throw new Exception\PathNotDirException($homePath . ' is not a directory');
         }
 
         self::$_defaultHomePath = realpath($homePath);
@@ -428,7 +426,7 @@ final class Hyphenator
      */
     public static function getDefaultHomePath()
     {
-        if ( is_Dir(self::$_defaultHomePath) )     {
+        if ( is_Dir(self::$_defaultHomePath) ) {
             return self::$_defaultHomePath;
         }
         if ( defined('HYPHENATOR_HOME') && is_Dir(HYPHENATOR_HOME) ) {
@@ -453,11 +451,11 @@ final class Hyphenator
      */
     public function setHomePath($homePath)
     {
-        if ( ! file_exists($homePath)) {
-            throw new Exception\PathNotFoundException($homePath . ' does not exist' );
+        if ( ! file_exists($homePath) ) {
+            throw new Exception\PathNotFoundException($homePath . ' does not exist');
         }
         if ( ! is_Dir($homePath)) {
-            throw new Exception\PathNotDirException($homePath . ' is not a directory' );
+            throw new Exception\PathNotDirException($homePath . ' is not a directory');
         }
 
         $this->_homePath = realpath($homePath);
@@ -527,7 +525,7 @@ final class Hyphenator
         if ( 0 !== strpos($className, 'Org\\Heigl\\Hyphenator') ) {
             return false;
         }
-        $className = substr($className,strlen('Org\\Heigl\\Hyphenator\\'));
+        $className = substr($className, strlen('Org\\Heigl\\Hyphenator\\'));
         $file = str_replace('\\', '/', $className) . '.php';
         $fileName = __DIR__ . DIRECTORY_SEPARATOR . $file;
         if ( ! file_exists(realpath($fileName)) ) {
@@ -554,6 +552,6 @@ final class Hyphenator
  * Check for requirements and if these are not met throw an exception
  */
 if ( ! extension_loaded('mbstring') ) {
-    throw new \Exception ( '\Org\Heigl\Hyphenator requires the mbstring-extension to be loaded');
+    throw new \Exception('\Org\Heigl\Hyphenator requires the mbstring-extension to be loaded');
 }
-mb_internal_encoding ('UTF-8');
+mb_internal_encoding('UTF-8');

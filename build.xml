@@ -52,15 +52,15 @@
         <mkdir dir="${basedir}/build/logs"/>
         <mkdir dir="${basedir}/build/phpunit"/>
         <mkdir dir="${basedir}/build/phpunit/coverage"/>
-    	<delete includeemptydirs="true" verbose="false">
+        <delete includeemptydirs="true" verbose="false">
             <fileset dir="${basedir}/build/phpunit/coverage">
                 <include name="**/*" />
             </fileset>
-    	</delete>
-    	<exec executable="phpunit" dir="${basedir}/tests" failonerror="on"/>
-    	<exec executable="${basedir}/tools/removeBasePath.sh" dir="${basedir}/build/phpunit/coverage" failonerror="true">
-    		<arg line="${basedir}/src/"/>
-    	</exec>
+        </delete>
+        <exec executable="phpunit" dir="${basedir}/tests" failonerror="on"/>
+        <exec executable="${basedir}/tools/removeBasePath.sh" dir="${basedir}/build/phpunit/coverage" failonerror="true">
+            <arg line="${basedir}/src/"/>
+        </exec>
     </target>
 
     <target name="doc">
@@ -84,18 +84,30 @@
         <antcall target="clean"/>
     </target>
 
-	<target name="docbook">
+    <target name="docbook">
         <mkdir dir="${basedir}/build/doc"/>
-		<delete includeemptydirs="true" verbose="true">
+        <delete includeemptydirs="true" verbose="true">
             <fileset dir="${basedir}/build/doc">
                 <include name="**/*" />
             </fileset>
         </delete>
-		<exec executable="xsltproc" dir="${basedir}">
-			<arg line="--output build/doc/index.html doc/hyphenator.xsl doc/main.xml "/>
-		</exec>
-		<copy todir="${basedir}/build/doc/">
-			<fileset dir="${basedir}/doc/inc/"/>
-		</copy>
-	</target>
+        <exec executable="xsltproc" dir="${basedir}">
+            <arg line="--output build/doc/index.html doc/hyphenator.xsl doc/main.xml "/>
+        </exec>
+        <copy todir="${basedir}/build/doc/">
+            <fileset dir="${basedir}/doc/inc/"/>
+        </copy>
+    </target>
+    
+    <!--
+    Check the code using phpcs using the heigl.org-Standard
+    -->
+    <target name="sniff">
+        <exec executable="phpcs" dir="${basedir}/src" failonerror="true">
+            <arg value="--standard=mdv"/>
+            <arg value="-n"/>
+            <arg value="-p"/>
+        	<arg value="."/>
+        </exec>
+    </target>
 </project>

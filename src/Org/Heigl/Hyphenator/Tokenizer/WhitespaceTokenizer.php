@@ -71,7 +71,7 @@ class WhitespaceTokenizer implements Tokenizer
                 if ( $newTokens == array($token) ) {
                     continue;
                 }
-                $input->replace($token,$newTokens);
+                $input->replace($token, $newTokens);
             }
             return $input ;
         }
@@ -91,14 +91,14 @@ class WhitespaceTokenizer implements Tokenizer
      * Each whitespace is placed in a WhitespaceToken and everything else is
      * placed in a WordToken-Object
      *
-     * @param string $input
+     * @param string $input The String to tokenize
      *
      * @return Token
      */
     protected function _tokenize($input)
     {
         $tokens = array ();
-        $splits = preg_split('/([\s]+)/u',$input,-1,PREG_SPLIT_DELIM_CAPTURE);
+        $splits = preg_split('/([\s]+)/u', $input, -1, PREG_SPLIT_DELIM_CAPTURE);
         foreach ( $splits as $split ) {
             if ( '' == trim($split)) {
                 $tokens[] = new WhitespaceToken($split);

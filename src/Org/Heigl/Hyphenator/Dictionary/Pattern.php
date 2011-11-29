@@ -33,8 +33,6 @@
 
 namespace Org\Heigl\Hyphenator\Dictionary;
 
-use \Org\Heigl\Hyphenator\Exception as e;
-
 /**
  * This class provides a pattern for hyphenation
  *
@@ -58,7 +56,7 @@ class Pattern
     protected $_text = '';
 
     /**
-     * The internal storage for the pattern
+     * The internal storage for the pattern.
      *
      * @var string $_pattern
      */
@@ -85,7 +83,7 @@ class Pattern
             }
         }
         $this->_text = preg_replace(array('/[0-9]/u','/\'/u'), array('','\\’'), $item);
-        if(strlen($this->_pattern) == mb_strlen($this->_text)) {
+        if ( strlen($this->_pattern) == mb_strlen($this->_text) ) {
             $this->_pattern .= '0';
         }
         return $this;
@@ -118,13 +116,13 @@ class Pattern
     /**
      * Get the text of the pattern
      *
-     * @throws NoPatternSetException
+     * @throws \Org\Heigl\Hyphenator\Exception\NoPatternSetException
      * @return string
      */
     public function getText()
     {
         if (! $this->_text ) {
-            throw new e\NoPatternSetException('No Pattern set');
+            throw new \Org\Heigl\Hyphenator\Exception\NoPatternSetException('No Pattern set');
         }
         return $this->_text;
     }
@@ -132,12 +130,13 @@ class Pattern
     /**
      * Get the pattern of this instance
      *
+     * @throws \Org\Heigl\Hyphenator\Exception\NoPatternSetException
      * @return string
      */
     public function getPattern()
     {
         if (! $this->_pattern ) {
-            throw new e\NoPatternSetException('No Pattern set');
+            throw new \Org\Heigl\Hyphenator\Exception\NoPatternSetException('No Pattern set');
         }
         return $this->_pattern;
     }

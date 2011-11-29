@@ -119,7 +119,7 @@ class Options
     protected $_filters = array ();
 
     /**
-     * The tokenizers to use
+     * The tokenizers to use.
      *
      * @var array $_tokenizers
      */
@@ -255,7 +255,7 @@ class Options
     /**
      * Set the hyphenation quality
      *
-     * @param int $quality
+     * @param int $quality The new Hyphenation Quality
      *
      * @return \Org\Heigl\Hyphenator\Options
      */
@@ -398,6 +398,8 @@ class Options
      *
      * @param string $file The config-file to be parsed
      *
+     * @throws \Org\Heigl\Hyphenator\Exception\PathNotFoundException
+     * @throws \Org\Heigl\Hyphenator\Exception\InvalidArgumentException
      * @return \Org\Heigl\Hyphenator\Options
      */
     public static function factory($file)
@@ -415,7 +417,7 @@ class Options
 
         $option = new Options();
         foreach ( $params as $key => $val ) {
-            if ( ! method_Exists($option,'set' . $key) ) {
+            if ( ! method_Exists($option, 'set' . $key) ) {
                 continue;
             }
             call_user_Func(array($option,'set' . $key), $val);

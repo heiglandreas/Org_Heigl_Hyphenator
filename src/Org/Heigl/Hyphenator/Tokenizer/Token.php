@@ -148,7 +148,7 @@ class Token
     /**
      * Set the filtered content
      *
-     * @param \string $content
+     * @param \string $content The Filtered Content
      *
      * @return Token
      */

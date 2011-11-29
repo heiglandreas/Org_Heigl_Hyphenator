@@ -52,7 +52,7 @@ use \Org\Heigl\Hyphenator\Tokenizer as t;
 abstract class Filter
 {
     /**
-     * Storage of the options-object
+     * Storage of the options-object.
      *
      * @var \Org\Heigl\Hyphenator\Options $_options
      */
@@ -87,7 +87,7 @@ abstract class Filter
      * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
      * to apply the filter to
      *
-     *  @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
+     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
      */
     public abstract function run(t\TokenRegistry $tokens);
 

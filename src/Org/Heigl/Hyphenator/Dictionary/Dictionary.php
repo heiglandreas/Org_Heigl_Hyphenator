@@ -113,7 +113,7 @@ class Dictionary
         }
         $this->_dictionary = array();
         foreach ( parse_ini_file($file) as $key => $val ) {
-            $this->_dictionary[str_replace('@:','',$key)] = $val;
+            $this->_dictionary[str_replace('@:', '', $key)] = $val;
         }
         return $this;
     }
@@ -147,7 +147,7 @@ class Dictionary
         unset ($items[0]);
         $fh = fopen($path . $locale . '.ini', 'w+');
         foreach ($items as $item) {
-            if ( '#' == mb_substr($item,0,1)) {
+            if ( '#' == mb_substr($item, 0, 1) ) {
                 continue;
             }
             if ( '' == trim($item) ) {

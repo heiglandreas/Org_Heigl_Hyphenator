@@ -50,7 +50,7 @@ class PunktuationTokenizer implements Tokenizer
 {
 
     /**
-     * The tokens to be handled by this tokenizer as an array
+     * The tokens to be handled by this tokenizer as an array.
      *
      * @var string $_tokens
      */
@@ -120,7 +120,7 @@ class PunktuationTokenizer implements Tokenizer
                 if ( $newTokens == array($token) ) {
                     continue;
                 }
-                $f->replace($token,$newTokens);
+                $f->replace($token, $newTokens);
             }
             return $f ;
         }
@@ -140,19 +140,19 @@ class PunktuationTokenizer implements Tokenizer
      * Each whitespace is placed in a WhitespaceToken and everything else is
      * placed in a WordToken-Object
      *
-     * @param string $input
+     * @param \string $input The String to tokenize
      *
      * @return Token
      */
     protected function _tokenize($input)
     {
         $signs = '\\' . implode('\\', $this->_tokens);
-        $splits = preg_split('/([' . $signs . ']+)/u',$input,-1,PREG_SPLIT_DELIM_CAPTURE);
+        $splits = preg_split('/([' . $signs . ']+)/u', $input, -1, PREG_SPLIT_DELIM_CAPTURE);
         foreach ( $splits as $split ) {
             if ( '' == $split) {
                 continue;
             }
-            if ( in_array(mb_substr($split,0,1),$this->_tokens) ) {
+            if ( in_array(mb_substr($split, 0, 1), $this->_tokens) ) {
                 $tokens[] = new NonWordToken($split);
                 continue;
             }
