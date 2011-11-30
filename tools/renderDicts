@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+ini_set('include_path',ini_get('include_path') . ':' . realpath(__DIR__ . '/../src/'));
+
+
+include_once 'Org/Heigl/Hyphenator/Hyphenator.php';
+use \Org\Heigl\Hyphenator\Hyphenator;
+
+Hyphenator::registerAutoload();
+
+$share = realpath(__DIR__ . '/../src/Org/Heigl/Hyphenator/share/files/dictionaries');
+$iterator = new DirectoryIterator($share);
+foreach ( $iterator as $file ) {
+	if ( ! preg_match('/hyph_([\w\_]+)\.dic/',$file->getFileName(),$result) ) {
+		continue;
+	}
+echo "\n" . 'rendering ' . $result[1] . ' in ';
+	$time = microtime(true);
+	$h = Hyphenator::factory(null,$result[1]);
+	echo round(microtime(true)-$time,5) . ' seconds' . "\n";
+}
