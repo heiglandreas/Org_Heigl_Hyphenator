@@ -147,13 +147,22 @@ class Dictionary
         unset ($items[0]);
         $fh = fopen($path . $locale . '.ini', 'w+');
         foreach ($items as $item) {
-            if ( '#' == mb_substr($item, 0, 1) ) {
+            // Remove comment-lines starting with '#' or '%'.
+            if ( in_array(mb_substr($item, 0, 1),array('#','%')) ) {
                 continue;
             }
+            // Ignore empty lines.
             if ( '' == trim($item) ) {
                 continue;
             }
+            // Remove all Upper-case items as they are OOo-specific
             if ( $item === strtoupper($item) ) {
+                continue;
+            }
+            // Ignore lines containing an '=' sign as these are specific
+            // instructions for non-standard-hyphenations. These will be
+            // implemented later.
+            if ( false !== strpos($item,'=') ) {
                 continue;
             }
             $item = mb_convert_Encoding($item, 'UTF-8', $source);
