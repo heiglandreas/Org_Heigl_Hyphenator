@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.0" xmlns="http://pear.php.net/dtd/package-2.0"
+    xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+    <name>Hyphenator</name>
+    <channel>pear.heigl.org</channel>
+    <summary>Word-Hyphenation for PHP</summary>
+    <description>
+        Word-Hyphenation using the TeX-Hyphenation algorithm describet by Marc Liang
+    </description>
+    <lead>
+        <name>Andreas Heigl</name>
+        <user>heiglandreas</user>
+        <email>andreas@heigl.org</email>
+        <active>yes</active>
+    </lead>
+    <date>2011-11-30</date>
+    <version>
+        <release>2.0.0</release>
+        <api>2.0.0</api>
+    </version>
+    <stability>
+        <release>alpha</release>
+        <api>alpha</api>
+    </stability>
+    <license uri="http://www.opensource.org/licenses/mit-license.php">MIT License</license>
+    <notes>-</notes>
+    <contents> 
+        <dir name="/" >
+            <dir name="src">
+                <dir name="Org">
+                    <dir name="Heigl">
+                        <dir name="Hyphenator">
+                            <file name="Hyphenator.php" role="php" />
+                            <file name="Options.php" role="php" />
+                            <file name="Exception.php" role="php" />
+                            <file name="Anotheronefortesting.php" role="php" />
+                            <dir name="Dictionary">
+                                <file name="Dictionary.php" role="php"/>
+                                <file name="DictionaryRegistry.php" role="php"/>
+                                <file name="Pattern.php" role="php"/>
+                            </dir>
+                            <dir name="Exception">
+                                <file name="InvalidArgumentException.php" role="php"/>
+                                <file name="NoPatternSetException.php" role="php"/>
+                                <file name="PathNotDirException.php" role="php"/>
+                                <file name="PathNotFoundException.php" role="php"/>
+                            </dir>
+                            <dir name="Filter">
+                                <file name="CustomMarkupFilter.php" role="php"/>
+                                <file name="Filter.php" role="php"/>
+                                <file name="FilterRegistry.php" role="php"/>
+                                <file name="SimpleFilter.php" role="php"/>
+                            </dir>
+                            <dir name="Onlyfortesting" />
+                            <dir name="Tokenizer">
+                                <file name="PunktuationTokenizer.php" role="php" />
+                                <file name="Token.php" role="php" />
+                                <file name="Tokenizer.php" role="php" />
+                                <file name="TokenizerRegistry.php" role="php" />
+                                <file name="TokenRegistry.php" role="php" />
+                                <file name="WhitespaceTokenizer.php" role="php" />
+                                <file name="WordToken.php" role="php" />
+                            </dir>
+                            <dir name="share">
+                                <file name="" role="php" />
+                            </dir>
+                        </dir>
+                    </dir>
+                </dir>
+            </dir>
+        </dir>
+    </contents>
+    <dependencies>
+        <required>
+            <php>
+                <min>5.3</min>
+                <max>6.0.0</max>
+            </php>
+            <pearinstaller>
+                <min>1.4.0dev13</min>
+            </pearinstaller>
+            <extension>
+                <name>mbstring</name>
+            </extension>
+        </required>
+    </dependencies>
+    <phprelease>
+        <filelist>
+            <install name="" as=""/>
+        </filelist>
+    </phprelease>
+    <changelog>
+        <release>
+            <version>
+                <release>1.3.5</release>
+                <api>1.3.0</api>
+            </version>
+            <stability>
+                <release>stable</release>
+                <api>stable</api>
+            </stability>
+            <date>2005-02-26</date>
+            <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+            <notes>-</notes>
+        </release>
+        <release>
+            <version>
+                <release>1.4.0a1</release>
+                <api>1.4.0</api>
+            </version>
+            <stability>
+                <release>alpha</release>
+                <api>alpha</api>
+            </stability>
+            <date>2005-02-26</date>
+            <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+            <notes>-</notes>
+        </release>
+    </changelog>
+</package>
