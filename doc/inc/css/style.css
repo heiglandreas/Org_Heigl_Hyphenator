@@ -156,7 +156,7 @@ a:active {
 }
 
 a[href^="http:"] {
-        background: url(../img/extern.png) right center no-repeat;
+        background: url(../images/extern.png) right center no-repeat;
         padding-right: 12px;
 }
 
@@ -189,7 +189,18 @@ P.C2 {
         PADDING: 1px
 }
 
-table{color:inherit;}
+table{color:inherit;font-size:1em;}
+
+img[alt="[Caution]"]:before{
+    content:"-!-";
+}
+img[alt="[Caution]"] {
+    display:none;
+}
+div.caution{
+    border:1px solid yellow;
+    background-color: lightgoldenrodyellow;
+}
 
 div.navfooter {
         color: #eeeeee;
@@ -206,7 +217,7 @@ hr {
 }
 
 div.navfooter td[align=right] a,div.navheader td[align=right] a {
-    background: transparent url(../img/right.png) right center no-repeat;
+    background: transparent url(../images/right.png) right center no-repeat;
     text-indent:-10000px;
     display:inline-block;
     height:20px;
@@ -215,7 +226,7 @@ div.navfooter td[align=right] a,div.navheader td[align=right] a {
     text-shadow: transparent 0 0 0;
 }
 div.navfooter td[align=left] a,div.navheader td[align=left] a {
-    background: transparent url(../img/left.png) right center no-repeat;
+    background: transparent url(../images/left.png) right center no-repeat;
     text-indent:-10000px;
     display:inline-block;
     height:20px;
@@ -293,6 +304,17 @@ ul,ol {
 ul {
         list-style-type: circle;
 }
+dt {
+    font-weight: 700;
+}
+dd {
+    padding-left: 20px;
+    margin-bottom: 0.5em;
+}
+dd p {
+    padding: 0.2em 0!important;
+}
+
 
 div.chapter,  div.toc {
     position:relative;
@@ -304,4 +326,8 @@ div.chapter,  div.toc {
 div.chapter p {
     padding: 0.5em 0;
     line-height: 1.3em;
+}
+
+tt, code, kbd, samp {
+    font-size:1em;
 }

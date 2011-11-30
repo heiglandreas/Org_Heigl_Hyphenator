@@ -11,5 +11,15 @@
             <listitem>mbstring-extension</listitem>
             <listitem>Currently all input has to be UTF-8 encoded</listitem>
         </itemizedlist> 
+        <caution>
+            <title>Caveat</title>
+            <para>On loading <classname>Org\Heigl\Hyphenator\Hyphenator</classname>
+            the internal encoding of the <package>mbstring</package>-extension will
+            be set to UTF-8. When you are using something different you have to
+            call <function link="http://php.net/mb_internal_encoding">mb_internal_encoding('UTF-8')</function> before invoking any 
+            of the Hyphenators methods. Otherwise the results might be completely
+            unpredictable!
+            </para>
+        </caution>
     </para>
 </chapter>

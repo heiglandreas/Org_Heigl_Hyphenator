@@ -4,7 +4,7 @@
     <para>
         The <classname>Org\Heigl\Hyphenator</classname>-Package can be configured 
         using the <filename>Hyphenator.properties</filename>-File inside
-        the defined <varname>HYPHENATOR_HOME</varname>-Directory.
+        the defined <constant>HYPHENATOR_HOME</constant>-Directory.
     </para>
     <para>
         The <varname>HYPHENATOR_HOME</varname>-Directory will be retrieved on 
@@ -12,7 +12,7 @@
         the following possibilities.
         <orderedlist>
             <listitem>Check for a folder defined via <methodname>Org\Heigl\Hyphenator::setDefaultHomePath</methodname>.</listitem>
-            <listitem>Check for a PHP-constant <varname>HYPHENATOR_HOME</varname>.</listitem>
+            <listitem>Check for a PHP-constant <constant>HYPHENATOR_HOME</constant>.</listitem>
             <listitem>Check for an environment-variable <varname>HYPHENATOR_HOME</varname>.</listitem>
             <listitem>Use the in the package included <filename>share</filename>-folder</listitem>
         </orderedlist>
@@ -36,12 +36,133 @@ $hyphenator->setOptions($options);
 // CAVEAT: This will also set all other Options to the default values!]]></programlisting>
     </para>
     <para>
-        The following configuration-Options can be used in the 
+        The following configuration-Options can be used.
     </para>
-    <para>
-        These are 
+    <para>The configuration file is named <filename>Hyphenator.properties</filename>
+    and is located in the top-level of the <constant>HYPHENATOR_HOME</constant>-Directory.
     </para>
-    <definitionlist>
-        <listitem></listitem>
-    </definitionlist>
+    <variablelist>
+        <varlistentry>
+            <term>hyphen</term>
+            <listitem>
+                <para>This character shall be used as Hyphen-Character.</para>
+                <para>This defaults to the soft-hyphen-character U+00AD (<constant>SOFT-HYPHEN</constant>)</para>
+                <para>This can also be set using 
+                <methodname>Org\Heigl\Hyphenator\Option::setHyphen()</methodname>
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term>
+                leftMin
+            </term>
+            <listitem>
+                <para>How many characters have to be left unhyphenated to the left 
+                of the word.</para>
+                <para>This has to be an integer value and defaults to 2</para>
+                <para>This can also be set using 
+                <methodname>Org\Heigl\Hyphenator\Option::setLeftMin()</methodname>
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term id="hyphenator.options.rightMin">
+                <varname>rightMin</varname>
+            </term>
+            <listitem>
+                <para>
+                How many characters have to be left unhyphenated to the right 
+                of the word.</para>
+                <para>This has to be an integer value and defaults to 2</para>
+                <para>This can also be set using 
+                <methodname>Org\Heigl\Hyphenator\Option::setRightMin()</methodname>
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term id="hyphenator.options.wordMin">
+                <varname>wordMin</varname>
+            </term>
+            <listitem>
+                <para>
+                Words under the given length will not be hyphenated altogether.
+                It makes sense to set option to a higher value than the sum of 
+                rightMin and leftMin.</para>
+                <para>This defaults to 6</para>
+                <para>This can also be set using 
+                <methodname>Org\Heigl\Hyphenator\Option::setWordMin()</methodname>
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term id="hyphenator.options.quality">
+                quality
+            </term>
+            <listitem>
+                <para>
+                How good shal the hyphenation be. The higher the number the 
+                better. THis can be any integer from 0 (no Hyphenation at all) 
+                through 9 (berst hyphernation). </para>
+                <para>This defaults to 9.</para>
+                    <caution><title>CAVEAT</title>Change this only if you know what you do!</caution>
+                <para>
+                This can also be set using
+                <methodname>Org\Heigl\Hyphenator\Option::setQuality()</methodname>
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term id="hyphenator.options.defaultLocale">
+                defaultLocale
+            </term>
+            <listitem>
+                <para>This parameter defines what dictionary to use by default
+                for hyphenation.</para>
+                <para>This can also be set using
+                <methodname>Org\Heigl\Hyphenator\Option::setdefaultLocale()</methodname>
+                </para>
+                <para>This value will be overwritten by the second parameter of 
+                <methodname>Org\Heigl\Hyphenator\Hyphenator::factory()</methodname>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term id="hyphenator.options.tokenizers">
+                tokenizers
+            </term>
+            <listitem>
+                <para>
+                A comma-separated list of tokenizers to use for splitting the 
+                text to be hyphenated into hypheable chunks.</para>
+                <para>The tokenizers have to implement the 
+                <classname>Org\Heigl\Tokenizer\Tokenizer</classname>-interface.
+                </para><para>The tokenizers can be given by using the Part of 
+                the Classname before the "Tokenizer". So for the <classname>WhitespaceTokeinzer</classname>
+                it would suffice to use "Whitespace" as name of the tokenizer.</para>
+                <para>
+                    Tokenizers can also be set using
+                    <methodname>Org\Heigl\Hyphenator\Hyphenator::addTokenizer()</methodname>
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term id="hyphenator.options.filters">
+                filters
+            </term>
+            <listitem>
+                <para>
+                A comma-separated list of filters to use for postprocessing the 
+                hyphenated text</para>
+                <para>The filters have to extend the 
+                <classname>Org\Heigl\Filter\Filter</classname>-class.
+                </para><para>The filters can be given by using the Part of 
+                the Classname before the "Filter". So for the <classname>SimpleFilter</classname>
+                it would suffice to use "Simple" as name of the filter.</para>
+                <para>
+                    Filters can also be set using
+                    <methodname>Org\Heigl\Hyphenator\Hyphenator::addFilter()</methodname>
+                </para>
+            </listitem>
+        </varlistentry>
+    </variablelist>
 </chapter>

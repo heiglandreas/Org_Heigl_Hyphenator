@@ -4,11 +4,9 @@
     <sect1>
         <title>Simple Example</title>
         <para>
-            <programlisting language="php" id="example.simple">
-                <![CDATA[use \Org\Heigl\Hyphenator as h;
+            <programlisting language="php" id="example.simple"><![CDATA[use \Org\Heigl\Hyphenator as h;
 $hyphenator = h\Hyphenator::factory();
-$result = $hyphenator->hyphenate('This is your text to be hyphenated');]]>
-            </programlisting>
+$result = $hyphenator->hyphenate('This is your text to be hyphenated');]]></programlisting>
         </para>
         <para>
             Plainly create a <classname>Hyphenator</classname>-Object via the
