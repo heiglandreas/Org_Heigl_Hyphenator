@@ -6,8 +6,9 @@
  */
 
 ini_set ( 'display_errors', true );
-ini_set ( 'include_path', ini_get ( 'include_path') . PATH_SEPARATOR . './src' );
-require_once 'Org/Heigl/Hyphenator.php';
+ini_set ( 'include_path', './src' . PATH_SEPARATOR . ini_get ( 'include_path'));
+require_once 'Org/Heigl/Hyphenator/Hyphenator.php';
+\Org\Heigl\Hyphenator\Hyphenator::registerAutoload();
 
 if ( ! isset ( $_REQUEST ['language'] ) ) {
     $_REQUEST ['language'] = 'de_DE';
@@ -16,19 +17,19 @@ if ( ! isset ( $_REQUEST ['text'] ) ) {
     $_REQUEST ['text'] = '';
 }
 if ( ! isset ( $_REQUEST ['quality'] ) ) {
-    $_REQUEST ['quality'] = '5';
+    $_REQUEST ['quality'] = '9';
 }
 if ( ! isset ( $_REQUEST ['leftMin'] ) ) {
-    $_REQUEST ['leftMin'] = '5';
+    $_REQUEST ['leftMin'] = '2';
 }
 if ( ! isset ( $_REQUEST ['rightMin'] ) ) {
-    $_REQUEST ['rightMin'] = '5';
+    $_REQUEST ['rightMin'] = '2';
 }
 if ( ! isset ( $_REQUEST ['wordMin'] ) ) {
     $_REQUEST ['wordMin'] = '5';
 }
 if ( ! isset ( $_REQUEST ['customHyphen'] ) ) {
-    $_REQUEST ['customHyphen'] = '--';
+    $_REQUEST ['customHyphen'] = '-';
 }
 if ( ! isset ( $_REQUEST ['noHyphenateMarker'] ) ) {
     $_REQUEST ['noHyphenateMarker'] = 'nbr:';
@@ -72,7 +73,7 @@ if ( ! isset ( $_REQUEST ['charspacing'] ) ) {
     <head>
         <title>Hyphenation-Tests</title>
         <link rel="stylesheet" href="style.css" type="text/css" />
-        <meta http-equiv="Content-type" value="text/html; charset=ISO-8895-1"/>
+        <meta http-equiv="Content-type" value="text/html; charset=UTF-8"/>
     </head>
     <body>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
@@ -85,7 +86,8 @@ if ( ! isset ( $_REQUEST ['charspacing'] ) ) {
                 <label for="language">Language</label>
                 <select size="1" name="language">
                     <option <?php echo ('de_DE' === $_REQUEST['language'])?'selected="selected"':'';?>value="de_DE">German</option>
-                    <option <?php echo ('en_EN' === $_REQUEST['language'])?'selected="selected"':'';?>value="en_EN">English</option>
+                    <option <?php echo ('en_GB' === $_REQUEST['language'])?'selected="selected"':'';?>value="en_GB">British English</option>
+                    <option <?php echo ('en_US' === $_REQUEST['language'])?'selected="selected"':'';?>value="en_US">American English</option>
                 </select>
                 <label for="quality">Quality</label>
                 <select size="1" name="quality">
@@ -130,8 +132,6 @@ if ( ! isset ( $_REQUEST ['charspacing'] ) ) {
                 </select>
                 <label for="customHyphen">Custom Hyphen-String</label>
                 <input type="text" name="customHyphen" value="<?php echo $_REQUEST['customHyphen']; ?>" />
-                <label for="noHyphenateMarker">String that markes a Word not to be hyphenated</label>
-                <input type="text" name="noHyphenateMarker" value="<?php echo $_REQUEST['noHyphenateMarker']; ?>" />
             </fieldset>
             <fieldset class="buttons">
                 <input type="submit" name="submit" value="Submit" />
@@ -140,16 +140,14 @@ if ( ! isset ( $_REQUEST ['charspacing'] ) ) {
         </form>
         <div class="result">
             <?php
-                $hyphenator = Org_Heigl_Hyphenator::getInstance ( $_REQUEST['language'] );
-                $hyphenator -> setHyphen ( '-' )
-                            -> setLeftMin ( $_REQUEST ['leftMin'] )
-                            -> setRightMin ( $_REQUEST ['rightMin'] )
-                            -> setWordMin ( $_REQUEST ['wordMin'] )
-                            -> setSpecialChars ( 'äöüß' )
-                            -> setQuality ( $_REQUEST ['quality'] )
-                            -> setNoHyphenateMarker ( $_REQUEST ['noHyphenateMarker'] )
-                            -> setCustomHyphen ( $_REQUEST ['customHyphen'] );
-                $hyphenated = $hyphenator -> hyphenate ( $_REQUEST['text'] );
+                $hyphenator = \Org\Heigl\Hyphenator\Hyphenator::factory(null,$_REQUEST['language']);
+                $hyphenator->getOptions()
+                           ->setHyphen($_REQUEST['customHyphen'])
+                           ->setLeftMin ( $_REQUEST ['leftMin'])
+                           ->setRightMin ( $_REQUEST ['rightMin'])
+                           ->setWordMin ( $_REQUEST ['wordMin'])
+                           ->setQuality ( $_REQUEST ['quality']);
+                $hyphenated = $hyphenator->hyphenate($_REQUEST['text']);
                 echo '<span>' . $hyphenated . '</span>';
             ?>
         </div>
