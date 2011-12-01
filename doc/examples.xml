@@ -2,6 +2,16 @@
 <chapter id="hyphenator.examples">
     <title>Usage-Examples</title>
     <sect1>
+        <title>Prerequisites</title>
+        <para>Before the <package>Hyphenator</package> can be used you have to 
+        add the provided autoloader either using your own autoloader or by 
+        invoking the <package>Hyphenators</package> own autoloader</para>
+        <para>
+            <programlisting language="php" id="hyphenator.example.prerequisites">require_once 'path/to/Org/Heigl/Hyphenator/Hyphenator.php';
+\Org\Heigl\Hyphenator\Hyphenator::registerAutoload()</programlisting>
+        </para>
+    </sect1>
+    <sect1>
         <title>Simple Example</title>
         <para>
             <programlisting language="php" id="example.simple"><![CDATA[use \Org\Heigl\Hyphenator as h;
@@ -29,4 +39,16 @@ $result = $hyphenator->hyphenate('This is your text to be hyphenated');]]></prog
             hyphenator (normaly the webserver-user).
         </para>
     </sect1>
+    <caution>
+        <title>Performance-Hint</title>
+        <para>
+            Due to the sometimes rather large hyphenation-pattern-files it 
+            might be a good idea to cache the hyphenator after instantiation to
+            reuse the once created instance.
+        </para>
+        <para>
+            Reading the largest hyphenation-pattern-file takes up to one 
+            second on a 2.5GHz Intel Core2 Duo using 4GB RAM.
+        </para>
+    </caution>
 </chapter>

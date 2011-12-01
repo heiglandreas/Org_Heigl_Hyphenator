@@ -18,9 +18,9 @@
     <para>
         <classname>Org\Heigl\Hyphenator</classname> is a package to enable 
         word-hyphenation in PHP. It uses the algorithms described by Marc Liang
-        in his thesis <ulink href="http://www.tug.org/docs/liang/liang-thesis.pdf">
+        in his thesis <ulink url="http://www.tug.org/docs/liang/liang-thesis.pdf">
         Word Hyphenation by computer</ulink> and the extensions described
-        by László Németh in his work <ulink href="http://www.tug.org/TUGboat/tb27-1/tb86nemeth.pdf">
+        by László Németh in his work <ulink url="http://www.tug.org/TUGboat/tb27-1/tb86nemeth.pdf">
         Automatic non-standard hyphenation in OpenOffice.org</ulink>. 
     </para>
     <para>

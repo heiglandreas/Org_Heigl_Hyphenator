@@ -18,8 +18,8 @@ pear install org.heigl/Hyphenator</programlisting>
             <orderedlist>
                 <listitem>Take the <filename>Org</filename>-Folder and place it somewhere 
                 your include-path reaches it.</listitem>
-                <listitem>Make the folder <filename>Org/Heigl/Hyphenator/shared</filename>
-                writeable. As an alternative you can also copy that folder to any 
+                <listitem>Optionally you can copy the folder <filename>Org/Heigl/Hyphenator/shared</filename> 
+                to any 
                 location you like and set the <varname>HYPHERNATOR_HOME</varname>-Environment 
                 Variable or PHP-constant to that path before invoking the Hyphenator
                 for the first time.
@@ -31,6 +31,53 @@ pear install org.heigl/Hyphenator</programlisting>
                     Hyphenate!
                 </listitem>
             </orderedlist>
+        </para>
+    </sect1>
+    <sect1>
+        <title>Installed Hyphenation-Patterns</title>
+        <para>
+            This package includes hyphenation-patterns for the following locales. 
+            These are taken from the svn-directory of the OpenOffice.org-CVS hosted at
+            apache.org. For more inforamtions have a look at <ulink rel="https://svn.apache.org/repos/asf/incubator/ooo/trunk/main/dictionaries">
+            https://svn.apache.org/repos/asf/incubator/ooo/trunk/main/dictionaries</ulink>. 
+            This Link will break as soon as the OpenOffice.org-Project comes out 
+            of the apache-incubator.
+        </para>
+        <para>
+            <itemizedlist>
+                <listitem>af_ZA</listitem>
+                <listitem>ca</listitem>
+                <listitem>da_DK</listitem>
+                <listitem>de_AT</listitem>
+                <listitem>de_CH</listitem>
+                <listitem>de_DE</listitem>
+                <listitem>en_GB</listitem>
+                <listitem>en_UK</listitem>
+                <listitem>et_EE</listitem>
+                <listitem>fr</listitem>
+                <listitem>hr_HR</listitem>
+                <listitem>hu_HU</listitem>
+                <listitem>it_IT</listitem>
+                <listitem>lt_LT</listitem>
+                <listitem>nb_NO</listitem>
+                <listitem>nn_NO</listitem>
+                <listitem>nl_NL</listitem>
+                <listitem>pl_PL</listitem>
+                <listitem>pt_BR</listitem>
+                <listitem>ro_RO</listitem>
+                <listitem>ru_RU</listitem>
+                <listitem>sk_SK</listitem>
+                <listitem>sl_SI</listitem>
+                <listitem>sr</listitem>
+                <listitem>zu_ZA</listitem>
+            </itemizedlist>
+            These are the hyphenation-files that are included in OpenOffice.org.
+            If you found another hyphenation-file, feel free to contact me or 
+            the OpenOffice.org-Team!
+        </para>
+        <para> 
+            All other locales will simply not be hyphenated but the string to be
+            hyphenated will be returned "AS IS"
         </para>
     </sect1>
 </chapter>
