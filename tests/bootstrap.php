@@ -11,7 +11,7 @@
  * @author     Andreas Heigl<a.heigl@wdv.de>
  * @copyright  2011-2011 Andreas Heigl
  * @license    @__LICENSEURL__@ @__LICENSENAME__@
- * @version    2.0.alpha
+ * @version    2.0.beta
  * @since      05.09.2011
  */
 // TODO: check include path

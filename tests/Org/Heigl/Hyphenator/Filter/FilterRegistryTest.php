@@ -26,7 +26,7 @@
  * @author    Andreas Heigl <andreas@heigl.org>
  * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   2.0.alpha
+ * @version   2.0.beta
  * @since     02.11.2011
  */
 
@@ -44,7 +44,7 @@ use \Org\Heigl\Hyphenator\Tokenizer as t;
  * @author    Andreas Heigl <andreas@heigl.org>
  * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   2.0.alpha
+ * @version   2.0.beta
  * @since     02.11.2011
  */
 class FilterRegistryTest extends \PHPUnit_Framework_TestCase

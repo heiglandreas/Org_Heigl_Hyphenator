@@ -26,7 +26,7 @@
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    2.0.alpha
+ * @version    2.0.beta
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      02.11.2011
  * @todo       Implement!
@@ -43,7 +43,7 @@ namespace Org\Heigl\Hyphenator\Filter;
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    2.0.alpha
+ * @version    2.0.beta
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      02.11.2011s
  */
