@@ -342,7 +342,8 @@ final class Hyphenator
         $tokens = $this->_tokenizers->tokenize($string);
         $tokens = $this->getHyphenationPattern($tokens);
         $tokens = $this->filter($tokens);
-        return $tokens->concatenate();
+        $return = $tokens->concatenate();
+        return $return;
     }
 
     /**
@@ -357,14 +358,15 @@ final class Hyphenator
      */
     public function getHyphenationPattern(Tokenizer\TokenRegistry $registry)
     {
-        $options = $this->getOptions();
+        $minWordLength = $this->getOptions()->getMinWordLength();
         foreach ( $registry as $token ) {
             if ( ! $token instanceof \Org\Heigl\Hyphenator\Tokenizer\WordToken ) {
                 continue;
             }
-            if ( $options->getMinWordLength() > $token->length() ) {
+            if ( $minWordLength > $token->length() ) {
                 continue;
             }
+            $time = microtime(true);
             $this->getPatternForToken($token);
         }
         return $registry;
