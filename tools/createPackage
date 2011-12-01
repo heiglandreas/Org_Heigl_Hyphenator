@@ -12,7 +12,8 @@ array(
     'ignore'            => array(), // ignore TODO, all files in tests/
     'installexceptions' => array(), // baseinstalldir ="/" for phpdoc
     'dir_roles'         => array(
-                            'library'       => 'php',
+                            'Org'       => 'php',
+                            'Org/Heigl/Hyphernator/share'       => 'php',
                            ),
     'exceptions'        => array(),
                           ));
