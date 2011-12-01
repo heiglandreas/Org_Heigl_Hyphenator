@@ -36,7 +36,8 @@ the Multibyte-String-Extension will be set to UTF8.
  | Installation:                                                              |
  +----------------------------------------------------------------------------+
  
-Copy the 'Org/Heigl/Hyphenator'-folder somewhere to your PHP-include-directory
+Eitehr via PEAR or copy the 'Org/Heigl/Hyphenator'-folder somewhere to your 
+PHP-include-directory. More information can be found in the doc-section
 
  +----------------------------------------------------------------------------+
  | Usage:                                                                     |
