@@ -208,11 +208,16 @@ class Dictionary
     public function getPatternsForWord($word)
     {
         $return = array ();
-        foreach ($this->_dictionary as $pattern => $marks) {
-            if ( false === mb_strpos($word, $pattern)) {
-                continue;
+        $word = '.' . $word . '.';
+        $strlen = mb_strlen($word);
+        for ( $i = 0; $i <= $strlen; $i ++ ) {
+            for ( $j = 2; $j <= ($strlen-$i); $j++ ) {
+                $substr = mb_substr($word, $i, $j);
+                if ( ! isset($this->_dictionary[$substr]) ) {
+                    continue;
+                }
+                $return[$substr] = $this->_dictionary[$substr];
             }
-            $return[$pattern] = $marks;
         }
         return $return;
     }
