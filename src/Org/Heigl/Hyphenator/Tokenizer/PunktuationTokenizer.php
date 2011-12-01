@@ -91,6 +91,8 @@ class PunktuationTokenizer implements Tokenizer
         '©',
         '€',
         "'",
+        '-',
+        '_',
     );
 
     /**
