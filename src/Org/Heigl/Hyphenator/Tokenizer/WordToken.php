@@ -95,7 +95,7 @@ class WordToken extends Token
         $endPattern = str_repeat('0', mb_strlen($content)+1);
         foreach ( $this->_pattern as $string => $pattern ) {
             $strStart = -1;
-            while ( false !== $strStart = mb_strpos($content, $string, $strStart + 1) ) {
+            while ( false !== $strStart = @mb_strpos($content, $string, $strStart + 1) ) {
                 $strLen   = mb_strlen($string);
                 for ( $i=0; $i <= $strLen; $i++ ) {
                     $start = $i+$strStart;
