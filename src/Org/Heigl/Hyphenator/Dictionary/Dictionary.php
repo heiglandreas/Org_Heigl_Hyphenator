@@ -109,7 +109,12 @@ class Dictionary
     {
         $file = self::$_fileLocation . DIRECTORY_SEPARATOR . $locale . '.ini';
         if ( ! file_exists($file) ) {
-            $this->_parseFile($locale);
+            try{
+                $this->_parseFile($locale);
+            }catch(\Exception $e){
+                $this->_dictionary = array();
+                return $this;
+            }
         }
         $this->_dictionary = array();
         foreach ( parse_ini_file($file) as $key => $val ) {
@@ -123,6 +128,7 @@ class Dictionary
      *
      * @param string $locale Parse the file for the given locale
      *
+     * @throws \Org\Heigl\Exception\PathNotFoundException
      * @return void
      */
     protected function _parseFile($locale)
@@ -137,6 +143,10 @@ class Dictionary
                 }
                 $file = $f->getPathName();
             }
+        }
+
+        if ( ! file_Exists($file) ) {
+            throw new \Org\Heigl\Hyphenator\Exception\PathNotFoundException('The given Path does not exist');
         }
 
         $items = file($file);

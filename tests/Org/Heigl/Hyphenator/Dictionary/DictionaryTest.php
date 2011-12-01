@@ -77,5 +77,13 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(array('test'=>'01234'),'_dictionary',$dictionary);
     }
 
+    public function testCreationOfNotExistentLocale()
+    {
+        Dictionary::setFileLocation(__DIR__ . '/share/');
+        $dictionary = Dictionary::factory('xx_XX');
+        $this->assertAttributeEquals(array(),'_dictionary',$dictionary);
+        $result = $dictionary->getPatternsForWord('Donaudampfschifffahrtskapitänsmütze');
+        $this->assertEquals(array(),$result);
+    }
 
 }
