@@ -72,6 +72,18 @@
         <buildnumber />
         <property file="build.number" />
         <mkdir dir="${basedir}/dist"/>
+        <exec executable="${basedir}/tools/createPackage" dir="${basedir}/src" failonerror="true">
+            <arg value="make"/>
+        </exec>
+        <exec executable="pear" dir="${basedir}/src">
+            <arg value="package"/>
+        </exec>
+        <move todir="${basedir}/dist">
+            <fileset dir="${basedir}/src">
+                <include name="**/*.tgz"/>
+            </fileset>
+        </move>
+    	<delete file="${basedir}/src/package.xml"/>
         <zip destfile="dist/Org_Heigl_Hyphenator-Build_${build.number}.zip">
             <zipfileset dir="build/api" prefix="documentation/api" />
             <zipfileset dir="build/doc" prefix="documentation/manual" />
