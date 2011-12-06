@@ -109,10 +109,18 @@ public function testAddingTokenizer()
         $r = new TokenizerRegistry();
         $r->add($t1);
         $r->add($t2);
-        $this->assertEquals('input', $r->tokenize('input'));
+        $tr = new \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry();
+        $tr->add(new \Org\Heigl\Hyphenator\Tokenizer\WordToken('input'));
+        $this->assertEquals($tr, $r->tokenize('input'));
 
     }
 
+    public function testTokenizingWithoutTokenizer()
+    {
+        $r = new TokenizerRegistry();
+        $tr = $r->tokenize('Teststring with spaces');
+        $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry', $tr);
+    }
 
 }
 
