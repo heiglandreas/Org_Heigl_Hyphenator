@@ -106,6 +106,11 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function tokenize( $string)
     {
+        if ( ! $string instanceof TokenRegistry ) {
+            $wt = new WordToken($string);
+            $string = new TokenRegistry();
+            $string->add($wt);
+        }
         foreach ( $this as $tokenizer ) {
             $string = $tokenizer->run($string);
         }
