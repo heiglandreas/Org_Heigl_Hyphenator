@@ -127,5 +127,10 @@ class TestFilter extends \Org\Heigl\Hyphenator\Filter\Filter
     {
         return $tokens;
     }
+
+    protected function _concatenate(t\TokenREgistry $tokens)
+    {
+        return $tokens;
+    }
 }
 class Test1Filter extends TestFilter{}

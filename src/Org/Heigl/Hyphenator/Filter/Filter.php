@@ -91,4 +91,30 @@ abstract class Filter
      */
     public abstract function run(t\TokenRegistry $tokens);
 
+    /**
+     * Concatenate the given TokenRegistry to return one result
+     *
+     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
+     * to apply the filter to
+     *
+     * @return mixed
+     */
+    protected abstract function _concatenate(t\TokenRegistry $tokens);
+
+    /**
+     * Take any input and eitehr pass it to the concatenate-method or return it.
+     *
+     * If the input is a TokenRegistry, we process it, otherwise we just return it.
+     *
+     * @param mixed $tokens The input to process
+     *
+     * @return mixed
+     */
+    public function concatenate($tokens)
+    {
+        if ( $tokens instanceof t\TokenRegistry ) {
+            return $this->_concatenate($tokens);
+        }
+        return $tokens;
+    }
 }

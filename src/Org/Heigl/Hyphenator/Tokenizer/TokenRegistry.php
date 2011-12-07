@@ -121,23 +121,6 @@ class TokenRegistry implements \Iterator, \Countable
 
 
     /**
-     * Concatenate the contained tokens.
-     *
-     * The values are concatenated using the Tokenizer\Token::getFilteredValue()
-     * method
-     *
-     * @return string
-     */
-    public function concatenate()
-    {
-        $string = '';
-        foreach ( $this as $token ) {
-            $string .= $token->getFilteredContent();
-        }
-        return $string;
-    }
-
-    /**
      * Implementation of \Iterator
      *
      * @see \Iterator::rewind()
