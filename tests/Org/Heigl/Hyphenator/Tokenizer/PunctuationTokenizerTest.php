@@ -34,7 +34,7 @@ namespace Org\Heigl\HyphenatorTest\Tokenizer;
 use \Org\Heigl\Hyphenator\Tokenizer as t;
 
 /**
- * This class tests the functionality of the class PunktuationTokenizer
+ * This class tests the functionality of the class PunctuationTokenizer
  *
  * @category  Hyphenator
  * @package   Org\Heigl\Hyphenator
@@ -44,12 +44,12 @@ use \Org\Heigl\Hyphenator\Tokenizer as t;
  * @version   2.0.beta
  * @since     02.11.2011
  */
-class PunktuationTokenizerTest extends \PHPUnit_Framework_TestCase
+class PunctuationTokenizerTest extends \PHPUnit_Framework_TestCase
 {
     public function testTokenizingString()
     {
         new t\Token('test');
-        $tokenizer = new t\PunktuationTokenizer();
+        $tokenizer = new t\PunctuationTokenizer();
         $tReg = new t\TokenRegistry();
         $tReg->add(new t\WordToken('Das'))
              ->add(new t\NonWordToken('('))
@@ -68,7 +68,7 @@ class PunktuationTokenizerTest extends \PHPUnit_Framework_TestCase
     public function testTokenizingRegistry()
     {
         new t\Token('test');
-        $tokenizer = new t\PunktuationTokenizer();
+        $tokenizer = new t\PunctuationTokenizer();
         $tReg = new t\TokenRegistry();
         $tReg->add(new t\WordToken('Das(ist'))
              ->add(new t\WhitespaceToken(' '))
