@@ -30,6 +30,37 @@
         must not occur. This Hyphenator uses the pattern-files from OpenOffice
         which are based on the pattern-files created for TeX.
     </para> 
+    <sect1>
+        <title>Theory of operation</title>
+        <para>Only words can be hyphenated and the beginning and the end of a word 
+        are special boundaries that have to be considered for hyphenation. Therefore 
+        the first part of the hyphenation-process is to split up any string into 
+        words that can be hyphenated and other stuff. In this <package>Hyphenator</package>-package
+        that ist done by using special <classname>Tokenizers</classname>. These split the given 
+        string according to their special Task. So the <classname>WhitespaceTokenizer</classname> 
+        uses whitespace-characters as split-point whereas the <classname>PunctuationTokenizer</classname>
+        uses common punktuation.characters.
+        </para>
+        <para>
+            The next step in the hyphenation process is to determin the possible hyphenation-places 
+            using special hyphenation-pattern. These patterns have been used in the 
+            TeX-language  for a long time now and are widely used in other OpenSource-Projects.
+            The pattern files used for this <package>Hyphenator</package>-package are from the 
+            OpenOffice.org-project. These are also based on the TeX-pattern, but are more easy 
+            to parse than the original TeX-files. They are also in some cases enriched with additional information.
+            These patterns are locale-dependend and are provided using a <classname>Dictionary</classname>
+        </para>
+        <para>
+            After the patterns have been retrieved for a word, the possible hyphenation positions can be 
+            defined. The word is then filtered using a <classname>Filter</classname> that handles the actual hyphenation.
+            According to the selected filter it is for instance possible to mark every possible hyphenation-position  with the
+            given Hyphen-string (<classname>SimpleFilter</classname>). Other Filters are possible.
+        </para>
+        <para>
+            The last step is to merge all the bits and pieces the tokenizers left over so we can ge a final hyphenation result.
+            This too is handled by the Filters as the result might be different according to the used token-filter. 
+        </para>
+    </sect1>
 </chapter>
     &prerequisites;
     &installation;
