@@ -284,6 +284,11 @@ final class Hyphenator
      */
     public function getTokenizers()
     {
+        if ( 0 == $this->_tokenizers->count() ) {
+            foreach ( $this->getOptions()->getTokenizers() as $tokenizer) {
+                $this->addTokenizer($tokenizer);
+            }
+        }
         return $this->_tokenizers;
     }
 
@@ -294,6 +299,9 @@ final class Hyphenator
      */
     public function getDictionaries()
     {
+        if ( 0 == $this->_dicts->count() ) {
+            $this->addDictionary($this->getOptions()->getDefaultLocale());
+        }
         return $this->_dicts;
     }
 
@@ -304,6 +312,12 @@ final class Hyphenator
      */
     public function getFilters()
     {
+        if ( 0 == $this->_filters->count() ) {
+            foreach ( $this->getOptions()->getFilters() as $filter) {
+                $this->addFilter($filter);
+            }
+        }
+
         return $this->_filters;
     }
 
@@ -382,7 +396,7 @@ final class Hyphenator
      */
     public function filter(Tokenizer\TokenRegistry $registry)
     {
-        return $this->_filters->filter($registry);
+        return $this->getFilters()->filter($registry);
     }
 
     /**
@@ -394,7 +408,7 @@ final class Hyphenator
      */
     public function getPatternForToken(Tokenizer\WordToken $token)
     {
-        foreach ( $this->_dicts as $dictionary ) {
+        foreach ( $this->getDictionaries() as $dictionary ) {
             $token->addPattern($dictionary->getPatternsForWord($token->get()));
         }
         return $token;
@@ -504,14 +518,6 @@ final class Hyphenator
         if ( null !== $locale ) {
             $hyphenator->getOptions()->setDefaultLocale($locale);
         }
-        foreach ( $hyphenator->getOptions()->getTokenizers() as $tokenizer) {
-            $hyphenator->addTokenizer($tokenizer);
-        }
-
-        foreach ( $hyphenator->getOptions()->getFilters() as $filter) {
-            $hyphenator->addFilter($filter);
-        }
-        $hyphenator->addDictionary($hyphenator->getOptions()->getDefaultLocale());
         return $hyphenator;
     }
 
