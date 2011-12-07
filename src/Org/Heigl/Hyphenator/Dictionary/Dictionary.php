@@ -107,6 +107,7 @@ class Dictionary
      */
     public function load($locale)
     {
+        $locale = $this->_unifyLocale($locale);
         $file = self::$_fileLocation . DIRECTORY_SEPARATOR . $locale . '.ini';
         if ( ! file_exists($file) ) {
             try{
@@ -236,5 +237,31 @@ class Dictionary
     {
         $this->_dictionary[$string] = $pattern;
         return $this;
+    }
+
+    /**
+     * Unify the given locale to a defsult format.
+     *
+     * For that in a 2 by 2 format the whole string is splited, the first part
+     * lowercased, the sewcond part upercased and concatenated with n under-
+     * score.
+     *
+     * a 2letter locae will simply be lowercased.
+     *
+     * everything else will be returned AS IS
+     *
+     * @param string $locale The locale to unify
+     *
+     * @return string
+     */
+    protected function _unifyLocale($locale)
+    {
+        if ( 2 == strlen($locale) ) {
+            return strtolower($locale);
+        }
+        if ( preg_match('/([a-zA-Z]{2,})[^a-zA-Z]+([a-zA-Z]{2,})/i',$locale, $result) ) {
+            return strtolower($result[1]) . '_' . strtoupper($result[2]);
+        }
+        return (string) $locale;
     }
 }

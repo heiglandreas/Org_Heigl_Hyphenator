@@ -62,6 +62,13 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue('UTF-8' == mb_detect_encoding(file_get_contents(__DIR__ . '/share/de.ini')));
     }
 
+    public function testParsingWrongLocaleWorks()
+    {
+        Dictionary::setFileLocation(__DIR__ . '/../../share/test3/files/dictionaries');
+        $dict = Dictionary::factory('de-de');
+        $this->assertAttributeNotEquals(array(),'_dictionary',$dict);
+    }
+
     public function testGettingPatterns()
     {
         Dictionary::setFileLocation(__DIR__ . '/share/');
