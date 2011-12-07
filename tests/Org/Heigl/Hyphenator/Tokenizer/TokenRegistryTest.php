@@ -123,17 +123,4 @@ class TokenRegistryTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testConcatenation()
-    {
-        $r = new TokenRegistry();
-        $r->add(new Token('test'))
-          ->add(new Token(' '))
-          ->add(new Token('oder'))
-          ->add(new Token('}'))
-          ->add(new Token(' '))
-          ->add(new Token('so'))
-          ->add(new Token(' '))
-          ->add(new Token('ähnlich'));
-        $this->assertEquals( 'test oder} so ähnlich', $r->concatenate());
-    }
 }
