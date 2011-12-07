@@ -67,4 +67,8 @@ class Test2Filter extends Filter
     {
         return $tokens;
     }
+    protected function _concatenate(t\TokenREgistry $tokens)
+    {
+        return $tokens;
+    }
 }

@@ -356,7 +356,7 @@ final class Hyphenator
         $tokens = $this->_tokenizers->tokenize($string);
         $tokens = $this->getHyphenationPattern($tokens);
         $tokens = $this->filter($tokens);
-        $return = $tokens->concatenate();
+        $return = $this->getFilters()->concatenate($tokens);
         return $return;
     }
 

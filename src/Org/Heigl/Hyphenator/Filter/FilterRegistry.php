@@ -115,6 +115,21 @@ class FilterRegistry implements \Iterator, \Countable
     }
 
     /**
+     * Concatenate the content of the given TokenRegistry
+     *
+     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The
+     * Registry to filter
+     *
+     * @return mixed
+     */
+    public function concatenate(\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens)
+    {
+        foreach ( $this as $filter ) {
+            $tokens = $filter->concatenate($tokens);
+        }
+        return $tokens;
+    }
+    /**
      * Implementation of \Iterator
      *
      * @see \Iterator::rewind()
