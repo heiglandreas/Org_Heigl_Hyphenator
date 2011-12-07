@@ -102,6 +102,7 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
     public function  testSettingFilters()
     {
         $h = new h\Hyphenator();
+        $h->getOptions()->setFilters(array());
         $f = new h\Filter\SimpleFilter();
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Filter\FilterRegistry', $h->getFilters());
         $this->assertEquals(0,$h->getFilters()->count());
@@ -225,14 +226,6 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         \Org\Heigl\Hyphenator\Dictionary\Dictionary::setFileLocation(__DIR__ . '/share/test3/files/dictionaries/');
         $h = new \Org\Heigl\Hyphenator\Hyphenator();
         $h->setOptions($o);
-        foreach ( $h->getOptions()->getTokenizers() as $tokenizer) {
-            $h->addTokenizer($tokenizer);
-        }
-
-        foreach ( $h->getOptions()->getFilters() as $filter) {
-            $h->addFilter($filter);
-        }
-        $h->addDictionary($h->getOptions()->getDefaultLocale());
 
         $this->assertEquals('We have some re-al-ly long words in ger-man like sau-er-stoff-feld-fla-sche.',$h->hyphenate('We have some really long words in german like sauerstofffeldflasche.'));
     }
