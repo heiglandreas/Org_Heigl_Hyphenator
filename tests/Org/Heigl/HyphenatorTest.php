@@ -206,10 +206,35 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         $h = h\Hyphenator::factory(__DIR__ . '/share/test2','de_DE');
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry', $h->getTokenizers());
         $t = $h->getTokenizers();
-        $this->assertAttributeEquals(array(new h\Tokenizer\WhitespaceTokenizer(), new h\Tokenizer\PunktuationTokenizer()),'_registry', $t);
+        $this->assertAttributeEquals(array(new h\Tokenizer\WhitespaceTokenizer(), new h\Tokenizer\PunctuationTokenizer()),'_registry', $t);
         $this->assertEquals('Do-nau-dampf-schiff-fahrt', $h->hyphenate('Donaudampfschifffahrt') );
         $this->assertEquals('Gü-ter-mäd-chen', $h->hyphenate('Gütermädchen') );
         unlink(__DIR__ . '/share/test2/files/dictionaries/de_DE.ini');
+    }
+
+    public function testHyphenatorInvocationWithoutFactory()
+    {
+        $o = new \Org\Heigl\Hyphenator\Options();
+        $o->setHyphen('-')
+          ->setDefaultLocale('de_DE')
+          ->setRightMin(2)
+          ->setLeftMin(2)
+          ->setWordMin(5)
+          ->setFilters('Simple')
+          ->setTokenizers('Whitespace','Punctuation');
+        \Org\Heigl\Hyphenator\Dictionary\Dictionary::setFileLocation(__DIR__ . '/share/test3/files/dictionaries/');
+        $h = new \Org\Heigl\Hyphenator\Hyphenator();
+        $h->setOptions($o);
+        foreach ( $h->getOptions()->getTokenizers() as $tokenizer) {
+            $h->addTokenizer($tokenizer);
+        }
+
+        foreach ( $h->getOptions()->getFilters() as $filter) {
+            $h->addFilter($filter);
+        }
+        $h->addDictionary($h->getOptions()->getDefaultLocale());
+
+        $this->assertEquals('We have some re-al-ly long words in ger-man like sau-er-stoff-feld-fla-sche.',$h->hyphenate('We have some really long words in german like sauerstofffeldflasche.'));
     }
 
     public function setup ()
