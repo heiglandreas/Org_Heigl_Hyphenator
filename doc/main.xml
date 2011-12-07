@@ -3,6 +3,7 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://www.heigl.org/docbook/dtd/docbookx.dtd"[
 <!ENTITY prerequisites SYSTEM "prerequisites.xml">
 <!ENTITY installation SYSTEM "installation.xml">
+<!ENTITY upgrade SYSTEM "upgrading.xml">
 <!ENTITY examples SYSTEM "examples.xml">
 <!ENTITY configuration SYSTEM "configuration.xml">
 <!ENTITY licenses SYSTEM "license.xml">
@@ -32,6 +33,7 @@
 </chapter>
     &prerequisites;
     &installation;
+    &upgrade;
     &examples;
     &configuration;
     &licenses;
