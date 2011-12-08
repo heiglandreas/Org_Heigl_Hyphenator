@@ -25,7 +25,7 @@
  * @author    Andreas Heigl <andreas@heigl.org>
  * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   2.0.beta
+ * @version   2.0.1
  * @since     02.11.2011
  */
 
@@ -42,7 +42,7 @@ use \Org\Heigl\Hyphenator\Dictionary as d;
  * @author    Andreas Heigl <andreas@heigl.org>
  * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   2.0.beta
+ * @version   2.0.1
  * @since     02.11.2011
  */
 class DictionaryRegistryTest extends \PHPUnit_Framework_TestCase

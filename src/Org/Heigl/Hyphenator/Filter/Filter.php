@@ -26,7 +26,7 @@
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    2.0.beta
+ * @version    2.0.1
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      02.11.2011
  * @todo       Implement!
@@ -45,7 +45,7 @@ use \Org\Heigl\Hyphenator\Tokenizer as t;
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    2.0.beta
+ * @version    2.0.1
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      02.11.2011s
  */

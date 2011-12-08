@@ -26,7 +26,7 @@
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    2.0.beta
+ * @version    2.0.1
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      11.11.2011
  */
@@ -42,7 +42,7 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
  * @author     Andreas Heigl <andreas@heigl.org>
  * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    2.0.beta
+ * @version    2.0.1
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      04.11.2011
  * @deprecated As of 07.12.2011 use PunctuationTokenizer instead

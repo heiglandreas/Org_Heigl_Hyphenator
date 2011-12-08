@@ -4,7 +4,7 @@
  *
  *
  */
-
+header('Content-Type: text/html; charset=UTF-8');
 ini_set ( 'display_errors', true );
 ini_set ( 'include_path', './src' . PATH_SEPARATOR . ini_get ( 'include_path'));
 require_once 'Org/Heigl/Hyphenator/Hyphenator.php';
@@ -88,6 +88,7 @@ if ( ! isset ( $_REQUEST ['charspacing'] ) ) {
                     <option <?php echo ('de_DE' === $_REQUEST['language'])?'selected="selected"':'';?>value="de_DE">German</option>
                     <option <?php echo ('en_GB' === $_REQUEST['language'])?'selected="selected"':'';?>value="en_GB">British English</option>
                     <option <?php echo ('en_US' === $_REQUEST['language'])?'selected="selected"':'';?>value="en_US">American English</option>
+                    <option <?php echo ('hu_HU' === $_REQUEST['language'])?'selected="selected"':'';?>value="hu_HU">Hungarian</option>
                 </select>
                 <label for="quality">Quality</label>
                 <select size="1" name="quality">
@@ -150,6 +151,9 @@ if ( ! isset ( $_REQUEST ['charspacing'] ) ) {
                 $hyphenated = $hyphenator->hyphenate($_REQUEST['text']);
                 echo '<span>' . $hyphenated . '</span>';
             ?>
+        </div>
+        <div class="result">
+        	<?php echo $_REQUEST['text']; ?>
         </div>
     </body>
 </html>
