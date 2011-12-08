@@ -122,4 +122,11 @@
         	<arg value="."/>
         </exec>
     </target>
+	
+    <!--
+    Parse the hyphenation files and create the ini-files
+    -->
+    <target name="parseDic">
+        <exec executable="${basedir}/tools/renderDicts" dir="${basedir}/tools/" failonerror="true"/>
+    </target>
 </project>
