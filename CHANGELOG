@@ -1,3 +1,12 @@
+2011-12-08 - Version 2.0.0
+- Refactoring
+- Added the manual
+
+2011-12-01 - Version 2.0.beta
+- Rewrote the complete codebase
+- Uses OpenOffice.orgs hyphenation-files
+- (nearly) complete test-coverage
+
 2009-06-10 - Version 0.1
 
 Added Quality-Hyphenation
