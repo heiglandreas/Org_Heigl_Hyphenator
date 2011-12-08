@@ -1,22 +1,25 @@
-#!/usr/bin/env php
+#!//usr/local/php5/bin/php
 <?php
+namespace Org\Heigl\Hyphenator\Dictionary;
 
-ini_set('include_path',ini_get('include_path') . ':' . realpath(__DIR__ . '/../src/'));
+ini_set('include_path',realpath(__DIR__ . '/../src/:.' ));
 
-
-include_once 'Org/Heigl/Hyphenator/Hyphenator.php';
-use \Org\Heigl\Hyphenator\Hyphenator;
-
-Hyphenator::registerAutoload();
+include_once __DIR__ . '/../src/Org/Heigl/Hyphenator/Hyphenator.php';
+\Org\Heigl\Hyphenator\Hyphenator::registerAutoload();
 
 $share = realpath(__DIR__ . '/../src/Org/Heigl/Hyphenator/share/files/dictionaries');
-$iterator = new DirectoryIterator($share);
+
+$iterator = new \DirectoryIterator($share);
+Dictionary::setFileLocation(__DIR__ . '/../src/Org/Heigl/Hyphenator/share/files/dictionaries');
 foreach ( $iterator as $file ) {
-	if ( ! preg_match('/hyph_([\w\_]+)\.dic/',$file->getFileName(),$result) ) {
-		continue;
-	}
-echo "\n" . 'rendering ' . $result[1] . ' in ';
-	$time = microtime(true);
-	$h = Hyphenator::factory(null,$result[1]);
-	echo round(microtime(true)-$time,5) . ' seconds' . "\n";
+    if ( ! preg_match('/hyph_([\w\_]+)\.dic/',$file->getFileName(),$result) ) {
+        continue;
+    }
+    echo "\n" . 'rendering ' . $result[1] . ' in ';
+    
+    $time = microtime(true);
+    try{
+        Dictionary::parseFile($result[1]);
+    }catch(\Exception $e){}
+    echo round(microtime(true)-$time,5) . ' seconds' . "\n";
 }

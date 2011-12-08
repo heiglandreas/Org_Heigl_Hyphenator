@@ -46,24 +46,24 @@
     </target>
 
     <target name="build"
-              depends="clean, doc, test, docbook, distribute" />
+              depends="clean, parseDic, test, api, manual, distribute" />
 
     <target name="test">
-        <mkdir dir="${basedir}/build/logs"/>
-        <mkdir dir="${basedir}/build/phpunit"/>
-        <mkdir dir="${basedir}/build/phpunit/coverage"/>
         <delete includeemptydirs="true" verbose="false">
             <fileset dir="${basedir}/build/phpunit/coverage">
                 <include name="**/*" />
             </fileset>
         </delete>
+        <mkdir dir="${basedir}/build/logs"/>
+        <mkdir dir="${basedir}/build/phpunit"/>
+        <mkdir dir="${basedir}/build/phpunit/coverage"/>
         <exec executable="phpunit" dir="${basedir}/tests" failonerror="on"/>
         <exec executable="${basedir}/tools/removeBasePath.sh" dir="${basedir}/build/phpunit/coverage" failonerror="true">
             <arg line="${basedir}/src/"/>
         </exec>
     </target>
 
-    <target name="doc">
+    <target name="api">
         <mkdir dir="${basedir}/build/api"/>
         <exec executable="docblox" dir="${basedir}" failonerror="on"/>
     </target>
@@ -96,7 +96,7 @@
         <antcall target="clean"/>
     </target>
 
-    <target name="docbook">
+    <target name="manual">
         <mkdir dir="${basedir}/build/doc"/>
         <delete includeemptydirs="true" verbose="true">
             <fileset dir="${basedir}/build/doc">
@@ -120,6 +120,16 @@
             <arg value="-n"/>
             <arg value="-p"/>
         	<arg value="."/>
+        </exec>
+    </target>
+	
+    <!--
+    Parse the hyphenation files and create the ini-files
+    -->
+    <target name="parseDic">
+        <exec executable="${basedir}/tools/renderDicts" dir="${basedir}/tools/" failonerror="true"/>
+        <exec executable="git" dir="${basedir}/src/Org/Heigl/Hyphenator/share/files/" failonerror="true">
+            <arg line="diff --quiet --exit-code ."/>
         </exec>
     </target>
 </project>

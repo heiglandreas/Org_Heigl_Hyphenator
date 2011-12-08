@@ -109,15 +109,10 @@ class Dictionary
     {
         $locale = $this->_unifyLocale($locale);
         $file = self::$_fileLocation . DIRECTORY_SEPARATOR . $locale . '.ini';
-        if ( ! file_exists($file) ) {
-            try{
-                $file = $this->_parseFile($locale);
-            }catch(\Exception $e){
-                $this->_dictionary = array();
-                return $this;
-            }
-        }
         $this->_dictionary = array();
+        if ( ! file_exists(realpath($file)) ) {
+            return $this;
+        }
         foreach ( parse_ini_file($file) as $key => $val ) {
             $this->_dictionary[str_replace('@:', '', $key)] = $val;
         }
@@ -129,23 +124,13 @@ class Dictionary
      *
      * @param string $locale Parse the file for the given locale
      *
-     * @throws \Org\Heigl\Exception\PathNotFoundException
+     * @throws \Org\Heigl\Hyphenator\Exception\PathNotFoundException
      * @return string
      */
-    protected function _parseFile($locale)
+    public static function parseFile($locale)
     {
         $path = self::$_fileLocation . DIRECTORY_SEPARATOR;
         $file = $path . 'hyph_' . $locale . '.dic';
-        if ( ! file_exists($file) ) {
-            $iterator = new \DirectoryIterator($path);
-            foreach ($iterator as $f) {
-                if ( 0 !== strpos($f->getFileName(), 'hyph_' . $locale)) {
-                    continue;
-                }
-                $file = $f->getPathName();
-            }
-        }
-
         if ( ! file_Exists($file) ) {
             throw new \Org\Heigl\Hyphenator\Exception\PathNotFoundException('The given Path does not exist');
         }
@@ -159,7 +144,7 @@ class Dictionary
         $fh = fopen($path . $locale . '.ini', 'w+');
         foreach ($items as $item) {
             // Remove comment-lines starting with '#' or '%'.
-            if ( in_array(mb_substr($item, 0, 1),array('#','%')) ) {
+            if ( in_array(mb_substr($item, 0, 1), array('#', '%')) ) {
                 continue;
             }
             // Ignore empty lines.
@@ -173,32 +158,17 @@ class Dictionary
             // Ignore lines containing an '=' sign as these are specific
             // instructions for non-standard-hyphenations. These will be
             // implemented later.
-            if ( false !== strpos($item,'=') ) {
+            if ( false !== strpos($item, '=') ) {
                 continue;
             }
             $item = mb_convert_Encoding($item, 'UTF-8', $source);
-            $result = $this->_parseTeXPattern($item);
+            $result = Pattern::factory($item);
             $string = '@:' . $result->getText() . ' = "' . $result->getPattern() . '"' . "\n";
             fwrite($fh, $string);
         }
         fclose($fh);
 
         return $path . $locale . '.ini';
-    }
-
-    /**
-     * Parse a TeX-Hyphenation-Pattern
-     *
-     * This returns an array containing the textual pattern as firstv and the
-     * hyphenation-pattern as second item
-     *
-     * @param \string $pattern The pattern to parse
-     *
-     * @return \array
-     */
-    protected function _parseTeXPattern($pattern)
-    {
-        return Pattern::factory($pattern);
     }
 
     /**
@@ -259,7 +229,7 @@ class Dictionary
         if ( 2 == strlen($locale) ) {
             return strtolower($locale);
         }
-        if ( preg_match('/([a-zA-Z]{2,})[^a-zA-Z]+([a-zA-Z]{2,})/i',$locale, $result) ) {
+        if ( preg_match('/([a-zA-Z]{2})[^a-zA-Z]+([a-zA-Z]{2})/i', $locale, $result) ) {
             return strtolower($result[1]) . '_' . strtoupper($result[2]);
         }
         return (string) $locale;

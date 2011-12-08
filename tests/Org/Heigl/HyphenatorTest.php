@@ -210,7 +210,6 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(array(new h\Tokenizer\WhitespaceTokenizer(), new h\Tokenizer\PunctuationTokenizer()),'_registry', $t);
         $this->assertEquals('Do-nau-dampf-schiff-fahrt', $h->hyphenate('Donaudampfschifffahrt') );
         $this->assertEquals('Gü-ter-mäd-chen', $h->hyphenate('Gütermädchen') );
-        unlink(__DIR__ . '/share/test2/files/dictionaries/de_DE.ini');
     }
 
     public function testHyphenatorInvocationWithoutFactory()
