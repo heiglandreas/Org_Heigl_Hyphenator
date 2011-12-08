@@ -124,7 +124,7 @@ class Dictionary
      *
      * @param string $locale Parse the file for the given locale
      *
-     * @throws \Org\Heigl\Exception\PathNotFoundException
+     * @throws \Org\Heigl\Hyphenator\Exception\PathNotFoundException
      * @return string
      */
     public static function parseFile($locale)
@@ -144,7 +144,7 @@ class Dictionary
         $fh = fopen($path . $locale . '.ini', 'w+');
         foreach ($items as $item) {
             // Remove comment-lines starting with '#' or '%'.
-            if ( in_array(mb_substr($item, 0, 1),array('#','%')) ) {
+            if ( in_array(mb_substr($item, 0, 1), array('#', '%')) ) {
                 continue;
             }
             // Ignore empty lines.
@@ -158,7 +158,7 @@ class Dictionary
             // Ignore lines containing an '=' sign as these are specific
             // instructions for non-standard-hyphenations. These will be
             // implemented later.
-            if ( false !== strpos($item,'=') ) {
+            if ( false !== strpos($item, '=') ) {
                 continue;
             }
             $item = mb_convert_Encoding($item, 'UTF-8', $source);
@@ -229,7 +229,7 @@ class Dictionary
         if ( 2 == strlen($locale) ) {
             return strtolower($locale);
         }
-        if ( preg_match('/([a-zA-Z]{2})[^a-zA-Z]+([a-zA-Z]{2})/i',$locale, $result) ) {
+        if ( preg_match('/([a-zA-Z]{2})[^a-zA-Z]+([a-zA-Z]{2})/i', $locale, $result) ) {
             return strtolower($result[1]) . '_' . strtoupper($result[2]);
         }
         return (string) $locale;
