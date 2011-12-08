@@ -53,13 +53,13 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals('foo','_fileLocation', '\Org\Heigl\Hyphenator\Dictionary\Dictionary');
     }
 
-    public function testParsingOnDictionaryCreationWorks()
+    public function testParsingOnDictionaryCreationDoesNotWorks()
     {
         Dictionary::setFileLocation(__DIR__ . '/share/');
         @unlink(__DIR__.'/share/de.ini');
         $dict = Dictionary::factory('de');
-        $this->assertTrue(file_Exists(__DIR__ . '/share/de.ini'));
-        $this->assertTrue('UTF-8' == mb_detect_encoding(file_get_contents(__DIR__ . '/share/de.ini')));
+        $this->assertFalse(file_Exists(__DIR__ . '/share/de.ini'));
+        //$this->assertTrue('UTF-8' == mb_detect_encoding(file_get_contents(__DIR__ . '/share/de.ini')));
     }
 
     public function testParsingWrongLocaleWorks()
@@ -72,7 +72,7 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
     public function testGettingPatterns()
     {
         Dictionary::setFileLocation(__DIR__ . '/share/');
-        $dict = Dictionary::factory('de');
+        $dict = Dictionary::factory('de-DE');
         $result = $dict->getPatternsForWord('täßterei');
         $this->assertEquals(array('täßt'=>'00020'),$result);
     }

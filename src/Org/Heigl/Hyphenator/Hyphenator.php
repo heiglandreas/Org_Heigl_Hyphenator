@@ -352,7 +352,6 @@ final class Hyphenator
      */
     public function hyphenate ( $string )
     {
-
         $tokens = $this->_tokenizers->tokenize($string);
         $tokens = $this->getHyphenationPattern($tokens);
         $tokens = $this->filter($tokens);

@@ -109,15 +109,10 @@ class Dictionary
     {
         $locale = $this->_unifyLocale($locale);
         $file = self::$_fileLocation . DIRECTORY_SEPARATOR . $locale . '.ini';
-        if ( ! file_exists($file) ) {
-            try{
-                $file = $this->_parseFile($locale);
-            }catch(\Exception $e){
-                $this->_dictionary = array();
-                return $this;
-            }
-        }
         $this->_dictionary = array();
+        if ( ! file_exists(realpath($file)) ) {
+            return $this;
+        }
         foreach ( parse_ini_file($file) as $key => $val ) {
             $this->_dictionary[str_replace('@:', '', $key)] = $val;
         }
@@ -132,7 +127,7 @@ class Dictionary
      * @throws \Org\Heigl\Exception\PathNotFoundException
      * @return string
      */
-    protected function _parseFile($locale)
+    public static function parseFile($locale)
     {
         $path = self::$_fileLocation . DIRECTORY_SEPARATOR;
         $file = $path . 'hyph_' . $locale . '.dic';
