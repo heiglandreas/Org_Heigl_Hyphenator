@@ -59,7 +59,6 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
         @unlink(__DIR__.'/share/de.ini');
         $dict = Dictionary::factory('de');
         $this->assertFalse(file_Exists(__DIR__ . '/share/de.ini'));
-        //$this->assertTrue('UTF-8' == mb_detect_encoding(file_get_contents(__DIR__ . '/share/de.ini')));
     }
 
     public function testParsingWrongLocaleWorks()
@@ -93,4 +92,19 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array(),$result);
     }
 
+    public function testParsingDicFilesWorks()
+    {
+        Dictionary::setFileLocation(__DIR__ . '/share/');
+        @unlink(__DIR__.'/share/de_TE.ini');
+        $dict = Dictionary::parseFile('de_TE');
+        $this->assertTrue(file_Exists($dict));
+        $this->assertTrue('UTF-8' == mb_detect_encoding(file_get_contents($dict)));
+        $this->assertEquals(file_get_contents(__DIR__.'/share/de_TE.default.ini'),file_get_contents($dict));
+        try{
+            $dict = Dictionary::parseFile('foobar');
+            $this->fail('This should have raised an exception!');
+        }catch(\Org\Heigl\Hyphenator\Exception\PathNotFoundException $exception){
+            $this->assertTrue(true);
+        }
+    }
 }

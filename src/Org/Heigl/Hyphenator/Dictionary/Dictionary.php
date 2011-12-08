@@ -131,16 +131,6 @@ class Dictionary
     {
         $path = self::$_fileLocation . DIRECTORY_SEPARATOR;
         $file = $path . 'hyph_' . $locale . '.dic';
-        if ( ! file_exists($file) ) {
-            $iterator = new \DirectoryIterator($path);
-            foreach ($iterator as $f) {
-                if ( 0 !== strpos($f->getFileName(), 'hyph_' . $locale)) {
-                    continue;
-                }
-                $file = $f->getPathName();
-            }
-        }
-
         if ( ! file_Exists($file) ) {
             throw new \Org\Heigl\Hyphenator\Exception\PathNotFoundException('The given Path does not exist');
         }
@@ -172,28 +162,13 @@ class Dictionary
                 continue;
             }
             $item = mb_convert_Encoding($item, 'UTF-8', $source);
-            $result = $this->_parseTeXPattern($item);
+            $result = Pattern::factory($item);
             $string = '@:' . $result->getText() . ' = "' . $result->getPattern() . '"' . "\n";
             fwrite($fh, $string);
         }
         fclose($fh);
 
         return $path . $locale . '.ini';
-    }
-
-    /**
-     * Parse a TeX-Hyphenation-Pattern
-     *
-     * This returns an array containing the textual pattern as firstv and the
-     * hyphenation-pattern as second item
-     *
-     * @param \string $pattern The pattern to parse
-     *
-     * @return \array
-     */
-    protected function _parseTeXPattern($pattern)
-    {
-        return Pattern::factory($pattern);
     }
 
     /**
@@ -254,7 +229,7 @@ class Dictionary
         if ( 2 == strlen($locale) ) {
             return strtolower($locale);
         }
-        if ( preg_match('/([a-zA-Z]{2,})[^a-zA-Z]+([a-zA-Z]{2,})/i',$locale, $result) ) {
+        if ( preg_match('/([a-zA-Z]{2})[^a-zA-Z]+([a-zA-Z]{2})/i',$locale, $result) ) {
             return strtolower($result[1]) . '_' . strtoupper($result[2]);
         }
         return (string) $locale;
