@@ -170,37 +170,3 @@ class Token
 
 }
 
-/**
- * This Class describes a Token represeonting something that is not a word.
- *
- * @category   Hyphenation
- * @package    Org_Heigl_Hyphenator
- * @subpackage Tokenizer
- * @author     Andreas Heigl <andreas@heigl.org>
- * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
- * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    2.0.1
- * @link       http://github.com/heiglandreas/Hyphenator
- * @since      04.11.2011
- */
-class NonWordToken extends Token
-{
-    //
-}
-/**
- * This Class describes a  Token containing whitespace
- *
- * @category   Hyphenation
- * @package    Org_Heigl_Hyphenator
- * @subpackage Tokenizer
- * @author     Andreas Heigl <andreas@heigl.org>
- * @copyright  2008-2011 Andreas Heigl<andreas@heigl.org>
- * @license    http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version    2.0.1
- * @link       http://github.com/heiglandreas/Hyphenator
- * @since      04.11.2011
- */
-class WhitespaceToken extends Token
-{
-    //
-}
