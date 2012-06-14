@@ -18,7 +18,7 @@
     },
     "autoload" : {
         "psr-0" : {
-            "Org\Heigl\Hyphenator" : "src"
+            "Org\\Heigl\\Hyphenator" : "src"
         }
     }
 }
