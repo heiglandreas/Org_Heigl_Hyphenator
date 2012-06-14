@@ -1,5 +1,5 @@
 {
-    "name" : "Org/Heigl\\Hyphenator", 
+    "name" : "Org_Heigl/Hyphenator", 
     "type" : "library",
     "description" : "Word-Hyphenation for PHP",
     "keywords" : [ "hyphenation", "hyphenate"],
