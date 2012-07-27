@@ -74,7 +74,7 @@ class Pattern
         $item = trim($pattern);
         $strlen = mb_strlen($item);
         $return = array();
-        for ( $i = 0; $i < $strlen; $i++ ) {
+        for ($i = 0; $i < $strlen; $i++) {
             if ( ( ( $i ) <= $strlen ) && preg_match('/[0-9]/u', mb_substr($item, $i, 1)) ) {
                 $this->_pattern .= mb_substr($item, $i, 1);
                 $i++;
@@ -86,6 +86,7 @@ class Pattern
         if ( strlen($this->_pattern) == mb_strlen($this->_text) ) {
             $this->_pattern .= '0';
         }
+
         return $this;
     }
 
@@ -110,6 +111,7 @@ class Pattern
     {
         $p = new Pattern();
         $p->setPattern($pattern);
+
         return $p;
     }
 
@@ -121,9 +123,10 @@ class Pattern
      */
     public function getText()
     {
-        if (! $this->_text ) {
+        if (! $this->_text) {
             throw new \Org\Heigl\Hyphenator\Exception\NoPatternSetException('No Pattern set');
         }
+
         return $this->_text;
     }
 
@@ -135,9 +138,10 @@ class Pattern
      */
     public function getPattern()
     {
-        if (! $this->_pattern ) {
+        if (! $this->_pattern) {
             throw new \Org\Heigl\Hyphenator\Exception\NoPatternSetException('No Pattern set');
         }
+
         return $this->_pattern;
     }
 }

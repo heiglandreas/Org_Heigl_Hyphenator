@@ -69,6 +69,7 @@ class FilterRegistry implements \Iterator, \Countable
         if ( ! in_array($filter, $this->_registry)) {
             $this->_registry[] = $filter;
         }
+
         return $this;
     }
 
@@ -84,6 +85,7 @@ class FilterRegistry implements \Iterator, \Countable
         if ( array_key_exists($key, $this->_registry)) {
             return $this->_registry[$key];
         }
+
         return null;
     }
 
@@ -95,6 +97,7 @@ class FilterRegistry implements \Iterator, \Countable
     public function cleanup()
     {
         $this->_registry = array ();
+
         return $this;
     }
 
@@ -108,9 +111,10 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function filter(\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens)
     {
-        foreach ( $this as $filter ) {
+        foreach ($this as $filter) {
             $tokens = $filter->run($tokens);
         }
+
         return $tokens;
     }
 
@@ -124,9 +128,10 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function concatenate(\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens)
     {
-        foreach ( $this as $filter ) {
+        foreach ($this as $filter) {
             $tokens = $filter->concatenate($tokens);
         }
+
         return $tokens;
     }
     /**
@@ -201,6 +206,7 @@ class FilterRegistry implements \Iterator, \Countable
         if ( false === current($this->_registry)) {
             return false;
         }
+
         return true;
     }
 

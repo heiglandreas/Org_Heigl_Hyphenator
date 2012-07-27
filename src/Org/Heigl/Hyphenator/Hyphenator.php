@@ -205,6 +205,7 @@ final class Hyphenator
         foreach ( $this->_options->getTokenizers() as $tokenizer ) {
             $this->addTokenizer($tokenizer);
         }
+
         return $this;
     }
 
@@ -215,10 +216,11 @@ final class Hyphenator
      */
     public function getOptions()
     {
-        if ( null === $this->_options ) {
+        if (null === $this->_options) {
             $optFile = $this->getHomePath() . DIRECTORY_SEPARATOR . 'Hyphenator.properties';
             $this->setOptions(Options::factory($optFile));
         }
+
         return $this->_options;
     }
 
@@ -232,11 +234,12 @@ final class Hyphenator
      */
     public function addDictionary($dictionary)
     {
-        if ( ! $dictionary instanceof \Org\Heigl\Hyphenator\Dictionary\Dictionary ) {
+        if (! $dictionary instanceof \Org\Heigl\Hyphenator\Dictionary\Dictionary) {
             \Org\Heigl\Hyphenator\Dictionary\Dictionary::setFileLocation($this->getHomePath() . '/files/dictionaries');
             $dictionary = \Org\Heigl\Hyphenator\Dictionary\Dictionary::factory($dictionary);
         }
         $this->_dicts->add($dictionary);
+
         return $this;
     }
 
@@ -251,12 +254,13 @@ final class Hyphenator
      */
     public function addFilter($filter)
     {
-        if ( ! $filter instanceof \Org\Heigl\Hyphenator\Filter\Filter ) {
+        if (! $filter instanceof \Org\Heigl\Hyphenator\Filter\Filter) {
             $filter = '\\Org\\Heigl\\Hyphenator\\Filter\\' . ucfirst($filter) . 'Filter';
             $filter = new $filter();
         }
         $filter->setOptions($this->getOptions());
         $this->_filters->add($filter);
+
         return $this;
     }
 
@@ -269,11 +273,12 @@ final class Hyphenator
      */
     public function addTokenizer( $tokenizer)
     {
-        if ( ! $tokenizer instanceof \Org\Heigl\Hyphenator\Tokenizer\Tokenizer ) {
+        if (! $tokenizer instanceof \Org\Heigl\Hyphenator\Tokenizer\Tokenizer) {
             $tokenizer = '\\Org\\Heigl\Hyphenator\\Tokenizer\\' . ucfirst($tokenizer) . 'Tokenizer';
             $tokenizer = new $tokenizer();
         }
         $this->_tokenizers->add($tokenizer);
+
         return $this;
     }
 
@@ -289,6 +294,7 @@ final class Hyphenator
                 $this->addTokenizer($tokenizer);
             }
         }
+
         return $this->_tokenizers;
     }
 
@@ -302,6 +308,7 @@ final class Hyphenator
         if ( 0 == $this->_dicts->count() ) {
             $this->addDictionary($this->getOptions()->getDefaultLocale());
         }
+
         return $this->_dicts;
     }
 
@@ -356,6 +363,7 @@ final class Hyphenator
         $tokens = $this->getHyphenationPattern($tokens);
         $tokens = $this->filter($tokens);
         $return = $this->getFilters()->concatenate($tokens);
+
         return $return;
     }
 
@@ -372,8 +380,8 @@ final class Hyphenator
     public function getHyphenationPattern(Tokenizer\TokenRegistry $registry)
     {
         $minWordLength = $this->getOptions()->getMinWordLength();
-        foreach ( $registry as $token ) {
-            if ( ! $token instanceof \Org\Heigl\Hyphenator\Tokenizer\WordToken ) {
+        foreach ($registry as $token) {
+            if (! $token instanceof \Org\Heigl\Hyphenator\Tokenizer\WordToken) {
                 continue;
             }
             if ( $minWordLength > $token->length() ) {
@@ -382,6 +390,7 @@ final class Hyphenator
             $time = microtime(true);
             $this->getPatternForToken($token);
         }
+
         return $registry;
     }
 
@@ -410,6 +419,7 @@ final class Hyphenator
         foreach ( $this->getDictionaries() as $dictionary ) {
             $token->addPattern($dictionary->getPatternsForWord($token->get()));
         }
+
         return $token;
     }
 
@@ -452,6 +462,7 @@ final class Hyphenator
                 return $home;
             }
         }
+
         return __DIR__ . '/share';
     }
 
@@ -492,9 +503,9 @@ final class Hyphenator
         if ( ! is_dir($this->_homePath) ) {
             return self::getDefaultHomePath();
         }
+
         return $this->_homePath;
     }
-
 
     /**
      * Create a new Hyphenator-Object for a certain locale
@@ -514,9 +525,10 @@ final class Hyphenator
         if ( null !== $path && file_Exists($path) ) {
             $hyphenator->setHomePath($path);
         }
-        if ( null !== $locale ) {
+        if (null !== $locale) {
             $hyphenator->getOptions()->setDefaultLocale($locale);
         }
+
         return $hyphenator;
     }
 
@@ -538,9 +550,10 @@ final class Hyphenator
         if ( ! file_exists(realpath($fileName)) ) {
             return false;
         }
-        if ( ! @include_once $fileName ) {
+        if (! @include_once $fileName) {
             return false;
         }
+
         return true;
     }
 

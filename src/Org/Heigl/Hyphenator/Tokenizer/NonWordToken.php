@@ -31,7 +31,6 @@
  * @since      11.11.2011
  */
 
-
 namespace Org\Heigl\Hyphenator\Tokenizer;
 
 /**

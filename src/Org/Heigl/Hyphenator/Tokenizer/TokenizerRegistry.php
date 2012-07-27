@@ -68,6 +68,7 @@ class TokenizerRegistry implements \Iterator, \Countable
         if ( ! in_array($tokenizer, $this->_registry)) {
             $this->_registry[] = $tokenizer;
         }
+
         return $this;
     }
 
@@ -83,6 +84,7 @@ class TokenizerRegistry implements \Iterator, \Countable
         if ( array_key_exists($key, $this->_registry)) {
             return $this->_registry[$key];
         }
+
         return null;
     }
 
@@ -94,6 +96,7 @@ class TokenizerRegistry implements \Iterator, \Countable
     public function cleanup()
     {
         $this->_registry = array ();
+
         return $this;
     }
 
@@ -106,14 +109,15 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function tokenize( $string)
     {
-        if ( ! $string instanceof TokenRegistry ) {
+        if (! $string instanceof TokenRegistry) {
             $wt = new WordToken($string);
             $string = new TokenRegistry();
             $string->add($wt);
         }
-        foreach ( $this as $tokenizer ) {
+        foreach ($this as $tokenizer) {
             $string = $tokenizer->run($string);
         }
+
         return $string;
     }
 
@@ -189,6 +193,7 @@ class TokenizerRegistry implements \Iterator, \Countable
         if ( false === current($this->_registry)) {
             return false;
         }
+
         return true;
     }
 }

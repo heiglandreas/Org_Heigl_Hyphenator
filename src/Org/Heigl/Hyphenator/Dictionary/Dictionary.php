@@ -95,6 +95,7 @@ class Dictionary
     {
         $dict = new Dictionary();
         $dict->load($locale);
+
         return $dict;
     }
 
@@ -116,6 +117,7 @@ class Dictionary
         foreach ( parse_ini_file($file) as $key => $val ) {
             $this->_dictionary[str_replace('@:', '', $key)] = $val;
         }
+
         return $this;
     }
 
@@ -183,7 +185,7 @@ class Dictionary
         $return = array ();
         $word = '.' . $word . '.';
         $strlen = mb_strlen($word);
-        for ( $i = 0; $i <= $strlen; $i ++ ) {
+        for ($i = 0; $i <= $strlen; $i ++) {
             for ( $j = 2; $j <= ($strlen-$i); $j++ ) {
                 $substr = mb_substr($word, $i, $j);
                 if ( ! isset($this->_dictionary[$substr]) ) {
@@ -192,6 +194,7 @@ class Dictionary
                 $return[$substr] = $this->_dictionary[$substr];
             }
         }
+
         return $return;
     }
 
@@ -206,6 +209,7 @@ class Dictionary
     public function addPAttern( $string, $pattern)
     {
         $this->_dictionary[$string] = $pattern;
+
         return $this;
     }
 
@@ -232,6 +236,7 @@ class Dictionary
         if ( preg_match('/([a-zA-Z]{2})[^a-zA-Z]+([a-zA-Z]{2})/i', $locale, $result) ) {
             return strtolower($result[1]) . '_' . strtoupper($result[2]);
         }
+
         return (string) $locale;
     }
 }

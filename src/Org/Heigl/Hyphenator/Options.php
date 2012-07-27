@@ -143,6 +143,7 @@ class Options
     public function setNoHyphenateString($noHyphenateString)
     {
         $this->_noHyphenateString = $noHyphenateString;
+
         return $this;
     }
 
@@ -166,6 +167,7 @@ class Options
     public function setHyphen($hyphen)
     {
         $this->_hyphen = $hyphen;
+
         return $this;
     }
 
@@ -189,6 +191,7 @@ class Options
     public function setLeftMin($leftMin)
     {
         $this->_leftMin = (int) $leftMin;
+
         return $this;
     }
 
@@ -212,6 +215,7 @@ class Options
     public function setRightMin($rightMin)
     {
         $this->_rightMin = (int) $rightMin;
+
         return $this;
     }
 
@@ -237,6 +241,7 @@ class Options
     public function setMinWordLength($minLength)
     {
         $this->_wordMin = (int) $minLength;
+
         return $this;
     }
 
@@ -262,6 +267,7 @@ class Options
     public function setQuality($quality)
     {
         $this->_quality = (int) $quality;
+
         return $this;
     }
 
@@ -287,6 +293,7 @@ class Options
     public function setCustomHyphen( $customHyphen)
     {
         $this->_customHyphen = (string) $customHyphen;
+
         return $this;
     }
 
@@ -314,9 +321,10 @@ class Options
         if ( ! is_array($filters) ) {
             $filters = explode(',', $filters);
         }
-        foreach ( $filters as $filter ) {
+        foreach ($filters as $filter) {
             $this->addFilter($filter);
         }
+
         return $this;
     }
 
@@ -330,10 +338,11 @@ class Options
     public function addFilter($filter)
     {
         $filter = trim($filter);
-        if ( ! $filter ) {
+        if (! $filter) {
             return $this;
         }
         $this->_filters[] = $filter;
+
         return $this;
     }
 
@@ -360,9 +369,10 @@ class Options
         if ( ! is_array($tokenizers) ) {
             $tokenizers = explode(',', $tokenizers);
         }
-        foreach ( $tokenizers as $tokenizer ) {
+        foreach ($tokenizers as $tokenizer) {
             $this->addTokenizer($tokenizer);
         }
+
         return $this;
     }
 
@@ -376,10 +386,11 @@ class Options
     public function addTokenizer($tokenizer)
     {
         $tokenizer = trim($tokenizer);
-        if ( ! $tokenizer ) {
+        if (! $tokenizer) {
             return $this;
         }
         $this->_tokenizers[] = $tokenizer;
+
         return $this;
     }
 
@@ -416,12 +427,13 @@ class Options
         }
 
         $option = new Options();
-        foreach ( $params as $key => $val ) {
+        foreach ($params as $key => $val) {
             if ( ! method_Exists($option, 'set' . $key) ) {
                 continue;
             }
             call_user_Func(array($option,'set' . $key), $val);
         }
+
         return $option;
     }
 
@@ -435,6 +447,7 @@ class Options
     public function setDefaultLocale($locale)
     {
         $this->_defaultLocale = (string) $locale;
+
         return $this;
     }
 

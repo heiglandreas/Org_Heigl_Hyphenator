@@ -61,10 +61,10 @@ class WhitespaceTokenizer implements Tokenizer
      */
     public function run($input)
     {
-        if ( $input instanceof TokenRegistry ) {
+        if ($input instanceof TokenRegistry) {
             // Tokenize a TokenRegistry
-            foreach ( $input as $token ) {
-                if ( $token instanceof WhitespaceToken ) {
+            foreach ($input as $token) {
+                if ($token instanceof WhitespaceToken) {
                     continue;
                 }
                 $newTokens = $this->_tokenize($token->get());
@@ -73,15 +73,17 @@ class WhitespaceTokenizer implements Tokenizer
                 }
                 $input->replace($token, $newTokens);
             }
+
             return $input ;
         }
 
         // Tokenize a simple string.
         $array =  $this->_tokenize($input);
         $registry = new TokenRegistry();
-        foreach ( $array as $item ) {
+        foreach ($array as $item) {
             $registry->add($item);
         }
+
         return $registry;
     }
 
@@ -99,13 +101,14 @@ class WhitespaceTokenizer implements Tokenizer
     {
         $tokens = array ();
         $splits = preg_split('/([\s]+)/u', $input, -1, PREG_SPLIT_DELIM_CAPTURE);
-        foreach ( $splits as $split ) {
+        foreach ($splits as $split) {
             if ( '' == trim($split)) {
                 $tokens[] = new WhitespaceToken($split);
                 continue;
             }
             $tokens[] = new WordToken($split);
         }
+
         return $tokens;
     }
 }

@@ -108,14 +108,14 @@ class PunctuationTokenizer implements Tokenizer
      */
     public function run($input)
     {
-        if ( $input instanceof TokenRegistry ) {
+        if ($input instanceof TokenRegistry) {
             // Tokenize a TokenRegistry
             $f = clone($input);
-            foreach ( $input as $token ) {
-                if ( $token instanceof WhitespaceToken ) {
+            foreach ($input as $token) {
+                if ($token instanceof WhitespaceToken) {
                     continue;
                 }
-                if ( $token instanceof NonWordToken ) {
+                if ($token instanceof NonWordToken) {
                     continue;
                 }
                 $newTokens = $this->_tokenize($token->get());
@@ -124,15 +124,17 @@ class PunctuationTokenizer implements Tokenizer
                 }
                 $f->replace($token, $newTokens);
             }
+
             return $f ;
         }
 
         // Tokenize a simple string.
         $array =  $this->_tokenize($input);
         $registry = new TokenRegistry();
-        foreach ( $array as $item ) {
+        foreach ($array as $item) {
             $registry->add($item);
         }
+
         return $registry;
     }
 
@@ -150,8 +152,8 @@ class PunctuationTokenizer implements Tokenizer
     {
         $signs = '\\' . implode('\\', $this->_tokens);
         $splits = preg_split('/([' . $signs . ']+)/u', $input, -1, PREG_SPLIT_DELIM_CAPTURE);
-        foreach ( $splits as $split ) {
-            if ( '' == $split) {
+        foreach ($splits as $split) {
+            if ('' == $split) {
                 continue;
             }
             if ( in_array(mb_substr($split, 0, 1), $this->_tokens) ) {
@@ -160,6 +162,7 @@ class PunctuationTokenizer implements Tokenizer
             }
             $tokens[] = new WordToken($split);
         }
+
         return $tokens;
     }
 }

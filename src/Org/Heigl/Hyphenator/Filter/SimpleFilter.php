@@ -63,8 +63,8 @@ class SimpleFilter extends Filter
      */
     public function run(t\TokenRegistry $tokens)
     {
-        foreach ( $tokens as $token ) {
-            if ( ! $token instanceof t\WordToken ) {
+        foreach ($tokens as $token) {
+            if (! $token instanceof t\WordToken) {
                 continue;
             }
             $string = $token->getFilteredContent();
@@ -72,7 +72,7 @@ class SimpleFilter extends Filter
             $length  = $token->length();
             $lastOne = 0;
             $result = array();
-            for ( $i = 1; $i <= $length; $i++ ) {
+            for ($i = 1; $i <= $length; $i++) {
                 $currPattern = mb_substr($pattern, $i, 1);
                 if ( $i < $this->_options->getLeftMin() ) {
                     continue;
@@ -80,7 +80,7 @@ class SimpleFilter extends Filter
                 if ( $i > $length - $this->_options->getRightMin() ) {
                     continue;
                 }
-                if ( 0 == $currPattern ) {
+                if (0 == $currPattern) {
                     continue;
                 }
                 if ( 0 === (int) $currPattern % 2 ) {
@@ -93,6 +93,7 @@ class SimpleFilter extends Filter
             $result [] = mb_substr($string, $lastOne);
             $token->setFilteredContent(implode($this->_options->getHyphen(), $result));
         }
+
         return $tokens;
     }
 
@@ -108,9 +109,10 @@ class SimpleFilter extends Filter
     protected function _concatenate(t\TokenRegistry $tokens)
     {
         $string = '';
-        foreach ( $tokens as $token ) {
+        foreach ($tokens as $token) {
             $string .= $token->getFilteredContent();
         }
+
         return $string;
     }
 }

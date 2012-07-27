@@ -65,7 +65,6 @@ class CustomMarkupFilter extends Filter
         return $tokens;
     }
 
-
     /**
      * Implements interface Filter
      *
@@ -78,9 +77,10 @@ class CustomMarkupFilter extends Filter
     protected function _concatenate(t\TokenRegistry $tokens)
     {
         $string = '';
-        foreach ( $tokens as $token ) {
+        foreach ($tokens as $token) {
             $string .= $token->getFilteredContent();
         }
+
         return $string;
     }
 }

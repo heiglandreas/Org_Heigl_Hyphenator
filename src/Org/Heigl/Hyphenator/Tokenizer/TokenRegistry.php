@@ -85,14 +85,14 @@ class TokenRegistry implements \Iterator, \Countable
     {
         // Get the current key of the element.
         $key = array_search($oldToken, $this->_registry, true);
-        if ( false === $key ) {
+        if (false === $key) {
             return $this;
         }
         $replacement = array ();
 
         // Check for any non-token-elements and remove them.
-        foreach ( $newTokens as $token ) {
-            if ( ! $token instanceof Token ) {
+        foreach ($newTokens as $token) {
+            if (! $token instanceof Token) {
                 continue;
             }
             $replacement[] = $token;
@@ -100,6 +100,7 @@ class TokenRegistry implements \Iterator, \Countable
 
         // Replace the old element with the newly created array
         array_splice($this->_registry, $key, 1, $replacement);
+
         return $this;
 
     }
@@ -116,9 +117,9 @@ class TokenRegistry implements \Iterator, \Countable
         if (array_key_exists($key, $this->_registry)) {
             return $this->_registry[$key];
         }
+
         return null;
     }
-
 
     /**
      * Implementation of \Iterator
@@ -192,6 +193,7 @@ class TokenRegistry implements \Iterator, \Countable
         if ( false === current($this->_registry) ) {
             return false;
         }
+
         return true;
     }
 }

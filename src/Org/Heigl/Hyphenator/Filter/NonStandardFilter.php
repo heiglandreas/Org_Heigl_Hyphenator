@@ -37,7 +37,7 @@ namespace Org\Heigl\Hyphenator\Filter;
 use \Org\Heigl\Hyphenator\Tokenizer as t;
 
 /**
- * This nterface provides a filter for non-standard hyphenation-patterns
+ * This class provides a filter for non-standard hyphenation-patterns
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
@@ -49,74 +49,68 @@ use \Org\Heigl\Hyphenator\Tokenizer as t;
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      02.11.2011s
  */
-abstract class Filter
+class NonStandardFilter extends Filter
 {
-    /**
-     * Storage of the options-object.
-     *
-     * @var \Org\Heigl\Hyphenator\Options $_options
-     */
-    protected $_options = null;
 
     /**
-     * Set the options-object for this filter
-     *
-     * @param \Org\Heigl\Hyphenator\Options $options The options to set
-     *
-     * @return Filter
-     */
-    public function setOptions(\Org\Heigl\Hyphenator\Options $options)
-    {
-        $this->_options=$options;
-
-        return $this;
-    }
-
-    /**
-     * Get the currently defined Options
-     *
-     * @return \Org\Heigl\Hyphenator\Options
-     */
-    public function getOptions()
-    {
-        return $this->_options;
-    }
-
-    /**
-     * Run the filter over the given Token
+     * Implements interface Filter
      *
      * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
-     * to apply the filter to
+     * to act upon
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
+     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
+     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
      */
-    abstract public function run(t\TokenRegistry $tokens);
-
-    /**
-     * Concatenate the given TokenRegistry to return one result
-     *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
-     * to apply the filter to
-     *
-     * @return mixed
-     */
-    abstract protected function _concatenate(t\TokenRegistry $tokens);
-
-    /**
-     * Take any input and eitehr pass it to the concatenate-method or return it.
-     *
-     * If the input is a TokenRegistry, we process it, otherwise we just return it.
-     *
-     * @param mixed $tokens The input to process
-     *
-     * @return mixed
-     */
-    public function concatenate($tokens)
+    public function run(t\TokenRegistry $tokens)
     {
-        if ($tokens instanceof t\TokenRegistry) {
-            return $this->_concatenate($tokens);
+        foreach ($tokens as $token) {
+            if (! $token instanceof t\WordToken) {
+                continue;
+            }
+            $string = $token->getFilteredContent();
+            $pattern = $token->getMergedPattern();
+            $length  = $token->length();
+            $result = array();
+            for ($i = 1; $i <= $length; $i++) {
+                $currPattern = mb_substr($pattern, $i, 1);
+                if ( $i < $this->_options->getLeftMin() ) {
+                    continue;
+                }
+                if ( $i > $length - $this->_options->getRightMin() ) {
+                    continue;
+                }
+                if (0 == $currPattern) {
+                    continue;
+                }
+                if ( 0 === (int) $currPattern % 2 ) {
+                    continue;
+                }
+                $start = mb_substr($string, 0, $i);
+                $end   = mb_substr($string, $i);
+                $result[] = $start . $this->_options->getHyphen() . $end;
+            }
+            $token->setHyphenatedContent($result);
         }
 
         return $tokens;
+    }
+
+    /**
+     * Implements interface Filter
+     *
+     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
+     * to act upon
+     *
+     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
+     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     */
+    protected function _concatenate(t\TokenRegistry $tokens)
+    {
+        $string = '';
+        foreach ($tokens as $token) {
+            $string .= $token->getFilteredContent();
+        }
+
+        return $string;
     }
 }

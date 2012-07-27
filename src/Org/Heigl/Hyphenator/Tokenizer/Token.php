@@ -109,6 +109,7 @@ class Token
     public function setHyphenatedContent (array $hyphenatedContent)
     {
         $this->_hyphenatedContent = $hyphenatedContent;
+
         return $this;
     }
 
@@ -139,9 +140,10 @@ class Token
      */
     public function getFilteredContent()
     {
-        if ( ! $this->_filteredContent ) {
+        if (! $this->_filteredContent) {
             return $this->_content;
         }
+
         return $this->_filteredContent;
     }
 
@@ -155,6 +157,7 @@ class Token
     public function setFilteredContent($content)
     {
         $this->_filteredContent = $content;
+
         return $this;
     }
 
@@ -169,4 +172,3 @@ class Token
     }
 
 }
-
