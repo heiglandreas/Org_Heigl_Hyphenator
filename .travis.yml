@@ -6,7 +6,3 @@ php:
   - "5.3"
   
 script: phpunit --coverage-text
-
-notifications:
-    email:
-        - hyphenator@heigl.org
