@@ -1,0 +1,6 @@
+# Travic-CI-Config file for \Org\Heigl\Hyphenator
+#
+language: php
+php:
+  - "5.4"
+  - "5.3"
