@@ -46,7 +46,7 @@
     </target>
 
     <target name="build"
-              depends="sniff, clean, parseDic, test, api, manual, distribute" />
+              depends="sniff, clean, parseDic, test, api, manual.rst, distribute" />
 
     <target name="test">
         <mkdir dir="${basedir}/build/logs"/>
@@ -57,7 +57,7 @@
                 <include name="**/*" />
             </fileset>
         </delete>
-        <exec executable="phpunit" dir="${basedir}/tests" failonerror="on"/>
+        <exec executable="phpunit" dir="${basedir}" failonerror="on"/>
         <exec executable="${basedir}/tools/removeBasePath.sh" dir="${basedir}/build/phpunit/coverage" failonerror="true">
             <arg line="${basedir}/src/"/>
         </exec>
@@ -65,7 +65,7 @@
 
     <target name="api">
         <mkdir dir="${basedir}/build/api"/>
-        <exec executable="docblox" dir="${basedir}" failonerror="on"/>
+        <exec executable="phpdoc" dir="${basedir}" failonerror="on"/>
     </target>
     
     <target name="distribute">
@@ -110,13 +110,28 @@
             <fileset dir="${basedir}/doc/inc/"/>
         </copy>
     </target>
+	
+	<target name="manual.rst">
+		<mkdir dir="${basedir}/build/doc"/>
+        <delete includeemptydirs="true" verbose="true">
+            <fileset dir="${basedir}/build/doc">
+                <include name="**/*" />
+            </fileset>
+        </delete>
+		<exec executable="sphinx-build" dir="${basedir}/docs">
+			<arg value="-b"/>
+			<arg value="html"/>
+			<arg value="."/>
+			<arg value="${basedir}/build/doc"/>
+		</exec>
+	</target>
     
     <!--
     Check the code using phpcs using the heigl.org-Standard
     -->
     <target name="sniff">
         <exec executable="phpcs" dir="${basedir}/src" failonerror="true">
-            <arg value="--standard=mdv"/>
+            <arg value="--standard=HeiglOrg"/>
             <arg value="-n"/>
             <arg value="-p"/>
         	<arg value="."/>
