@@ -4,3 +4,9 @@ language: php
 php:
   - "5.4"
   - "5.3"
+  
+script: phpunit --coverage-text
+
+notifications:
+    email:
+        - travis-hyphenator@heigl.org
