@@ -36,8 +36,14 @@ the Multibyte-String-Extension will be set to UTF8.
  | Installation:                                                              |
  +----------------------------------------------------------------------------+
  
-Eitehr via PEAR or copy the 'Org/Heigl/Hyphenator'-folder somewhere to your 
-PHP-include-directory. More information can be found in the doc-section
+There are three ways to install this package:
+
+ * via PEAR 
+ * via composer
+ * copy the 'Org/Heigl/Hyphenator'-folder somewhere to your PHP-include-
+   directory.
+
+More information can be found in the doc-section
 
  +----------------------------------------------------------------------------+
  | Usage:                                                                     |
@@ -54,6 +60,11 @@ echo $hyphenatedText;
 ?>
 
  +----------------------------------------------------------------------------+
- | Documentation:                                                              |
+ | Documentation:                                                             |
  +----------------------------------------------------------------------------+
-More documentation can be found in the 'documentation'-folder
+ 
+More documentation can be found at 
+http://orgheiglhyphenator.readthedocs.org/en/latest/
+
+Build-Status of the latest release can be found at
+http://travis-ci.org/#!/heiglandreas/Org_Heigl_Hyphenator
