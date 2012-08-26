@@ -9,4 +9,4 @@ script: phpunit --coverage-text
 
 notifications:
     email:
-        - travis-hyphenator@heigl.org
+        - hyphenator@heigl.org
