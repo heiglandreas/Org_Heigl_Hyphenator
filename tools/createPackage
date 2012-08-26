@@ -21,10 +21,10 @@ $pfm->setPackage('Hyphenator');
 $pfm->setSummary('word-hyphenation for PHP');
 $pfm->setDescription('word-hyphenation based on TeX-Hyphenation-patterns for PHP');
 $pfm->setChannel('pear.heigl.org');
-$pfm->setAPIVersion('2.0.0');
-$pfm->setReleaseVersion('2.0.0');
-$pfm->setReleaseStability('beta');
-$pfm->setAPIStability('beta');
+$pfm->setAPIVersion('2.0.1');
+$pfm->setReleaseVersion('2.0.4');
+$pfm->setReleaseStability('stable');
+$pfm->setAPIStability('stable');
 $pfm->setNotes('Currently this is only alpha state');
 $pfm->setPackageType('php'); // this is a PEAR-style php script package
 $pfm->addRelease(); // set up a release section
