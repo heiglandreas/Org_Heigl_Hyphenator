@@ -1,3 +1,7 @@
 phpunit.xml
 .settings/*
 build
+.gitconfig
+.project
+.buildpath
+build.number
