@@ -64,6 +64,35 @@ Invoke the ``Hyphenator`` manually
     // prints We have some re-al-ly long words in ger-man like sau-er-stoff-feld-fla-sche.
     // Thanks to lsmith for the idea!
 
+Get the hyphenation of a single word as array
+=============================================
+
+::
+    
+    <?php
+    use \Org\Heigl\Hyphenator as h;
+    $o = new h\Options();
+    $o->setHyphen('-')
+      ->setDefaultLocale('de_DE')
+      ->setRightMin(2)
+      ->setLeftMin(2)
+      ->setWordMin(5)
+      ->setFilters('NonStandard')
+      ->setTokenizers('Whitespace','Punctuation');
+    $h = new h\Hyphenator();
+    $h->setOptions($o);
+    var_Dump($h->hyphenate('Donaudampfschifffahrt'));
+    // array(4) {
+    //    [0] =>
+    //     string(22) "Do-naudampfschifffahrt"
+    //    [1] =>
+    //    string(22) "Donau-dampfschifffahrt"
+    //    [2] =>
+    //    string(22) "Donaudampf-schifffahrt"
+    //    [3] =>
+    //    string(22) "Donaudampfschiff-fahrt"
+    // }
+
 .. warning::
 
    Performance-Hint: Due to the sometimes rather large hyphenation-pattern-files it

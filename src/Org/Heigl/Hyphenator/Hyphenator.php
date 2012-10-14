@@ -362,8 +362,12 @@ final class Hyphenator
         $tokens = $this->_tokenizers->tokenize($string);
         $tokens = $this->getHyphenationPattern($tokens);
         $tokens = $this->filter($tokens);
-        $return = $this->getFilters()->concatenate($tokens);
-
+		if (1 === sizeof($tokens) && 1 === $this->getFilters()->count()) {
+			$tokens->rewind();
+			$return = $tokens->current()->getHyphenatedContent();
+		} else {
+        	$return = $this->getFilters()->concatenate($tokens);
+		}
         return $return;
     }
 
