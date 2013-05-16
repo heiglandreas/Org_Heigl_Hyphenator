@@ -48,6 +48,12 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
  */
 class WhitespaceTokenizer implements Tokenizer
 {
+    protected $whitespaces = array(
+      '\s',           // white space
+      "\xE2\x80\xAF", // non-breaking thin white space
+      "\xC2\xA0",     // non-breaking space
+    );
+
     /**
      * Split the given input into tokens using whitespace as splitter
      *
@@ -100,9 +106,10 @@ class WhitespaceTokenizer implements Tokenizer
     protected function _tokenize($input)
     {
         $tokens = array ();
-        $splits = preg_split('/([\s]+)/u', $input, -1, PREG_SPLIT_DELIM_CAPTURE);
-        foreach ($splits as $split) {
-            if ( '' == trim($split)) {
+        $splits = preg_split("/([".implode("", $this->whitespaces)."]+)/u", $input, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+        foreach ( $splits as $split ) {
+            if (preg_match("/^[".implode("", $this->whitespaces)."]+$/um", $split)) {
                 $tokens[] = new WhitespaceToken($split);
                 continue;
             }

@@ -104,4 +104,37 @@ class WhitespaceTokenizerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($tReg1, $tokenizer->run($tReg));
     }
 
+    public function testTokenizingNonBreakingSpaceString()
+    {
+        new t\Token('test');
+        $tokenizer = new t\WhitespaceTokenizer();
+        $tReg = new t\TokenRegistry();
+        $tReg->add(new t\WordToken('Some'))
+             ->add(new t\WhitespaceToken("\xC2\xA0"))
+             ->add(new t\WordToken('non'))
+             ->add(new t\WhitespaceToken("\xC2\xA0"))
+             ->add(new t\WordToken('breaking'))
+             ->add(new t\WhitespaceToken("\xC2\xA0"))
+             ->add(new t\WordToken('spaces'));
+        $registry = $tokenizer->run("Some\xC2\xA0non\xC2\xA0breaking\xC2\xA0spaces");
+        $this->assertEquals($tReg, $registry);
+    }
+
+    public function testTokenizingThinNonBreakingSpaceString()
+    {
+        new t\Token('test');
+        $tokenizer = new t\WhitespaceTokenizer();
+        $tReg = new t\TokenRegistry();
+        $tReg->add(new t\WordToken('Some'))
+             ->add(new t\WhitespaceToken("\xE2\x80\xAF"))
+             ->add(new t\WordToken('thin'))
+             ->add(new t\WhitespaceToken("\xE2\x80\xAF"))
+             ->add(new t\WordToken('non'))
+             ->add(new t\WhitespaceToken("\xE2\x80\xAF"))
+             ->add(new t\WordToken('breaking'))
+             ->add(new t\WhitespaceToken("\xE2\x80\xAF"))
+             ->add(new t\WordToken('spaces'));
+        $registry = $tokenizer->run("Some\xE2\x80\xAFthin\xE2\x80\xAFnon\xE2\x80\xAFbreaking\xE2\x80\xAFspaces");
+        $this->assertEquals($tReg, $registry);
+    }
 }

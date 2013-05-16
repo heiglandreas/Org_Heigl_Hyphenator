@@ -229,6 +229,19 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('We have some re-al-ly long words in ger-man like sau-er-stoff-feld-fla-sche.',$h->hyphenate('We have some really long words in german like sauerstofffeldflasche.'));
     }
 
+    public function testSpecialSpaceChar()
+    {
+        $o = new \Org\Heigl\Hyphenator\Options();
+        $o->setHyphen('-')
+          ->setDefaultLocale('fr')
+          ->setFilters('Simple')
+          ->setTokenizers('Whitespace','Punctuation');
+        $h = new \Org\Heigl\Hyphenator\Hyphenator();
+        $h->setOptions($o);
+
+        $this->assertEquals('Ceci est à rem-pla-cer par une fâble'."\xE2\x80\xAF".':p',$h->hyphenate('Ceci est à remplacer par une fâble'."\xE2\x80\xAF".':p'));
+    }
+
     public function setup ()
     {
         //
