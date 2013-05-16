@@ -150,6 +150,7 @@ class PunctuationTokenizer implements Tokenizer
      */
     protected function _tokenize($input)
     {
+        $tokens = array();
         $signs = '\\' . implode('\\', $this->_tokens);
         $splits = preg_split('/([' . $signs . ']+)/u', $input, -1, PREG_SPLIT_DELIM_CAPTURE);
         foreach ($splits as $split) {
