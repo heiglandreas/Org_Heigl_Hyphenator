@@ -100,9 +100,10 @@ class WhitespaceTokenizer implements Tokenizer
     protected function _tokenize($input)
     {
         $tokens = array ();
-        $splits = preg_split('/([\s]+)/u', $input, -1, PREG_SPLIT_DELIM_CAPTURE);
-        foreach ($splits as $split) {
-            if ( '' == trim($split)) {
+        $splits = preg_split("/([\\s\xE2\x80\xAF\xC2\xA0]+)/u", $input, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+        foreach ( $splits as $split ) {
+            if (preg_match("/^[\\s\xE2\x80\xAF\xC2\xA0]+$/um", $split)) {
                 $tokens[] = new WhitespaceToken($split);
                 continue;
             }
