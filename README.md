@@ -26,18 +26,18 @@ More information can be found in the doc-section
 
 # Usage: 
 
-    ```php
-    <?php
-    use \Org\Heigl\Hyphenator as h;
-    // Create a hyphenator-instance based on a given config-file
-    $hyphenator = h\Hyphenator::factory('/path/to/the/config/file.properties');
-    
-    // And hyphenate a given string
-    $hyphenatedText = $hyphenator->hyphenate($string);
-    
-    echo $hyphenatedText;
-    ?>
-    ```
+```php
+<?php
+use \Org\Heigl\Hyphenator as h;
+// Create a hyphenator-instance based on a given config-file
+$hyphenator = h\Hyphenator::factory('/path/to/the/config/file.properties');
+ 
+// And hyphenate a given string
+$hyphenatedText = $hyphenator->hyphenate($string);
+   
+echo $hyphenatedText;
+?>
+```
 
 # Documentation:
  
