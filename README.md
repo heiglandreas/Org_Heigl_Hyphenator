@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/heiglandreas/Org_Heigl_Hyphenator.png?label=ready)](https://waffle.io/heiglandreas/Org_Heigl_Hyphenator)  
 [![Build Status](https://travis-ci.org/heiglandreas/Org_Heigl_Hyphenator.png?branch=master)](https://travis-ci.org/heiglandreas/Org_Heigl_Hyphenator)
 [![Latest Stable Version](https://poser.pugx.org/org_heigl/hyphenator/v/stable.png)](https://packagist.org/packages/org_heigl/hyphenator)
 [![Total Downloads](https://poser.pugx.org/org_heigl/hyphenator/downloads.png)](https://packagist.org/packages/org_heigl/hyphenator)
