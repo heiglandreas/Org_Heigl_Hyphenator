@@ -63,7 +63,6 @@ class HyphenatorFeatureTest extends \PHPUnit_Framework_TestCase
         
         $h = new h\Hyphenator();
         $h->setOptions($o);
-        var_Dump($h->hyphenate($word));
         $this->assertEquals($expected, $h->hyphenate($word));
         
     }

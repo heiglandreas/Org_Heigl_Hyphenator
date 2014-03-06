@@ -196,6 +196,9 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
 
     public function testRegisteringAutoload()
     {
+        if (defined('HHVM_VERSION')) {
+            $this->markTestSkipped('Autoloading is not tested on HHVM');
+        }
         spl_autoload_unregister(array('Org\Heigl\Hyphenator\Hyphenator', '__autoload'));
         //$this->assertNotContains(array('Org\Heigl\Hyphenator\Hyphenator', '__autoload'),spl_autoload_functions());
         h\Hyphenator::registerAutoload();

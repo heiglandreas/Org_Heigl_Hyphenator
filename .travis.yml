@@ -6,5 +6,10 @@ php:
   - "5.3"
   - "5.5"
   - "hhvm"
+
+matrix:
+  allow_failures:
+    - hhvm: *
+  fast_finish : true
   
 script: phpunit --coverage-text
