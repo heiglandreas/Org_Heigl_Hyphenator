@@ -24,7 +24,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
-require_once ('vendor/autoload.php');
+require_once (__DIR__ . '/../vendor/autoload.php');
 
 mb_internal_encoding('UTF-8');
 require_once 'Org/Heigl/Hyphenator/Hyphenator.php';
