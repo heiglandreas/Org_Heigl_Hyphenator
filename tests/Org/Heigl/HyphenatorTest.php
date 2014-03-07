@@ -32,6 +32,7 @@
 namespace Org\Heigl\HyphenatorTest;
 
 use \Org\Heigl\Hyphenator as h;
+use \Mockery as M;
 
 /**
  * This class tests the functionality of the class Org_Heigl_Hyphenator
@@ -243,6 +244,25 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         $h->setOptions($o);
 
         $this->assertEquals('Ceci est à rem-pla-cer par une fâble'."\xE2\x80\xAF".':p',$h->hyphenate('Ceci est à remplacer par une fâble'."\xE2\x80\xAF".':p'));
+    }
+
+    public function testSettingTokenizers2()
+    {
+        $options = M::mock('\Org\Heigl\Hyphenator\Options');
+        $options->shouldReceive('getTokenizers')->once()->andReturn(array('Whitespace', 'Punctuation'));
+
+        $h = new \Org\Heigl\Hyphenator\Hyphenator();
+        $h->setOptions($options);
+
+        $ref = new \ReflectionClass($h);
+        $prop = $ref->getProperty('_tokenizers');
+        $prop->setAccessible(true);
+        $prop->setValue($h, new \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry());
+
+        $result = $h->getTokenizers();
+
+        $this->assertEquals(2, $result->count());
+        $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\WhitespaceTokenizer', $result->current());
     }
 
     public function setup ()

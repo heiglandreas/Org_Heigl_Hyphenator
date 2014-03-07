@@ -119,23 +119,23 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('++',$o->getCustomHyphen());
 
     }
-    public function testSettingCustomHyphens()
-    {
-        $o = new Options();
-        $this->markTestSkipped('Skipped due to refactoring');
-        $this->assertAttributeSame(array('&shy;','&#173;','-/-','-'),'_specialStrings',$o);
-        $this->assertSame(array('&shy;','&#173;','-/-','-'),$o->getCustomHyphens());
-        $this->assertSame($o, $o->setCustomHyphens(array()));
-        $this->assertAttributeSame(array(),'_specialStrings',$o);
-        $this->assertSame(array(),$o->getCustomHyphens());
-        $this->assertSame($o, $o->setCustomHyphens(array('foo')));
-        $this->assertAttributeSame(array('foo'),'_specialStrings',$o);
-        $this->assertSame(array('foo'),$o->getCustomHyphens());
-        $this->assertSame($o, $o->addCustomHyphen('bar'));
-        $this->assertAttributeSame(array('foo','bar'),'_specialStrings',$o);
-        $this->assertSame(array('foo','bar'),$o->getCustomHyphens());
-
-    }
+//    public function testSettingCustomHyphens()
+//    {
+//        $o = new Options();
+//        $this->markTestSkipped('Skipped due to refactoring');
+//        $this->assertAttributeSame(array('&shy;','&#173;','-/-','-'),'_specialStrings',$o);
+//        $this->assertSame(array('&shy;','&#173;','-/-','-'),$o->getCustomHyphens());
+//        $this->assertSame($o, $o->setCustomHyphens(array()));
+//        $this->assertAttributeSame(array(),'_specialStrings',$o);
+//        $this->assertSame(array(),$o->getCustomHyphens());
+//        $this->assertSame($o, $o->setCustomHyphens(array('foo')));
+//        $this->assertAttributeSame(array('foo'),'_specialStrings',$o);
+//        $this->assertSame(array('foo'),$o->getCustomHyphens());
+//        $this->assertSame($o, $o->addCustomHyphen('bar'));
+//        $this->assertAttributeSame(array('foo','bar'),'_specialStrings',$o);
+//        $this->assertSame(array('foo','bar'),$o->getCustomHyphens());
+//
+//    }
 
     public function testSettingFilters()
     {
