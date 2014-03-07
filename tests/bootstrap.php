@@ -24,6 +24,8 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
+require_once ('vendor/autoload.php');
+
 mb_internal_encoding('UTF-8');
 require_once 'Org/Heigl/Hyphenator/Hyphenator.php';
 \Org\Heigl\Hyphenator\Hyphenator::registerAutoload();
@@ -36,7 +38,7 @@ class UnitTestHelper
      * use the following code to access any protected or private class method
      * $obj = new MyClass();
      * $method = UnitTestHelper::getMethod($obj, 'nameOfMethod');
-     * $result = $method->invoke('your',method,array('arguments'));
+     * $result = $method->invoke($obj,'param1','param2');
      *
      * @param Object|string $obj
      * @param string $name
