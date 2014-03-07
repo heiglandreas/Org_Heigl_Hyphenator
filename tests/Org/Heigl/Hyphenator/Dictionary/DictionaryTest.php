@@ -107,4 +107,32 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
             $this->assertTrue(true);
         }
     }
+
+    /**
+     * @dataProvider localeUnificationProvider
+     *
+     * @param $parameter
+     * @param $expected
+     */
+    public function testLocaleUnification($parameter, $expected)
+    {
+        $obj = new \Org\Heigl\Hyphenator\Dictionary\Dictionary();
+        $method = \UnitTestHelper::getMethod($obj, '_unifyLocale');
+        $result = $method->invoke($obj,$parameter);
+
+        $this->assertEquals($expected, $result);
+
+    }
+
+    public function localeUnificationProvider()
+    {
+        return array(
+            array('de', 'de'),
+            array('DE', 'de'),
+            array('de de', 'de_DE'),
+            array('fo_BA', 'fo_BA'),
+            array('DE,de', 'de_DE'),
+            array('fooBar', 'fooBar'),
+        );
+    }
 }
