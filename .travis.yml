@@ -13,4 +13,6 @@ matrix:
     - php: hhvm
   fast_finish : true
   
-script: phpunit --coverage-text
+script:
+  - composer update
+  - phpunit --coverage-text
