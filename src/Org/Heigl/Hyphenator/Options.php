@@ -34,6 +34,8 @@
 namespace Org\Heigl\Hyphenator;
 
 use \Org\Heigl\Hyphenator\Exception;
+use \Org\Heigl\Hyphenator\Tokenizer;
+use \Org\Heigl\Hyphenator\Filter\Filter;
 
 /**
  * This class provides Options for the Hyphenator.
@@ -331,13 +333,15 @@ class Options
     /**
      * Add a filter to the options-array
      *
-     * @param string $filter The filter to be added
+     * @param string|Filter $filter The filter to be added
      *
      * @return \Org\Heigl\Hyphenator\Options
      */
     public function addFilter($filter)
     {
-        $filter = trim($filter);
+        if (is_string($filter)) {
+            $filter = trim($filter);
+        }
         if (! $filter) {
             return $this;
         }
@@ -379,13 +383,15 @@ class Options
     /**
      * Add a tokenizer to the tomeizer-list
      *
-     * @param string $tokenizer The tokenizer to add
+     * @param string|Tokenizer $tokenizer The tokenizer to add
      *
      * @return \Org\Heigl\Hyphenator\Options
      */
     public function addTokenizer($tokenizer)
     {
-        $tokenizer = trim($tokenizer);
+        if (is_string($tokenizer)) {
+            $tokenizer = trim($tokenizer);
+        }
         if (! $tokenizer) {
             return $this;
         }
