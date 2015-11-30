@@ -34,7 +34,7 @@
 namespace Org\Heigl\Hyphenator;
 
 use \Org\Heigl\Hyphenator\Exception;
-use \Org\Heigl\Hyphenator\Tokenizer;
+use \Org\Heigl\Hyphenator\Tokenizer\Tokenizer;
 use \Org\Heigl\Hyphenator\Filter\Filter;
 
 /**
@@ -335,12 +335,15 @@ class Options
      *
      * @param string|Filter $filter The filter to be added
      *
+     * @throws \UnexpectedValueException
      * @return \Org\Heigl\Hyphenator\Options
      */
     public function addFilter($filter)
     {
         if (is_string($filter)) {
             $filter = trim($filter);
+        } elseif (! $filter instanceof Filter) {
+            throw new \UnexpectedValueException('Expceted instanceof Org\Heigl\Hyphenator\Filter\Filter or string');
         }
         if (! $filter) {
             return $this;
@@ -391,7 +394,10 @@ class Options
     {
         if (is_string($tokenizer)) {
             $tokenizer = trim($tokenizer);
+        } elseif (! $tokenizer instanceof Tokenizer) {
+            throw new \UnexpectedValueException('Expceted instanceof Org\Heigl\Hyphenator\Tokenizer\Tokenizer or string');
         }
+
         if (! $tokenizer) {
             return $this;
         }
