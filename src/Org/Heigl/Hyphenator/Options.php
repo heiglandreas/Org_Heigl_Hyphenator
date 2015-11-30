@@ -34,6 +34,8 @@
 namespace Org\Heigl\Hyphenator;
 
 use \Org\Heigl\Hyphenator\Exception;
+use \Org\Heigl\Hyphenator\Tokenizer\Tokenizer;
+use \Org\Heigl\Hyphenator\Filter\Filter;
 
 /**
  * This class provides Options for the Hyphenator.
@@ -331,13 +333,18 @@ class Options
     /**
      * Add a filter to the options-array
      *
-     * @param string $filter The filter to be added
+     * @param string|Filter $filter The filter to be added
      *
+     * @throws \UnexpectedValueException
      * @return \Org\Heigl\Hyphenator\Options
      */
     public function addFilter($filter)
     {
-        $filter = trim($filter);
+        if (is_string($filter)) {
+            $filter = trim($filter);
+        } elseif (! $filter instanceof Filter) {
+            throw new \UnexpectedValueException('Expceted instanceof Org\Heigl\Hyphenator\Filter\Filter or string');
+        }
         if (! $filter) {
             return $this;
         }
@@ -379,13 +386,18 @@ class Options
     /**
      * Add a tokenizer to the tomeizer-list
      *
-     * @param string $tokenizer The tokenizer to add
+     * @param string|Tokenizer $tokenizer The tokenizer to add
      *
      * @return \Org\Heigl\Hyphenator\Options
      */
     public function addTokenizer($tokenizer)
     {
-        $tokenizer = trim($tokenizer);
+        if (is_string($tokenizer)) {
+            $tokenizer = trim($tokenizer);
+        } elseif (! $tokenizer instanceof Tokenizer) {
+            throw new \UnexpectedValueException('Expceted instanceof Org\Heigl\Hyphenator\Tokenizer\Tokenizer or string');
+        }
+
         if (! $tokenizer) {
             return $this;
         }

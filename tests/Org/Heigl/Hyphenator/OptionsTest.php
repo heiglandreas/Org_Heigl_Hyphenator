@@ -33,6 +33,7 @@
 namespace Org\Heigl\HyphenatorTest;
 
 use \Org\Heigl\Hyphenator\Options;
+use Mockery as M;
 
 
 /**
@@ -138,6 +139,69 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(array('filterC','filterD'),'_filters',$o);
         $this->assertSame(array('filterC','filterD'),$o->getFilters());
     }
+
+    public function testSettingFilterInstance()
+    {
+        $o = new Options();
+
+        $filter = M::mock('Org\Heigl\Hyphenator\Filter\Filter');
+
+        $this->assertAttributeEquals(array(),'_filters',$o);
+        $this->assertSame(array(),$o->getFilters());
+        $this->assertSame($o, $o->addFilter($filter));
+        $this->assertAttributeEquals(array($filter),'_filters',$o);
+    }
+
+    /**
+     * @expectedException \UnexpectedValueException
+     * @dataProvider settingSoemthingElseThanFilterFailsProvider
+     */
+    public function testSettingSoemthingElseThanFilterFails($filter)
+    {
+        $o = new Options();
+
+        $o->addFilter($filter);
+    }
+
+    public function settingSoemthingElseThanFilterFailsProvider()
+    {
+        return array(
+            array(M::mock('Org\Heigl\Hyphenator\Tokenizer\Tokenizer')),
+            array(new \Exception()),
+        );
+    }
+
+    public function testSettingTokenizerInstance()
+    {
+        $o = new Options();
+
+        $tokenizer = M::mock('Org\Heigl\Hyphenator\Tokenizer\Tokenizer');
+
+        $this->assertAttributeEquals(array(),'_tokenizers',$o);
+        $this->assertSame(array(),$o->getTokenizers());
+        $this->assertSame($o, $o->addTokenizer($tokenizer));
+        $this->assertAttributeEquals(array($tokenizer),'_tokenizers',$o);
+    }
+    /**
+     * @expectedException \UnexpectedValueException
+     * @dataProvider settingSoemthingElseThanTokenizerFailsProvider
+     */
+    public function testSettingSoemthingElseThanTokenizerFails($tokenizer)
+    {
+        $o = new Options();
+
+        $o->addTokenizer($tokenizer);
+    }
+
+    public function settingSoemthingElseThanTokenizerFailsProvider()
+    {
+        return array(
+            array(M::mock('Org\Heigl\Hyphenator\Filter\Filter')),
+            array(new \Exception()),
+        );
+    }
+
+
     public function testSettingTokenizers()
     {
         $o = new Options();
