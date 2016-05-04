@@ -1,7 +1,7 @@
 {
-    "name" : "Org_Heigl/Hyphenator", 
+    "name" : "Org_Heigl/Hyphenator",
     "type" : "library",
-    "description" : "Word-Hyphenation for PHP",
+    "description" : "Word-Hyphenation for PHP based on the TeX-Hyphenation algorithm",
     "keywords" : [ "hyphenation", "hyphenate"],
     "homepage" : "http://github.com/heiglandreas/Org_Heigl_Hyphenator",
     "license" : "MIT",
@@ -14,14 +14,33 @@
         }
     ],
     "require" : {
-        "php" : ">=5.3.0"
+        "php" : "^5.3||^7.0",
+        "ext-mbstring" : "*"
     },
     "require-dev" : {
-        "mockery/mockery" : "dev-master"
+        "mockery/mockery" : "^0.9",
+        "phpunit/phpunit": "^4.8||^5.3",
+        "fabpot/php-cs-fixer": "^1.7"
     },
     "autoload" : {
         "psr-0" : {
-            "Org\\Heigl\\Hyphenator" : "src"
+            "Org\\Heigl\\Hyphenator\\" : "src"
         }
+    },
+    "autoload-dev" : {
+        "psr-4" : {
+            "Org\\Heigl\\HyphenatorTest\\" : "tests"
+        }
+    },
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "upload-coverage": "coveralls -v",
+        "cs-check": "php-cs-fixer --version && php-cs-fixer fix -v --diff --dry-run",
+        "cs-fix": "php-cs-fixer fix -v",
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-clover clover.xml"
     }
 }

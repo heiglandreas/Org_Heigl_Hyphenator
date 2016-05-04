@@ -122,7 +122,7 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertAttributeEquals(null,'_defaultHomePath','\Org\Heigl\Hyphenator\Hyphenator');
         $h = new h\Hyphenator();
-        $baseDirectory1 = dirname(dirname(dirname(__DIR__))) . '/src/Org/Heigl/Hyphenator/share';
+        $baseDirectory1 = dirname(__DIR__) . '/src/Org/Heigl/Hyphenator/share';
         $this->assertEquals($baseDirectory1, \Org\Heigl\Hyphenator\Hyphenator::getDefaultHomePath());
         $this->assertEquals($baseDirectory1, $h->getHomePath());
         $baseDirectory2 = __DIR__ . '/share/tmp1';
