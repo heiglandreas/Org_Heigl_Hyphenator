@@ -14,7 +14,7 @@ This package has the following requirements:
 * Multibyte-Extension loaded
 * Input has to be UTF8-encoded.
 
-On loading the \Org\Heigl\Hyphenator\Hyphenator-class the internal encoding for
+On loading the ````\Org\Heigl\Hyphenator\Hyphenator```-class the internal encoding for
 the Multibyte-String-Extension will be set to UTF8.
 
 # Installation: 
@@ -51,7 +51,7 @@ Build-Status of the latest release can be found at http://travis-ci.org/#!/heigl
 
 # Legal Stuff
 
-Copyright (c) 2011-2013 Andreas Heigl<andreas@heigl.org>
+Copyright (c) 2011-2016 Andreas Heigl<andreas@heigl.org>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
