@@ -19,11 +19,10 @@
     },
     "require-dev" : {
         "mockery/mockery" : "^0.9",
-        "phpunit/phpunit": "^4.8||^5.3",
-        "fabpot/php-cs-fixer": "^1.7"
+        "phpunit/phpunit": "^4.8||^5.3"
     },
     "autoload" : {
-        "psr-0" : {
+        "psr-4" : {
             "Org\\Heigl\\Hyphenator\\" : "src"
         }
     },
@@ -38,8 +37,18 @@
             "@test"
         ],
         "upload-coverage": "coveralls -v",
-        "cs-check": "php-cs-fixer --version && php-cs-fixer fix -v --diff --dry-run",
-        "cs-fix": "php-cs-fixer fix -v",
+        "cs-download" : [
+            "if [ ! -e php-cs-fixer ] ; then curl -o php-cs-fixer -L `curl -s https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/releases | grep browser_download_url | head -n 1 | cut -d '\"' -f 4`; fi",
+            "chmod 755 php-cs-fixer"
+        ],
+        "cs-check": [
+            "@cs-download",
+            "./php-cs-fixer --version && ./php-cs-fixer fix -v --diff --dry-run"
+        ],
+        "cs-fix": [
+            "@cs-download",
+            "./php-cs-fixer fix -v"
+        ],
         "test": "phpunit",
         "test-coverage": "phpunit --coverage-clover clover.xml"
     }

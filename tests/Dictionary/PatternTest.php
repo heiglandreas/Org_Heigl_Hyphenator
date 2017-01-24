@@ -20,8 +20,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @category  Org_Heigl
- * @package   Org_Heigl_Hyphenator
+ * @category  Hyphenator
+ * @package   Org\Heigl\Hyphenator
  * @author    Andreas Heigl <andreas@heigl.org>
  * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
@@ -29,47 +29,63 @@
  * @since     02.11.2011
  */
 
-namespace Org\Heigl\HyphenatorTest;
+namespace Org\Heigl\HyphenatorTest\Dictionary;
 
-use \Org\Heigl\Hyphenator as h;
+use Org\Heigl\Hyphenator\Dictionary\Pattern;
+use Org\Heigl\Hyphenator\Exception as e;
 
 /**
  * This class tests the functionality of the class Org_Heigl_Hyphenator
  *
- * @category  Org_Heigl
- * @package   Org_Heigl_Hyphenator
+ * @category  Hyphenator
+ * @package   Org\Heigl\Hyphenator
  * @author    Andreas Heigl <andreas@heigl.org>
- * @copyright 2008 Andreas Heigl<andreas@heigl.org>
+ * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
  * @version   2.0.1
- * @since     20.04.2009
+ * @since     02.11.2011
  */
-class HyphenatorFeatureTest extends \PHPUnit_Framework_TestCase
+class PatternTest extends \PHPUnit_Framework_TestCase
 {
-    
-    /**
-     * @dataProvider hyphenationOfSingleWordWithArrayOutputProvider
-     */
-    public function testHyphenationOfSingleWordWithArrayOutput($word, $language, $expected)
+    public function testSettingPattern()
     {
-        $o = new h\Options();
-        $o->setHyphen('-')
-          ->setDefaultLocale($language)
-          ->setRightMin(2)
-          ->setLeftMin(2)
-          ->setWordMin(5)
-          ->setFilters('NonStandard')
-          ->setTokenizers('Whitespace', 'Punctuation');
-        
-        $h = new h\Hyphenator();
-        $h->setOptions($o);
-        $this->assertEquals($expected, $h->hyphenate($word));
+        $p = new Pattern();
+        $this->assertAttributeEquals('', '_text', $p);
+        $this->assertAttributeEquals('', '_pattern', $p);
+        try {
+            $p->getText();
+            $this->fail('No Exception raised');
+        } catch (e\NoPatternSetException $e) {
+            $this->assertTrue(true);
+        }
+        try {
+            $p->getPattern();
+            $this->fail('No Exception raised');
+        } catch (e\NoPatternSetException $e) {
+            $this->assertTrue(true);
+        }
+        $this->assertSame($p, $p->setPattern('te8st'));
+        $this->assertAttributeEquals('test', '_text', $p);
+        $this->assertAttributeEquals('00800', '_pattern', $p);
     }
-    
-    public function hyphenationOfSingleWordWithArrayOutputProvider()
+
+    /**
+     * @dataProvider patternCreationProvider
+     */
+    public function testPatternCreation($input, $text, $pattern)
+    {
+        $p = Pattern::factory($input);
+        $this->assertAttributeEquals($text, '_text', $p);
+        $this->assertAttributeEquals($pattern, '_pattern', $p);
+        $this->assertEquals($text, $p->getText());
+        $this->assertEquals($pattern, $p->getPattern());
+    }
+
+    public function patternCreationProvider()
     {
         return array(
-                array('donaudampfschifffahrt', 'de_DE', array('do-naudampfschifffahrt', 'donau-dampfschifffahrt', 'donaudampf-schifffahrt', 'donaudampfschiff-fahrt')),
-            );
+            array('te8st', 'test','00800'),
+            array('øre5sœnd', 'øresœnd', '00050000'),
+        );
     }
 }
