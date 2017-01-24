@@ -2,7 +2,7 @@
 <phpunit bootstrap="tests/bootstrap.php" colors="true">
     <testsuites>
 	    <testsuite name="Org_Heigl_Hyphenator TestSuite">
-	        <directory>tests/Org/</directory>
+	        <directory>tests/</directory>
 	    </testsuite>
 	</testsuites>
     <groups>
@@ -14,7 +14,7 @@
         <whitelist>
             <directory suffix=".php">src</directory>
             <exclude>
-                <directory suffix=".php">src/Org/Heigl/Hyphenator/parsedFiles</directory>
+                <directory suffix=".php">src/share/Org/Heigl/Hyphenator/parsedFiles</directory>
             </exclude>
         </whitelist>
 	</filter>

@@ -63,7 +63,7 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
 
     public function testParsingWrongLocaleWorks()
     {
-        Dictionary::setFileLocation(__DIR__ . '/../../share/test3/files/dictionaries');
+        Dictionary::setFileLocation(__DIR__ . '/../share/test3/files/dictionaries');
         $dict = Dictionary::factory('de-de');
         $this->assertAttributeNotEquals(array(),'_dictionary',$dict);
     }

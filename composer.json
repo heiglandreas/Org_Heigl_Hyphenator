@@ -1,5 +1,5 @@
 {
-    "name" : "Org_Heigl/Hyphenator", 
+    "name" : "org_heigl/hyphenator",
     "type" : "library",
     "description" : "Word-Hyphenation for PHP",
     "keywords" : [ "hyphenation", "hyphenate"],
@@ -20,8 +20,13 @@
         "mockery/mockery" : "dev-master"
     },
     "autoload" : {
-        "psr-0" : {
-            "Org\\Heigl\\Hyphenator" : "src"
+        "psr-4" : {
+            "Org\\Heigl\\Hyphenator\\" : "src"
+        }
+    },
+    "autoload-dev" : {
+        "psr-4" : {
+            "Org\\Heigl\\HyphenatorTest\\" : "tests"
         }
     }
 }
