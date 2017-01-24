@@ -230,14 +230,14 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
             $this->assertTrue(true);
         }
         try{
-            Options::factory(__DIR__ . '/../share/unparseable.ini');
+            Options::factory(__DIR__ . '/share/unparseable.ini');
             $this->fail('The given file should not be parseable');
         }catch(\Org\Heigl\Hyphenator\Exception\InvalidArgumentException $e){
             $this->assertTrue(true);
         }
-        $o = Options::factory(__DIR__ . '/../share/onlydist.ini');
+        $o = Options::factory(__DIR__ . '/share/onlydist.ini');
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Options', $o );
-        $o = Options::factory(__DIR__ . '/../share/parseable.ini');
+        $o = Options::factory(__DIR__ . '/share/parseable.ini');
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Options', $o );
         $this->assertAttributeEquals('test', '_hyphen', $o);
         $this->assertAttributeEquals('test', '_noHyphenateString', $o);

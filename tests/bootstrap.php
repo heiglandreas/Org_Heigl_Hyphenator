@@ -27,7 +27,6 @@ set_include_path(implode(PATH_SEPARATOR, array(
 require_once (__DIR__ . '/../vendor/autoload.php');
 
 mb_internal_encoding('UTF-8');
-require_once 'Org/Heigl/Hyphenator/Hyphenator.php';
 \Org\Heigl\Hyphenator\Hyphenator::registerAutoload();
 
 class UnitTestHelper
