@@ -118,7 +118,7 @@ class Options
      *
      * @var array $_filters
      */
-    protected $_filters = array ();
+    protected $_filters = array();
 
     /**
      * The tokenizers to use.
@@ -292,7 +292,7 @@ class Options
      *
      * @return \Org\Heigl\Hyphenator\Options
      */
-    public function setCustomHyphen( $customHyphen)
+    public function setCustomHyphen($customHyphen)
     {
         $this->_customHyphen = (string) $customHyphen;
 
@@ -319,8 +319,8 @@ class Options
      */
     public function setFilters($filters)
     {
-        $this->_filters = array ();
-        if ( ! is_array($filters) ) {
+        $this->_filters = array();
+        if (! is_array($filters)) {
             $filters = explode(',', $filters);
         }
         foreach ($filters as $filter) {
@@ -373,7 +373,7 @@ class Options
     public function setTokenizers($tokenizers)
     {
         $this->_tokenizers = array();
-        if ( ! is_array($tokenizers) ) {
+        if (! is_array($tokenizers)) {
             $tokenizers = explode(',', $tokenizers);
         }
         foreach ($tokenizers as $tokenizer) {
@@ -427,20 +427,20 @@ class Options
      */
     public static function factory($file)
     {
-        if ( ! file_Exists($file) ) {
+        if (! file_Exists($file)) {
             $file = $file . '.dist';
-            if ( ! file_exists($file) ) {
+            if (! file_exists($file)) {
                 throw new \Org\Heigl\Hyphenator\Exception\PathNotFoundException($file);
             }
         }
         $params = parse_ini_file($file);
-        if ( ! is_array($params) || 1 > count($params) ) {
+        if (! is_array($params) || 1 > count($params)) {
             throw new \Org\Heigl\Hyphenator\Exception\InvalidArgumentException($file . ' is not a parseable file');
         }
 
         $option = new Options();
         foreach ($params as $key => $val) {
-            if ( ! method_Exists($option, 'set' . $key) ) {
+            if (! method_Exists($option, 'set' . $key)) {
                 continue;
             }
             call_user_Func(array($option,'set' . $key), $val);
@@ -472,5 +472,4 @@ class Options
     {
         return $this->_defaultLocale;
     }
-
 }

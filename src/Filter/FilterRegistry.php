@@ -54,7 +54,7 @@ class FilterRegistry implements \Iterator, \Countable
      *
      * @var \Org\Heigl\Hyphenator\Filter\Filter[] $_registry
      */
-    protected $_registry = array ();
+    protected $_registry = array();
 
     /**
      * Add an item to the registry
@@ -66,7 +66,7 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function add(Filter $filter)
     {
-        if ( ! in_array($filter, $this->_registry)) {
+        if (! in_array($filter, $this->_registry)) {
             $this->_registry[] = $filter;
         }
 
@@ -82,7 +82,7 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function getFilterWithKey($key)
     {
-        if ( array_key_exists($key, $this->_registry)) {
+        if (array_key_exists($key, $this->_registry)) {
             return $this->_registry[$key];
         }
 
@@ -96,7 +96,7 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function cleanup()
     {
-        $this->_registry = array ();
+        $this->_registry = array();
 
         return $this;
     }
@@ -203,11 +203,10 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function valid()
     {
-        if ( false === current($this->_registry)) {
+        if (false === current($this->_registry)) {
             return false;
         }
 
         return true;
     }
-
 }

@@ -46,8 +46,6 @@ namespace Org\Heigl\Hyphenator\Exception;
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      02.11.2011
  */
-class InvalidArgumentException
-extends \InvalidArgumentException
-implements \Org\Heigl\Hyphenator\Exception
+class InvalidArgumentException extends \InvalidArgumentException implements \Org\Heigl\Hyphenator\Exception
 {
 }

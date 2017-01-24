@@ -53,7 +53,7 @@ class Dictionary
      *
      * @var array $_dictionary
      */
-    protected $_dictionary = array ();
+    protected $_dictionary = array();
 
     /**
      * Where to look for the basic files.
@@ -81,7 +81,6 @@ class Dictionary
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -111,10 +110,10 @@ class Dictionary
         $locale = $this->_unifyLocale($locale);
         $file = self::$_fileLocation . DIRECTORY_SEPARATOR . $locale . '.ini';
         $this->_dictionary = array();
-        if ( ! file_exists(realpath($file)) ) {
+        if (! file_exists(realpath($file))) {
             return $this;
         }
-        foreach ( parse_ini_file($file) as $key => $val ) {
+        foreach (parse_ini_file($file) as $key => $val) {
             $this->_dictionary[str_replace('@:', '', $key)] = $val;
         }
 
@@ -133,7 +132,7 @@ class Dictionary
     {
         $path = self::$_fileLocation . DIRECTORY_SEPARATOR;
         $file = $path . 'hyph_' . $locale . '.dic';
-        if ( ! file_Exists($file) ) {
+        if (! file_Exists($file)) {
             throw new \Org\Heigl\Hyphenator\Exception\PathNotFoundException('The given Path does not exist');
         }
 
@@ -142,25 +141,25 @@ class Dictionary
         if (0===strpos($source, 'ISO8859')) {
             $source = str_Replace('ISO8859', 'ISO-8859', $source);
         }
-        unset ($items[0]);
+        unset($items[0]);
         $fh = fopen($path . $locale . '.ini', 'w+');
         foreach ($items as $item) {
             // Remove comment-lines starting with '#' or '%'.
-            if ( in_array(mb_substr($item, 0, 1), array('#', '%')) ) {
+            if (in_array(mb_substr($item, 0, 1), array('#', '%'))) {
                 continue;
             }
             // Ignore empty lines.
-            if ( '' == trim($item) ) {
+            if ('' == trim($item)) {
                 continue;
             }
             // Remove all Upper-case items as they are OOo-specific
-            if ($item === mb_strtoupper($item) ) {
+            if ($item === mb_strtoupper($item)) {
                 continue;
             }
             // Ignore lines containing an '=' sign as these are specific
             // instructions for non-standard-hyphenations. These will be
             // implemented later.
-            if ( false !== mb_strpos($item, '=') ) {
+            if (false !== mb_strpos($item, '=')) {
                 continue;
             }
             $item = mb_convert_Encoding($item, 'UTF-8', $source);
@@ -182,13 +181,13 @@ class Dictionary
      */
     public function getPatternsForWord($word)
     {
-        $return = array ();
+        $return = array();
         $word = '.' . $word . '.';
         $strlen = mb_strlen($word);
         for ($i = 0; $i <= $strlen; $i ++) {
-            for ( $j = 2; $j <= ($strlen-$i); $j++ ) {
+            for ($j = 2; $j <= ($strlen-$i); $j++) {
                 $substr = mb_substr($word, $i, $j);
-                if ( ! isset($this->_dictionary[$substr]) ) {
+                if (! isset($this->_dictionary[$substr])) {
                     continue;
                 }
                 $return[$substr] = $this->_dictionary[$substr];
@@ -206,7 +205,7 @@ class Dictionary
      *
      * @return \Org\Heigl\Hyphenator\Dictionary\Dictionary
      */
-    public function addPAttern( $string, $pattern)
+    public function addPAttern($string, $pattern)
     {
         $this->_dictionary[$string] = $pattern;
 
@@ -230,10 +229,10 @@ class Dictionary
      */
     protected function _unifyLocale($locale)
     {
-        if ( 2 == strlen($locale) ) {
+        if (2 == strlen($locale)) {
             return strtolower($locale);
         }
-        if ( preg_match('/([a-zA-Z]{2})[^a-zA-Z]+([a-zA-Z]{2})/i', $locale, $result) ) {
+        if (preg_match('/([a-zA-Z]{2})[^a-zA-Z]+([a-zA-Z]{2})/i', $locale, $result)) {
             return strtolower($result[1]) . '_' . strtoupper($result[2]);
         }
 

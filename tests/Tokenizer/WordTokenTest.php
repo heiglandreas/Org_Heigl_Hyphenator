@@ -49,11 +49,11 @@ class WordTokenTest extends \PHPUnit_Framework_TestCase
     public function testWordTokenCanAddPattern()
     {
         $t = new WordToken('test');
-        $this->assertAttributeEquals(array(),'_pattern',$t);
+        $this->assertAttributeEquals(array(), '_pattern', $t);
         $t->addPattern(array('te'=>'012','es'=>'234'));
-        $this->assertAttributeEquals(array('te'=>'012','es'=>'234'),'_pattern',$t);
+        $this->assertAttributeEquals(array('te'=>'012','es'=>'234'), '_pattern', $t);
         $t->addPattern(array('st'=>'234','es'=>'345'));
-        $this->assertAttributeEquals(array('te'=>'012','es'=>'345','st'=>'234'),'_pattern',$t);
+        $this->assertAttributeEquals(array('te'=>'012','es'=>'345','st'=>'234'), '_pattern', $t);
     }
 
     /**
@@ -63,14 +63,14 @@ class WordTokenTest extends \PHPUnit_Framework_TestCase
     {
         $t = new WordToken($word);
         $t->addPattern($pattern);
-        $this->assertAttributeEquals($pattern,'_pattern',$t);
-        $this->assertEquals($result,$t->getMergedPattern($quality));
+        $this->assertAttributeEquals($pattern, '_pattern', $t);
+        $this->assertEquals($result, $t->getMergedPattern($quality));
     }
 
     public function patternProvider()
     {
-        return array (
-            array (
+        return array(
+            array(
                 array('.t'=>'012','te'=>'743','es'=>'328','st'=>'070','t.'=>'800'),
                 'test',
                 '74380',
@@ -83,7 +83,7 @@ class WordTokenTest extends \PHPUnit_Framework_TestCase
             //       0 7 0
             //         8 0 0
             // 0 7 4 3 8 0 0
-            array (
+            array(
                 array('.t'=>'012','te'=>'743','es'=>'328','st'=>'070','t.'=>'800'),
                 'test',
                 '14300',
@@ -96,7 +96,7 @@ class WordTokenTest extends \PHPUnit_Framework_TestCase
             //       0 0 0
             //         0 0 0
             // 0 1 4 3 0 0 0
-            array (
+            array(
                 array('.t'=>'012','tä'=>'743','äß'=>'328','är'=>'070','rø'=>'800','øi'=>'345','i.'=>'100'),
                 'täßtärøi',
                 '743848345',

@@ -49,7 +49,7 @@ use \Org\Heigl\Hyphenator\Tokenizer as t;
  */
 class FilterRegistryTest extends \PHPUnit_Framework_TestCase
 {
-public function testAddingFilter()
+    public function testAddingFilter()
     {
         $t1 = new TestFilter();
         $t2 = new Test1Filter();
@@ -115,10 +115,7 @@ public function testAddingFilter()
         $t = new t\TokenRegistry();
         $t->add(new t\WordToken('test'));
         $this->assertSame($t, $r->filter($t));
-
     }
-
-
 }
 
 class TestFilter extends \Org\Heigl\Hyphenator\Filter\Filter
@@ -133,4 +130,6 @@ class TestFilter extends \Org\Heigl\Hyphenator\Filter\Filter
         return $tokens;
     }
 }
-class Test1Filter extends TestFilter{}
+class Test1Filter extends TestFilter
+{
+}

@@ -51,7 +51,6 @@ use \Mockery as M;
  */
 class CustomMarkupFilterTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testConcatenation()
     {
         $obj = new CustomMarkupFilter();

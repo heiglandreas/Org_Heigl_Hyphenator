@@ -54,7 +54,7 @@ class PunctuationTokenizer implements Tokenizer
      *
      * @var string $_tokens
      */
-    protected $_tokens = array (
+    protected $_tokens = array(
         '.',
         '?',
         '!',
@@ -119,7 +119,7 @@ class PunctuationTokenizer implements Tokenizer
                     continue;
                 }
                 $newTokens = $this->_tokenize($token->get());
-                if ( $newTokens == array($token) ) {
+                if ($newTokens == array($token)) {
                     continue;
                 }
                 $f->replace($token, $newTokens);
@@ -157,7 +157,7 @@ class PunctuationTokenizer implements Tokenizer
             if ('' == $split) {
                 continue;
             }
-            if ( in_array(mb_substr($split, 0, 1), $this->_tokens) ) {
+            if (in_array(mb_substr($split, 0, 1), $this->_tokens)) {
                 $tokens[] = new NonWordToken($split);
                 continue;
             }

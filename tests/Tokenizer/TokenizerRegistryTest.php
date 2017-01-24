@@ -46,7 +46,7 @@ use \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry;
  */
 class TokenizerRegistryTest extends \PHPUnit_Framework_TestCase
 {
-public function testAddingTokenizer()
+    public function testAddingTokenizer()
     {
         $t1 = new TestTokenizer();
         $t2 = new Test1Tokenizer();
@@ -112,7 +112,6 @@ public function testAddingTokenizer()
         $tr = new \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry();
         $tr->add(new \Org\Heigl\Hyphenator\Tokenizer\WordToken('input'));
         $this->assertEquals($tr, $r->tokenize('input'));
-
     }
 
     public function testTokenizingWithoutTokenizer()
@@ -121,7 +120,6 @@ public function testAddingTokenizer()
         $tr = $r->tokenize('Teststring with spaces');
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry', $tr);
     }
-
 }
 
 class TestTokenizer implements \Org\Heigl\Hyphenator\Tokenizer\Tokenizer
@@ -131,4 +129,6 @@ class TestTokenizer implements \Org\Heigl\Hyphenator\Tokenizer\Tokenizer
         return $input;
     }
 }
-class Test1Tokenizer extends TestTokenizer{}
+class Test1Tokenizer extends TestTokenizer
+{
+}

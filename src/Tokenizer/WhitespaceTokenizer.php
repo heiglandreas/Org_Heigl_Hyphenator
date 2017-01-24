@@ -74,7 +74,7 @@ class WhitespaceTokenizer implements Tokenizer
                     continue;
                 }
                 $newTokens = $this->_tokenize($token->get());
-                if ( $newTokens == array($token) ) {
+                if ($newTokens == array($token)) {
                     continue;
                 }
                 $input->replace($token, $newTokens);
@@ -105,10 +105,10 @@ class WhitespaceTokenizer implements Tokenizer
      */
     protected function _tokenize($input)
     {
-        $tokens = array ();
+        $tokens = array();
         $splits = preg_split("/([".implode("", $this->whitespaces)."]+)/u", $input, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-        foreach ( $splits as $split ) {
+        foreach ($splits as $split) {
             if (preg_match("/^[".implode("", $this->whitespaces)."]+$/um", $split)) {
                 $tokens[] = new WhitespaceToken($split);
                 continue;

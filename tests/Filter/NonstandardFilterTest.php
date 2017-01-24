@@ -65,13 +65,13 @@ class NonStandardFilterTest extends \PHPUnit_Framework_TestCase
         $o->setHyphen('-');
         $f->setOptions($o);
         $this->assertSame($r, $f->run($r));
-        $this->assertEquals($result,$r->getTokenWithKey(0)->getHyphenatedContent());
+        $this->assertEquals($result, $r->getTokenWithKey(0)->getHyphenatedContent());
     }
 
     public function filterProvider()
     {
         return array(
-            array('Donaudampfschifffahrt', array('auda' => '00100', 'pfsch'=>'001000', 'fff'=>'0010'), array ( 'Donau-dampfschifffahrt','Donaudampf-schifffahrt','Donaudampfschiff-fahrt')),
+            array('Donaudampfschifffahrt', array('auda' => '00100', 'pfsch'=>'001000', 'fff'=>'0010'), array( 'Donau-dampfschifffahrt','Donaudampf-schifffahrt','Donaudampfschiff-fahrt')),
         );
     }
 

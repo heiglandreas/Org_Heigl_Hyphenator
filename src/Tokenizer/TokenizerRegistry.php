@@ -53,7 +53,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      *
      * @var \Org\Heigl\Hyphenator\Tokenizer\Tokenizer[] $_registry
      */
-    protected $_registry = array ();
+    protected $_registry = array();
 
     /**
      * Add an item to the registry
@@ -65,7 +65,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function add(Tokenizer $tokenizer)
     {
-        if ( ! in_array($tokenizer, $this->_registry)) {
+        if (! in_array($tokenizer, $this->_registry)) {
             $this->_registry[] = $tokenizer;
         }
 
@@ -81,7 +81,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function getTokenizerWithKey($key)
     {
-        if ( array_key_exists($key, $this->_registry)) {
+        if (array_key_exists($key, $this->_registry)) {
             return $this->_registry[$key];
         }
 
@@ -95,7 +95,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function cleanup()
     {
-        $this->_registry = array ();
+        $this->_registry = array();
 
         return $this;
     }
@@ -107,7 +107,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      *
      * @return \Org\Heigl\Hyphenator\TokenRegistry
      */
-    public function tokenize( $string)
+    public function tokenize($string)
     {
         if (! $string instanceof TokenRegistry) {
             $wt = new WordToken($string);
@@ -190,7 +190,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function valid()
     {
-        if ( false === current($this->_registry)) {
+        if (false === current($this->_registry)) {
             return false;
         }
 

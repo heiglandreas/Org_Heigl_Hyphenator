@@ -53,7 +53,7 @@ class TokenRegistry implements \Iterator, \Countable
      *
      * @var \Org\Heigl\Hyphenator\Tokenizer\Token[] $_registry
      */
-    protected $_registry = array ();
+    protected $_registry = array();
 
     /**
      * Add an item to the registry
@@ -88,7 +88,7 @@ class TokenRegistry implements \Iterator, \Countable
         if (false === $key) {
             return $this;
         }
-        $replacement = array ();
+        $replacement = array();
 
         // Check for any non-token-elements and remove them.
         foreach ($newTokens as $token) {
@@ -102,7 +102,6 @@ class TokenRegistry implements \Iterator, \Countable
         array_splice($this->_registry, $key, 1, $replacement);
 
         return $this;
-
     }
 
     /**
@@ -190,7 +189,7 @@ class TokenRegistry implements \Iterator, \Countable
      */
     public function valid()
     {
-        if ( false === current($this->_registry) ) {
+        if (false === current($this->_registry)) {
             return false;
         }
 

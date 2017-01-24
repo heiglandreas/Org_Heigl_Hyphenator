@@ -50,18 +50,18 @@ class PatternTest extends \PHPUnit_Framework_TestCase
     public function testSettingPattern()
     {
         $p = new Pattern();
-        $this->assertAttributeEquals('','_text',$p);
-        $this->assertAttributeEquals('','_pattern',$p);
-        try{
+        $this->assertAttributeEquals('', '_text', $p);
+        $this->assertAttributeEquals('', '_pattern', $p);
+        try {
             $p->getText();
             $this->fail('No Exception raised');
-        }catch(e\NoPatternSetException $e) {
+        } catch (e\NoPatternSetException $e) {
             $this->assertTrue(true);
         }
-        try{
+        try {
             $p->getPattern();
             $this->fail('No Exception raised');
-        }catch(e\NoPatternSetException $e) {
+        } catch (e\NoPatternSetException $e) {
             $this->assertTrue(true);
         }
         $this->assertSame($p, $p->setPattern('te8st'));
@@ -75,8 +75,8 @@ class PatternTest extends \PHPUnit_Framework_TestCase
     public function testPatternCreation($input, $text, $pattern)
     {
         $p = Pattern::factory($input);
-        $this->assertAttributeEquals($text,'_text',$p);
-        $this->assertAttributeEquals($pattern,'_pattern',$p);
+        $this->assertAttributeEquals($text, '_text', $p);
+        $this->assertAttributeEquals($pattern, '_pattern', $p);
         $this->assertEquals($text, $p->getText());
         $this->assertEquals($pattern, $p->getPattern());
     }
@@ -88,5 +88,4 @@ class PatternTest extends \PHPUnit_Framework_TestCase
             array('øre5sœnd', 'øresœnd', '00050000'),
         );
     }
-
 }

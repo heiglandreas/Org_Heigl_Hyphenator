@@ -74,16 +74,16 @@ class SimpleFilter extends Filter
             $result = array();
             for ($i = 1; $i <= $length; $i++) {
                 $currPattern = mb_substr($pattern, $i, 1);
-                if ( $i < $this->_options->getLeftMin() ) {
+                if ($i < $this->_options->getLeftMin()) {
                     continue;
                 }
-                if ( $i > $length - $this->_options->getRightMin() ) {
+                if ($i > $length - $this->_options->getRightMin()) {
                     continue;
                 }
                 if (0 == $currPattern) {
                     continue;
                 }
-                if ( 0 === (int) $currPattern % 2 ) {
+                if (0 === (int) $currPattern % 2) {
                     continue;
                 }
                 $sylable = mb_substr($string, $lastOne, $i-$lastOne);

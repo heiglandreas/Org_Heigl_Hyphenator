@@ -60,16 +60,15 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
     {
         $hyphenator = new h\Hyphenator();
         $options = new h\Options();
-        $this->assertAttributeEquals(null,'_options', $hyphenator);
+        $this->assertAttributeEquals(null, '_options', $hyphenator);
         $hyphenator->setOptions($options);
         $this->assertAttributeSame($options, '_options', $hyphenator);
-        $this->assertSame($options,$hyphenator->getOptions());
-        $this->assertEquals(0,$hyphenator->getTokenizers()->count());
+        $this->assertSame($options, $hyphenator->getOptions());
+        $this->assertEquals(0, $hyphenator->getTokenizers()->count());
         $options->addTokenizer('whitespace');
-        $this->assertSame($hyphenator,$hyphenator->setOptions($options));
+        $this->assertSame($hyphenator, $hyphenator->setOptions($options));
         $this->assertAttributeSame($options, '_options', $hyphenator);
-        $this->assertEquals(1,$hyphenator->getTokenizers()->count());
-
+        $this->assertEquals(1, $hyphenator->getTokenizers()->count());
     }
 
     public function testGettingOption()
@@ -77,57 +76,54 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         $h = new h\Hyphenator();
         $o = $h->getOptions();
         $this->assertInstanceOf('\ORg\Heigl\Hyphenator\Options', $o);
-        $this->assertSame($o,$h->getOptions());
+        $this->assertSame($o, $h->getOptions());
     }
 
-    public function  testSettingDictionaries()
+    public function testSettingDictionaries()
     {
         $hyphenator = new h\Hyphenator();
         $this->assertAttributeInstanceof('\Org\Heigl\Hyphenator\Dictionary\DictionaryRegistry', '_dicts', $hyphenator);
         $dict = new h\Dictionary\Dictionary('de');
-        $this->assertSame($hyphenator,$hyphenator->addDictionary($dict));
-        $this->assertEquals(1,$hyphenator->getDictionaries()->count());
-        $this->assertSame($hyphenator,$hyphenator->addDictionary('en_US'));
-        $this->assertEquals(2,$hyphenator->getDictionaries()->count());
-
+        $this->assertSame($hyphenator, $hyphenator->addDictionary($dict));
+        $this->assertEquals(1, $hyphenator->getDictionaries()->count());
+        $this->assertSame($hyphenator, $hyphenator->addDictionary('en_US'));
+        $this->assertEquals(2, $hyphenator->getDictionaries()->count());
     }
-    public function  testSettingTokenizers()
+    public function testSettingTokenizers()
     {
         $hyphenator = new h\Hyphenator();
         $dict = new h\Tokenizer\WhitespaceTokenizer();
         $hyphenator->addTokenizer($dict);
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry', $hyphenator->getTokenizers());
         $this->assertSame($dict, $hyphenator->getTokenizers()->getTokenizerWithKey(0));
-
     }
-    public function  testSettingFilters()
+    public function testSettingFilters()
     {
         $h = new h\Hyphenator();
         $h->getOptions()->setFilters(array());
         $f = new h\Filter\SimpleFilter();
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Filter\FilterRegistry', $h->getFilters());
-        $this->assertEquals(0,$h->getFilters()->count());
-        $this->assertSame($h,$h->addFilter($f));
+        $this->assertEquals(0, $h->getFilters()->count());
+        $this->assertSame($h, $h->addFilter($f));
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Filter\FilterRegistry', $h->getFilters());
-        $this->assertEquals(1,$h->getFilters()->count());
+        $this->assertEquals(1, $h->getFilters()->count());
         $this->assertSame($f, $h->getFilters()->getFilterWithKey(0));
-        $this->assertSame($h,$h->addFilter('CustomMarkup'));
+        $this->assertSame($h, $h->addFilter('CustomMarkup'));
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Filter\FilterRegistry', $h->getFilters());
-        $this->assertEquals(2,$h->getFilters()->count());
+        $this->assertEquals(2, $h->getFilters()->count());
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Filter\CustomMarkupFilter', $h->getFilters()->getFilterWithKey(1));
-
     }
 
     public function testHomeDirectory()
     {
-        $this->assertAttributeEquals(null,'_defaultHomePath','\Org\Heigl\Hyphenator\Hyphenator');
+        $this->assertAttributeEquals(null, '_defaultHomePath', '\Org\Heigl\Hyphenator\Hyphenator');
         $h = new h\Hyphenator();
         $baseDirectory1 = dirname(__DIR__) . '/src/share';
         $this->assertEquals($baseDirectory1, \Org\Heigl\Hyphenator\Hyphenator::getDefaultHomePath());
         $this->assertEquals($baseDirectory1, $h->getHomePath());
         $baseDirectory2 = __DIR__ . '/share/tmp1';
         mkdir($baseDirectory2);
-        putenv('HYPHENATOR_HOME=' . $baseDirectory2 );
+        putenv('HYPHENATOR_HOME=' . $baseDirectory2);
         $this->assertEquals($baseDirectory2, \Org\Heigl\Hyphenator\Hyphenator::getDefaultHomePath());
         $this->assertEquals($baseDirectory2, $h->getHomePath());
         rmdir($baseDirectory2);
@@ -135,7 +131,7 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($baseDirectory1, $h->getHomePath());
         $baseDirectory3 = __DIR__ . '/share/tmp2';
         mkdir($baseDirectory3);
-        define('HYPHENATOR_HOME', $baseDirectory3 );
+        define('HYPHENATOR_HOME', $baseDirectory3);
         $this->assertEquals($baseDirectory3, \Org\Heigl\Hyphenator\Hyphenator::getDefaultHomePath());
         $this->assertEquals($baseDirectory3, $h->getHomePath());
         rmdir($baseDirectory3);
@@ -161,28 +157,28 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
     public function testSettingDefaultHomeDirectoryWithInvalidInfos()
     {
         $h = new h\Hyphenator();
-        try{
+        try {
             $h->setHomePath('foo');
             $this->fail('No Exception thrown');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $this->assertInstanceof('\Org\Heigl\Hyphenator\Exception\PathNotFoundException', $e);
         }
-        try{
+        try {
             $h->setHomePath(__FILE__);
             $this->fail('No Exception thrown');
-        }catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertInstanceof('\Org\Heigl\Hyphenator\Exception\PathNotDirException', $e);
         }
-        try{
+        try {
             \Org\Heigl\Hyphenator\Hyphenator::setDefaultHomePath('foo');
             $this->fail('No Exception thrown');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $this->assertInstanceof('\Org\Heigl\Hyphenator\Exception\PathNotFoundException', $e);
         }
-        try{
+        try {
             \Org\Heigl\Hyphenator\Hyphenator::setDefaultHomePath(__FILE__);
             $this->fail('No Exception thrown');
-        }catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertInstanceof('\Org\Heigl\Hyphenator\Exception\PathNotDirException', $e);
         }
     }
@@ -203,17 +199,17 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         spl_autoload_unregister(array('Org\Heigl\Hyphenator\Hyphenator', '__autoload'));
         //$this->assertNotContains(array('Org\Heigl\Hyphenator\Hyphenator', '__autoload'),spl_autoload_functions());
         h\Hyphenator::registerAutoload();
-        $this->assertContains(array('Org\Heigl\Hyphenator\Hyphenator', '__autoload'),spl_autoload_functions());
+        $this->assertContains(array('Org\Heigl\Hyphenator\Hyphenator', '__autoload'), spl_autoload_functions());
     }
 
     public function testHyphenatorInvocationSimple()
     {
-        $h = h\Hyphenator::factory(__DIR__ . '/share/test2','de_DE');
+        $h = h\Hyphenator::factory(__DIR__ . '/share/test2', 'de_DE');
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry', $h->getTokenizers());
         $t = $h->getTokenizers();
-        $this->assertAttributeEquals(array(new h\Tokenizer\WhitespaceTokenizer(), new h\Tokenizer\PunctuationTokenizer()),'_registry', $t);
-        $this->assertEquals('Do-nau-dampf-schiff-fahrt', $h->hyphenate('Donaudampfschifffahrt') );
-        $this->assertEquals('Gü-ter-mäd-chen', $h->hyphenate('Gütermädchen') );
+        $this->assertAttributeEquals(array(new h\Tokenizer\WhitespaceTokenizer(), new h\Tokenizer\PunctuationTokenizer()), '_registry', $t);
+        $this->assertEquals('Do-nau-dampf-schiff-fahrt', $h->hyphenate('Donaudampfschifffahrt'));
+        $this->assertEquals('Gü-ter-mäd-chen', $h->hyphenate('Gütermädchen'));
     }
 
     public function testHyphenatorInvocationWithoutFactory()
@@ -225,12 +221,12 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
           ->setLeftMin(2)
           ->setWordMin(5)
           ->setFilters('Simple')
-          ->setTokenizers('Whitespace','Punctuation');
+          ->setTokenizers('Whitespace', 'Punctuation');
         \Org\Heigl\Hyphenator\Dictionary\Dictionary::setFileLocation(__DIR__ . '/share/test3/files/dictionaries/');
         $h = new \Org\Heigl\Hyphenator\Hyphenator();
         $h->setOptions($o);
 
-        $this->assertEquals('We have some re-al-ly long words in ger-man like sau-er-stoff-feld-fla-sche.',$h->hyphenate('We have some really long words in german like sauerstofffeldflasche.'));
+        $this->assertEquals('We have some re-al-ly long words in ger-man like sau-er-stoff-feld-fla-sche.', $h->hyphenate('We have some really long words in german like sauerstofffeldflasche.'));
     }
 
     public function testSpecialSpaceChar()
@@ -239,11 +235,11 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         $o->setHyphen('-')
           ->setDefaultLocale('fr')
           ->setFilters('Simple')
-          ->setTokenizers('Whitespace','Punctuation');
+          ->setTokenizers('Whitespace', 'Punctuation');
         $h = new \Org\Heigl\Hyphenator\Hyphenator();
         $h->setOptions($o);
 
-        $this->assertEquals('Ceci est à rem-pla-cer par une fâble'."\xE2\x80\xAF".':p',$h->hyphenate('Ceci est à remplacer par une fâble'."\xE2\x80\xAF".':p'));
+        $this->assertEquals('Ceci est à rem-pla-cer par une fâble'."\xE2\x80\xAF".':p', $h->hyphenate('Ceci est à remplacer par une fâble'."\xE2\x80\xAF".':p'));
     }
 
     public function testSettingTokenizers2()
@@ -265,7 +261,7 @@ class HyphenatorTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\WhitespaceTokenizer', $result->current());
     }
 
-    public function setup ()
+    public function setup()
     {
     }
 }

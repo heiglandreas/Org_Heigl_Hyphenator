@@ -86,7 +86,7 @@ class Token
     public function __construct($content)
     {
         $this->_content = $content;
-        $this->_hyphenatedContent = array ( $content );
+        $this->_hyphenatedContent = array( $content );
     }
 
     /**
@@ -106,7 +106,7 @@ class Token
      *
      * @return Token
      */
-    public function setHyphenatedContent (array $hyphenatedContent)
+    public function setHyphenatedContent(array $hyphenatedContent)
     {
         $this->_hyphenatedContent = $hyphenatedContent;
 
@@ -170,5 +170,4 @@ class Token
     {
         return mb_strlen($this->_content);
     }
-
 }

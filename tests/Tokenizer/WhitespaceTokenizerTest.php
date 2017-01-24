@@ -54,11 +54,11 @@ class WhitespaceTokenizerTest extends \PHPUnit_Framework_TestCase
         $tReg->add(new t\WordToken('Das'))
              ->add(new t\WhitespaceToken(' '))
              ->add(new t\WordToken('ist'))
-             ->add(new t\WhitespaceToken( '  '))
+             ->add(new t\WhitespaceToken('  '))
              ->add(new t\WordToken('ein'))
              ->add(new t\WhitespaceToken("\n"))
              ->add(new t\WordToken('Test'));
-        $registry = $tokenizer->run('Das ist  ein' . "\n" . 'Test' );
+        $registry = $tokenizer->run('Das ist  ein' . "\n" . 'Test');
         $this->assertEquals($tReg, $registry);
     }
 
@@ -70,11 +70,11 @@ class WhitespaceTokenizerTest extends \PHPUnit_Framework_TestCase
         $tReg->add(new t\WordToken('Døs'))
              ->add(new t\WhitespaceToken(' '))
              ->add(new t\WordToken('Ûst'))
-             ->add(new t\WhitespaceToken( '  '))
+             ->add(new t\WhitespaceToken('  '))
              ->add(new t\WordToken('åin'))
              ->add(new t\WhitespaceToken("\n"))
              ->add(new t\WordToken('Tœst'));
-        $registry = $tokenizer->run('Døs Ûst  åin' . "\n" . 'Tœst' );
+        $registry = $tokenizer->run('Døs Ûst  åin' . "\n" . 'Tœst');
         $this->assertEquals($tReg, $registry);
     }
 

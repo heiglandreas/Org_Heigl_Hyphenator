@@ -15,8 +15,8 @@
  * @since      05.09.2011
  */
 // TODO: check include path
-ini_set ( 'date.timezone', 'Europe/Berlin' );
-ini_set ( 'memory_limit', '512M');
+ini_set('date.timezone', 'Europe/Berlin');
+ini_set('memory_limit', '512M');
 
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
@@ -24,7 +24,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
-require_once (__DIR__ . '/../vendor/autoload.php');
+require_once(__DIR__ . '/../vendor/autoload.php');
 
 mb_internal_encoding('UTF-8');
 \Org\Heigl\Hyphenator\Hyphenator::registerAutoload();
@@ -44,7 +44,8 @@ class UnitTestHelper
      *
      * @return method
      */
-    public static function getMethod($obj, $name) {
+    public static function getMethod($obj, $name)
+    {
         $class = new ReflectionClass($obj);
         $method = $class->getMethod($name);
         $method->setAccessible(true);

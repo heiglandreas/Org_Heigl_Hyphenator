@@ -202,7 +202,7 @@ final class Hyphenator
     {
         $this->_options = $options;
         $this->_tokenizers->cleanup();
-        foreach ( $this->_options->getTokenizers() as $tokenizer ) {
+        foreach ($this->_options->getTokenizers() as $tokenizer) {
             $this->addTokenizer($tokenizer);
         }
 
@@ -271,7 +271,7 @@ final class Hyphenator
      *
      * @return Hyphenator
      */
-    public function addTokenizer( $tokenizer)
+    public function addTokenizer($tokenizer)
     {
         if (! $tokenizer instanceof \Org\Heigl\Hyphenator\Tokenizer\Tokenizer) {
             $tokenizer = '\\Org\\Heigl\Hyphenator\\Tokenizer\\' . ucfirst($tokenizer) . 'Tokenizer';
@@ -289,8 +289,8 @@ final class Hyphenator
      */
     public function getTokenizers()
     {
-        if ( 0 == $this->_tokenizers->count() ) {
-            foreach ( $this->getOptions()->getTokenizers() as $tokenizer) {
+        if (0 == $this->_tokenizers->count()) {
+            foreach ($this->getOptions()->getTokenizers() as $tokenizer) {
                 $this->addTokenizer($tokenizer);
             }
         }
@@ -305,7 +305,7 @@ final class Hyphenator
      */
     public function getDictionaries()
     {
-        if ( 0 == $this->_dicts->count() ) {
+        if (0 == $this->_dicts->count()) {
             $this->addDictionary($this->getOptions()->getDefaultLocale());
         }
 
@@ -319,8 +319,8 @@ final class Hyphenator
      */
     public function getFilters()
     {
-        if ( 0 == $this->_filters->count() ) {
-            foreach ( $this->getOptions()->getFilters() as $filter) {
+        if (0 == $this->_filters->count()) {
+            foreach ($this->getOptions()->getFilters() as $filter) {
                 $this->addFilter($filter);
             }
         }
@@ -333,7 +333,7 @@ final class Hyphenator
      *
      * @return void
      */
-    public function __construct ()
+    public function __construct()
     {
         $this->_dicts = new Dictionary\DictionaryRegistry();
         $this->_filters = new Filter\FilterRegistry();
@@ -357,17 +357,17 @@ final class Hyphenator
      *
      * @return string The hyphenated string
      */
-    public function hyphenate ( $string )
+    public function hyphenate($string)
     {
         $tokens = $this->_tokenizers->tokenize($string);
         $tokens = $this->getHyphenationPattern($tokens);
         $tokens = $this->filter($tokens);
-		if (1 === sizeof($tokens) && 1 === $this->getFilters()->count()) {
-			$tokens->rewind();
-			$return = $tokens->current()->getHyphenatedContent();
-		} else {
-        	$return = $this->getFilters()->concatenate($tokens);
-		}
+        if (1 === sizeof($tokens) && 1 === $this->getFilters()->count()) {
+            $tokens->rewind();
+            $return = $tokens->current()->getHyphenatedContent();
+        } else {
+            $return = $this->getFilters()->concatenate($tokens);
+        }
         return $return;
     }
 
@@ -388,7 +388,7 @@ final class Hyphenator
             if (! $token instanceof \Org\Heigl\Hyphenator\Tokenizer\WordToken) {
                 continue;
             }
-            if ( $minWordLength > $token->length() ) {
+            if ($minWordLength > $token->length()) {
                 continue;
             }
             $time = microtime(true);
@@ -420,7 +420,7 @@ final class Hyphenator
      */
     public function getPatternForToken(Tokenizer\WordToken $token)
     {
-        foreach ( $this->getDictionaries() as $dictionary ) {
+        foreach ($this->getDictionaries() as $dictionary) {
             $token->addPattern($dictionary->getPatternsForWord($token->get()));
         }
 
@@ -438,10 +438,10 @@ final class Hyphenator
      */
     public static function setDefaultHomePath($homePath)
     {
-        if ( ! file_exists($homePath)) {
+        if (! file_exists($homePath)) {
             throw new Exception\PathNotFoundException($homePath . ' does not exist');
         }
-        if ( ! is_Dir($homePath)) {
+        if (! is_Dir($homePath)) {
             throw new Exception\PathNotDirException($homePath . ' is not a directory');
         }
 
@@ -455,14 +455,14 @@ final class Hyphenator
      */
     public static function getDefaultHomePath()
     {
-        if ( is_Dir(self::$_defaultHomePath) ) {
+        if (is_Dir(self::$_defaultHomePath)) {
             return self::$_defaultHomePath;
         }
-        if ( defined('HYPHENATOR_HOME') && is_Dir(HYPHENATOR_HOME) ) {
+        if (defined('HYPHENATOR_HOME') && is_Dir(HYPHENATOR_HOME)) {
             return realpath(HYPHENATOR_HOME);
         }
-        if ( $home = getenv('HYPHENATOR_HOME')) {
-            if ( is_Dir($home) ) {
+        if ($home = getenv('HYPHENATOR_HOME')) {
+            if (is_Dir($home)) {
                 return $home;
             }
         }
@@ -481,10 +481,10 @@ final class Hyphenator
      */
     public function setHomePath($homePath)
     {
-        if ( ! file_exists($homePath) ) {
+        if (! file_exists($homePath)) {
             throw new Exception\PathNotFoundException($homePath . ' does not exist');
         }
-        if ( ! is_Dir($homePath)) {
+        if (! is_Dir($homePath)) {
             throw new Exception\PathNotDirException($homePath . ' is not a directory');
         }
 
@@ -504,7 +504,7 @@ final class Hyphenator
      */
     public function getHomePath()
     {
-        if ( ! is_dir($this->_homePath) ) {
+        if (! is_dir($this->_homePath)) {
             return self::getDefaultHomePath();
         }
 
@@ -526,7 +526,7 @@ final class Hyphenator
     public static function factory($path = null, $locale = null)
     {
         $hyphenator = new Hyphenator();
-        if ( null !== $path && file_Exists($path) ) {
+        if (null !== $path && file_Exists($path)) {
             $hyphenator->setHomePath($path);
         }
         if (null !== $locale) {
@@ -545,13 +545,13 @@ final class Hyphenator
      */
     public static function __autoload($className)
     {
-        if ( 0 !== strpos($className, 'Org\\Heigl\\Hyphenator') ) {
+        if (0 !== strpos($className, 'Org\\Heigl\\Hyphenator')) {
             return false;
         }
         $className = substr($className, strlen('Org\\Heigl\\Hyphenator\\'));
         $file = str_replace('\\', '/', $className) . '.php';
         $fileName = __DIR__ . DIRECTORY_SEPARATOR . $file;
-        if ( ! file_exists(realpath($fileName)) ) {
+        if (! file_exists(realpath($fileName))) {
             return false;
         }
         if (! @include_once $fileName) {
@@ -575,7 +575,7 @@ final class Hyphenator
 /*
  * Check for requirements and if these are not met throw an exception
  */
-if ( ! extension_loaded('mbstring') ) {
+if (! extension_loaded('mbstring')) {
     throw new \Exception('\Org\Heigl\Hyphenator requires the mbstring-extension to be loaded');
 }
 mb_internal_encoding('UTF-8');

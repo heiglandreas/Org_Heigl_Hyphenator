@@ -53,40 +53,40 @@ class TokenTest extends \PHPUnit_Framework_TestCase
     {
         new Token('test');
         $tokenA = new WordToken('a');
-        $this->assertEquals('Org\Heigl\Hyphenator\Tokenizer\WordToken',$tokenA->getType());
+        $this->assertEquals('Org\Heigl\Hyphenator\Tokenizer\WordToken', $tokenA->getType());
         $tokenB = new NonWordToken('a');
-        $this->assertEquals('Org\Heigl\Hyphenator\Tokenizer\NonWordToken',$tokenB->getType());
+        $this->assertEquals('Org\Heigl\Hyphenator\Tokenizer\NonWordToken', $tokenB->getType());
         $tokenC = new WhitespaceToken('a');
-        $this->assertEquals('Org\Heigl\Hyphenator\Tokenizer\WhitespaceToken',$tokenC->getType());
+        $this->assertEquals('Org\Heigl\Hyphenator\Tokenizer\WhitespaceToken', $tokenC->getType());
     }
 
     public function testTokenReturnsCorrectValues()
     {
         $tokenA = new Token('test');
-        $this->assertAttributeEquals('test','_content', $tokenA);
+        $this->assertAttributeEquals('test', '_content', $tokenA);
         $this->assertEquals('test', $tokenA->get());
         $this->assertAttributeEquals(array('test'), '_hyphenatedContent', $tokenA);
-        $this->assertEquals(array('test'),$tokenA->getHyphenatedContent());
+        $this->assertEquals(array('test'), $tokenA->getHyphenatedContent());
         $tokenA->setHyphenatedContent(array('a','B'));
         $this->assertAttributeEquals(array('a','B'), '_hyphenatedContent', $tokenA);
-        $this->assertEquals(array('a','B'),$tokenA->getHyphenatedContent());
+        $this->assertEquals(array('a','B'), $tokenA->getHyphenatedContent());
     }
 
     /**
      * @dataProvider tokenLengthProvider
      */
-    public function testTokenLength($string,$length)
+    public function testTokenLength($string, $length)
     {
         $t = new Token($string);
-        $this->assertEquals($length,$t->length());
+        $this->assertEquals($length, $t->length());
     }
 
     public function tokenLengthProvider()
     {
-        return array (
-            array ('test', 4),
-            array ('täßt', 4),
-            array ('täßtärø¥', 8),
+        return array(
+            array('test', 4),
+            array('täßt', 4),
+            array('täßtärø¥', 8),
 
         );
     }
@@ -98,14 +98,14 @@ class TokenTest extends \PHPUnit_Framework_TestCase
     {
         $t = new Token($value);
         $this->assertEquals($expected, $t->getFilteredContent());
-        $this->assertSame($t,$t->setFilteredContent('test'));
+        $this->assertSame($t, $t->setFilteredContent('test'));
         $this->assertEquals('test', $t->getFilteredContent());
     }
 
     public function filteredContentProvider()
     {
-        return array (
-            array ('test','test'),
+        return array(
+            array('test','test'),
         );
     }
 }

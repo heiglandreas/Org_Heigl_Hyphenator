@@ -46,10 +46,10 @@ use \Org\Heigl\Hyphenator as h;
  */
 class HyphenatorFeatureTest extends \PHPUnit_Framework_TestCase
 {
-	
-	/**
-	 * @dataProvider hyphenationOfSingleWordWithArrayOutputProvider
-	 */
+    
+    /**
+     * @dataProvider hyphenationOfSingleWordWithArrayOutputProvider
+     */
     public function testHyphenationOfSingleWordWithArrayOutput($word, $language, $expected)
     {
         $o = new h\Options();
@@ -59,18 +59,17 @@ class HyphenatorFeatureTest extends \PHPUnit_Framework_TestCase
           ->setLeftMin(2)
           ->setWordMin(5)
           ->setFilters('NonStandard')
-          ->setTokenizers('Whitespace','Punctuation');
+          ->setTokenizers('Whitespace', 'Punctuation');
         
         $h = new h\Hyphenator();
         $h->setOptions($o);
         $this->assertEquals($expected, $h->hyphenate($word));
-        
     }
     
     public function hyphenationOfSingleWordWithArrayOutputProvider()
     {
-    	return array(
-    			array('donaudampfschifffahrt', 'de_DE', array('do-naudampfschifffahrt', 'donau-dampfschifffahrt', 'donaudampf-schifffahrt', 'donaudampfschiff-fahrt')),
-    		);
+        return array(
+                array('donaudampfschifffahrt', 'de_DE', array('do-naudampfschifffahrt', 'donau-dampfschifffahrt', 'donaudampf-schifffahrt', 'donaudampfschiff-fahrt')),
+            );
     }
 }

@@ -48,9 +48,9 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
 {
     public function testSettingDefaultFilePath()
     {
-        $this->assertAttributeEquals('','_fileLocation', '\Org\Heigl\Hyphenator\Dictionary\Dictionary');
+        $this->assertAttributeEquals('', '_fileLocation', '\Org\Heigl\Hyphenator\Dictionary\Dictionary');
         Dictionary::setFileLocation('foo');
-        $this->assertAttributeEquals('foo','_fileLocation', '\Org\Heigl\Hyphenator\Dictionary\Dictionary');
+        $this->assertAttributeEquals('foo', '_fileLocation', '\Org\Heigl\Hyphenator\Dictionary\Dictionary');
     }
 
     public function testParsingOnDictionaryCreationDoesNotWorks()
@@ -65,7 +65,7 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
     {
         Dictionary::setFileLocation(__DIR__ . '/../share/test3/files/dictionaries');
         $dict = Dictionary::factory('de-de');
-        $this->assertAttributeNotEquals(array(),'_dictionary',$dict);
+        $this->assertAttributeNotEquals(array(), '_dictionary', $dict);
     }
 
     public function testGettingPatterns()
@@ -73,23 +73,23 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
         Dictionary::setFileLocation(__DIR__ . '/share/');
         $dict = Dictionary::factory('de-DE');
         $result = $dict->getPatternsForWord('täßterei');
-        $this->assertEquals(array('täßt'=>'00020'),$result);
+        $this->assertEquals(array('täßt'=>'00020'), $result);
     }
 
     public function testSettingPatterns()
     {
         $dictionary = new Dictionary();
         $dictionary->addPattern('test', '01234');
-        $this->assertAttributeEquals(array('test'=>'01234'),'_dictionary',$dictionary);
+        $this->assertAttributeEquals(array('test'=>'01234'), '_dictionary', $dictionary);
     }
 
     public function testCreationOfNotExistentLocale()
     {
         Dictionary::setFileLocation(__DIR__ . '/share/');
         $dictionary = Dictionary::factory('xx_XX');
-        $this->assertAttributeEquals(array(),'_dictionary',$dictionary);
+        $this->assertAttributeEquals(array(), '_dictionary', $dictionary);
         $result = $dictionary->getPatternsForWord('Donaudampfschifffahrtskapitänsmütze');
-        $this->assertEquals(array(),$result);
+        $this->assertEquals(array(), $result);
     }
 
     public function testParsingDicFilesWorks()
@@ -99,11 +99,11 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
         $dict = Dictionary::parseFile('de_TE');
         $this->assertTrue(file_Exists($dict));
         $this->assertTrue('UTF-8' == mb_detect_encoding(file_get_contents($dict)));
-        $this->assertEquals(file_get_contents(__DIR__.'/share/de_TE.default.ini'),file_get_contents($dict));
-        try{
+        $this->assertEquals(file_get_contents(__DIR__.'/share/de_TE.default.ini'), file_get_contents($dict));
+        try {
             $dict = Dictionary::parseFile('foobar');
             $this->fail('This should have raised an exception!');
-        }catch(\Org\Heigl\Hyphenator\Exception\PathNotFoundException $exception){
+        } catch (\Org\Heigl\Hyphenator\Exception\PathNotFoundException $exception) {
             $this->assertTrue(true);
         }
     }
@@ -118,10 +118,9 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
     {
         $obj = new \Org\Heigl\Hyphenator\Dictionary\Dictionary();
         $method = \UnitTestHelper::getMethod($obj, '_unifyLocale');
-        $result = $method->invoke($obj,$parameter);
+        $result = $method->invoke($obj, $parameter);
 
         $this->assertEquals($expected, $result);
-
     }
 
     public function localeUnificationProvider()

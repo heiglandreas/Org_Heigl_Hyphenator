@@ -75,7 +75,7 @@ class Pattern
         $strlen = mb_strlen($item);
         $return = array();
         for ($i = 0; $i < $strlen; $i++) {
-            if ( ( ( $i ) <= $strlen ) && preg_match('/[0-9]/u', mb_substr($item, $i, 1)) ) {
+            if ((($i) <= $strlen) && preg_match('/[0-9]/u', mb_substr($item, $i, 1))) {
                 $this->_pattern .= mb_substr($item, $i, 1);
                 $i++;
             } else {
@@ -83,7 +83,7 @@ class Pattern
             }
         }
         $this->_text = preg_replace(array('/[0-9]/u','/\'/u'), array('','\\’'), $item);
-        if ( strlen($this->_pattern) == mb_strlen($this->_text) ) {
+        if (strlen($this->_pattern) == mb_strlen($this->_text)) {
             $this->_pattern .= '0';
         }
 

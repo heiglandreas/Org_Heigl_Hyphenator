@@ -50,18 +50,18 @@ class DictionaryRegistryTest extends \PHPUnit_Framework_TestCase
     public function testAddingDictionary()
     {
         $registry = new DictionaryRegistry();
-        $this->assertAttributeEquals(array(),'_registry', $registry);
+        $this->assertAttributeEquals(array(), '_registry', $registry);
         $dict = new d\Dictionary();
         $registry->add($dict);
-        $this->assertAttributeEquals(array($dict),'_registry', $registry);
-        $this->assertSame($dict,$registry->getDictionaryWithKey(0));
+        $this->assertAttributeEquals(array($dict), '_registry', $registry);
+        $this->assertSame($dict, $registry->getDictionaryWithKey(0));
     }
 
     public function testGettingPatternsForWord()
     {
         $registry = new DictionaryRegistry();
         $dict1 = new d\Dictionary();
-        $dict1->addPattern('te','012')
+        $dict1->addPattern('te', '012')
               ->addPattern('et', '112')
               ->addPattern('at', '234');
         $dict2 = new d\Dictionary();
@@ -70,9 +70,8 @@ class DictionaryRegistryTest extends \PHPUnit_Framework_TestCase
               ->addPattern('st', '110');
         $registry->add($dict1)
                  ->add($dict2);
-        $expected = array ('te' => '012','es'=>'010','st'=>'110');
-        $this->assertEquals($expected,$registry->getHyphenationPattterns('test'));
-
+        $expected = array('te' => '012','es'=>'010','st'=>'110');
+        $this->assertEquals($expected, $registry->getHyphenationPattterns('test'));
     }
 
     public function testRegistryImplementsItterator()
@@ -87,14 +86,14 @@ class DictionaryRegistryTest extends \PHPUnit_Framework_TestCase
         $registry = new DictionaryRegistry();
         $registry->add(new d\Dictionary())
                  ->add(new d\Dictionary());
-        $this->assertEquals(1,$registry->count());
+        $this->assertEquals(1, $registry->count());
         $dictionary = new d\Dictionary();
         $dictionary->addPattern('test', 'test1');
         $registry->add($dictionary);
-        $this->assertEquals(2,$registry->count());
+        $this->assertEquals(2, $registry->count());
         $registry->rewind();
         $this->assertEquals(new d\Dictionary(), $registry->current());
-        $this->assertEquals( 0, $registry->key());
+        $this->assertEquals(0, $registry->key());
         $registry->next();
         $this->assertTrue($registry->valid());
         $registry->next();
@@ -110,8 +109,8 @@ class DictionaryRegistryTest extends \PHPUnit_Framework_TestCase
         $dictionary2 = new d\Dictionary();
         $dictionary2->addPattern('test1', 'test12');
         $registry->add($dictionary2);
-        $this->assertEquals($dictionary2,$registry->getDictionaryWithKey(1));
-        $this->assertEquals($dictionary1,$registry->getDictionaryWithKey(0));
-        $this->assertEquals(null,$registry->getDictionaryWithKey(2));
+        $this->assertEquals($dictionary2, $registry->getDictionaryWithKey(1));
+        $this->assertEquals($dictionary1, $registry->getDictionaryWithKey(0));
+        $this->assertEquals(null, $registry->getDictionaryWithKey(2));
     }
 }

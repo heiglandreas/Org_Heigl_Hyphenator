@@ -46,8 +46,6 @@ namespace Org\Heigl\Hyphenator\Exception;
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      02.11.2011
  */
-class NoPatternSetException
-extends \InvalidArgumentException
-implements \Org\Heigl\Hyphenator\Exception
+class NoPatternSetException extends \InvalidArgumentException implements \Org\Heigl\Hyphenator\Exception
 {
 }

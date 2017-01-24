@@ -54,12 +54,12 @@ class PunctuationTokenizerTest extends \PHPUnit_Framework_TestCase
         $tReg->add(new t\WordToken('Das'))
              ->add(new t\NonWordToken('('))
              ->add(new t\WordToken('ist'))
-             ->add(new t\NonWordToken( '/'))
+             ->add(new t\NonWordToken('/'))
              ->add(new t\WordToken('ein'))
              ->add(new t\NonWordToken('>'))
              ->add(new t\WordToken('Test oder	so'))
              ->add(new t\NonWordToken(')'));
-        $registry = $tokenizer->run('Das(ist/ein>Test oder	so)' );
+        $registry = $tokenizer->run('Das(ist/ein>Test oder	so)');
         $this->assertEquals($tReg, $registry);
     }
 
@@ -96,5 +96,4 @@ class PunctuationTokenizerTest extends \PHPUnit_Framework_TestCase
         $registry = $tokenizer->run($tReg);
         $this->assertEquals($tReg1, $tokenizer->run($tReg));
     }
-
 }

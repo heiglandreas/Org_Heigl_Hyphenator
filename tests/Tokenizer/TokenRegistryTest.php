@@ -118,9 +118,7 @@ class TokenRegistryTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(array($wt1, $wt2, $wt3), '_registry', $r);
         $r->replace($wt4, array());
         $this->assertAttributeEquals(array($wt1, $wt2, $wt3), '_registry', $r);
-        $r->replace($wt2,array ( $wt4, 'foo', $wt5));
+        $r->replace($wt2, array( $wt4, 'foo', $wt5));
         $this->assertAttributeEquals(array($wt1, $wt4, $wt5, $wt3), '_registry', $r);
-
     }
-
 }
