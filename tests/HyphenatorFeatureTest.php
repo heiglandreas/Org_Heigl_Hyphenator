@@ -70,6 +70,7 @@ class HyphenatorFeatureTest extends \PHPUnit_Framework_TestCase
     {
         return array(
                 array('donaudampfschifffahrt', 'de_DE', array('do-naudampfschifffahrt', 'donau-dampfschifffahrt', 'donaudampf-schifffahrt', 'donaudampfschiff-fahrt')),
+//                array('altbaucharme', 'de_DE', array('alt-baucharme', 'altbau-charme')),
             );
     }
 }

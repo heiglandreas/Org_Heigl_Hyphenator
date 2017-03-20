@@ -73,6 +73,9 @@ class WhitespaceTokenizer implements Tokenizer
                 if ($token instanceof WhitespaceToken) {
                     continue;
                 }
+                if ($token instanceof NonWordToken) {
+                    continue;
+                }
                 $newTokens = $this->_tokenize($token->get());
                 if ($newTokens == array($token)) {
                     continue;
