@@ -57,20 +57,57 @@ class HyphenatorFeatureTest extends \PHPUnit_Framework_TestCase
           ->setDefaultLocale($language)
           ->setRightMin(2)
           ->setLeftMin(2)
-          ->setWordMin(5)
+          ->setWordMin(4)
           ->setFilters('NonStandard')
-          ->setTokenizers('Whitespace', 'Punctuation');
+          ->setTokenizers('Whitespace, Punctuation');
         
         $h = new h\Hyphenator();
         $h->setOptions($o);
         $this->assertEquals($expected, $h->hyphenate($word));
     }
-    
+
     public function hyphenationOfSingleWordWithArrayOutputProvider()
     {
-        return array(
-                array('donaudampfschifffahrt', 'de_DE', array('do-naudampfschifffahrt', 'donau-dampfschifffahrt', 'donaudampf-schifffahrt', 'donaudampfschiff-fahrt')),
-//                array('altbaucharme', 'de_DE', array('alt-baucharme', 'altbau-charme')),
-            );
+        return [
+            ['donaudampfschifffahrt', 'de_DE', ['do-naudampfschifffahrt', 'donau-dampfschifffahrt', 'donaudampf-schifffahrt', 'donaudampfschiff-fahrt']],
+//            ['altbaucharme', 'de_DE', array['alt-baucharme', 'altbau-charme']],
+            ['otto', 'de_DE', ['ot-to']],
+
+        ];
+    }
+
+
+    /**
+     * @dataProvider hyphenationOfSingleWordWithDefaultOutputProvider
+     */
+    public function testHyphenationOfSingleWordWithDefaultOutput($word, $language, $expected, $quality = 9)
+    {
+        $o = new h\Options();
+        $o->setHyphen('^')
+          ->setDefaultLocale($language)
+          ->setRightMin(2)
+          ->setLeftMin(2)
+          ->setWordMin(4)
+          ->setFilters('Simple')
+          ->setQuality($quality)
+          ->setTokenizers('Whitespace, Punctuation');
+
+        $h = new h\Hyphenator();
+        $h->setOptions($o);
+
+        $this->assertEquals($expected, $h->hyphenate($word));
+    }
+
+    public function hyphenationOfSingleWordWithDefaultOutputProvider()
+    {
+        return [
+            ['donaudampfschifffahrt ', 'de_DE', 'do^nau^dampf^schiff^fahrt '],
+//            ['altbaucharme', 'de_DE', 'alt-bau-charme'],
+            ['otto ', 'de_DE', 'ot^to '],
+            ['daniel ', 'de_DE', 'da^niel '],
+            ['aussichtsturm ', 'de_DE', 'aus^sichtsturm '], // Sturm will not be hyphenated…
+            ['aussichtsturm ', 'de_DE', 'aus^sicht^sturm ', h\Hyphenator::QUALITY_NORMAL], // Sturm will not be hyphenated…
+            ['urinstinkt ', 'de_DE', 'ur^instinkt ', h\Hyphenator::QUALITY_HIGHEST], // Sturm will not be hyphenated…
+        ];
     }
 }

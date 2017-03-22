@@ -274,6 +274,16 @@ class Options
     }
 
     /**
+     * Get the hyphenation-quality
+     *
+     * @return int
+     */
+    public function getQuality()
+    {
+        return $this->_quality;
+    }
+
+    /**
      * Get the minimum Length of a word to be hyphenated
      *
      * @return int

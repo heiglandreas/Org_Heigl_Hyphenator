@@ -68,7 +68,7 @@ class NonStandardFilter extends Filter
                 continue;
             }
             $string = $token->getFilteredContent();
-            $pattern = $token->getMergedPattern();
+            $pattern = $token->getMergedPattern($this->_options->getQuality());
             $length  = $token->length();
             $result = array();
             for ($i = 1; $i <= $length; $i++) {

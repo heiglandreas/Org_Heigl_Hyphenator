@@ -68,16 +68,17 @@ class SimpleFilter extends Filter
                 continue;
             }
             $string = $token->getFilteredContent();
-            $pattern = $token->getMergedPattern();
+            $pattern = $token->getMergedPattern($this->_options->getQuality());
             $length  = $token->length();
             $lastOne = 0;
             $result = array();
+
             for ($i = 1; $i <= $length; $i++) {
                 $currPattern = mb_substr($pattern, $i, 1);
                 if ($i < $this->_options->getLeftMin()) {
                     continue;
                 }
-                if ($i > $length - $this->_options->getRightMin()) {
+                if ($i > ($length - $this->_options->getRightMin())) {
                     continue;
                 }
                 if (0 == $currPattern) {
