@@ -112,10 +112,7 @@ class PunctuationTokenizer implements Tokenizer
             // Tokenize a TokenRegistry
             $f = clone($input);
             foreach ($input as $token) {
-                if ($token instanceof WhitespaceToken) {
-                    continue;
-                }
-                if ($token instanceof NonWordToken) {
+                if (! $token instanceof WordToken) {
                     continue;
                 }
                 $newTokens = $this->_tokenize($token->get());

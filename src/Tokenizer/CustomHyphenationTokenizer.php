@@ -33,8 +33,10 @@
 
 namespace Org\Heigl\Hyphenator\Tokenizer;
 
+use Org\Heigl\Hyphenator\Options;
+
 /**
- * Use Whitespace to split any input into tokens
+ * Use Punktuation to split any input into tokens
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
@@ -46,16 +48,18 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      04.11.2011
  */
-class WhitespaceTokenizer implements Tokenizer
+class CustomHyphenationTokenizer implements Tokenizer
 {
-    protected $whitespaces = array(
-      '\s',           // white space
-      "\xE2\x80\xAF", // non-breaking thin white space
-      "\xC2\xA0",     // non-breaking space
-    );
+
+    private $options;
+
+    public function __construct(Options $options)
+    {
+        $this->options = $options;
+    }
 
     /**
-     * Split the given input into tokens using whitespace as splitter
+     * Split the given input into tokens using punktuation marks as splitter
      *
      * The input can be a string or a tokenRegistry. If the input is a
      * TokenRegistry, each item will be tokenized.
@@ -69,22 +73,20 @@ class WhitespaceTokenizer implements Tokenizer
     {
         if ($input instanceof TokenRegistry) {
             // Tokenize a TokenRegistry
+            $f = clone($input);
             foreach ($input as $token) {
                 if (! $token instanceof WordToken) {
                     continue;
                 }
-                $newTokens = $this->_tokenize($token->get());
-                if ($newTokens == array($token)) {
-                    continue;
-                }
-                $input->replace($token, $newTokens);
+                $newTokens = $this->tokenize($token->get());
+                $f->replace($token, $newTokens);
             }
 
-            return $input ;
+            return $f ;
         }
 
         // Tokenize a simple string.
-        $array =  $this->_tokenize($input);
+        $array =  $this->tokenize($input);
         $registry = new TokenRegistry();
         foreach ($array as $item) {
             $registry->add($item);
@@ -99,20 +101,43 @@ class WhitespaceTokenizer implements Tokenizer
      * Each whitespace is placed in a WhitespaceToken and everything else is
      * placed in a WordToken-Object
      *
-     * @param string $input The String to tokenize
+     * @param \string $input The String to tokenize
      *
      * @return Token
      */
-    protected function _tokenize($input)
+    private function tokenize($input)
     {
-        $tokens = array();
-        $splits = preg_split("/([".implode("", $this->whitespaces)."]+)/u", $input, -1, PREG_SPLIT_DELIM_CAPTURE);
+        $tokens = [];
 
+        $splits = preg_split(sprintf(
+            '/((?:(?<=\W)%1$s|\b\w+%2$s)\w+?\b)/u',
+                $this->options->getNoHyphenateString(),
+                $this->options->getCustomHyphen()
+        ), $input, -1, PREG_SPLIT_DELIM_CAPTURE);
         foreach ($splits as $split) {
-            if (preg_match("/^[".implode("", $this->whitespaces)."]+$/um", $split)) {
-                $tokens[] = new WhitespaceToken($split);
+            if ('' == $split) {
                 continue;
             }
+            if (0 === mb_strpos($split, $this->options->getNoHyphenateString())) {
+
+                $tokens[] = new ExcludedWordToken(str_replace(
+                    $this->options->getNoHyphenateString(),
+                    '',
+                    $split
+                ));
+                continue;
+            }
+
+            if (false !== mb_strpos($split, $this->options->getCustomHyphen())) {
+
+                $tokens[] = new ExcludedWordToken(str_replace(
+                    $this->options->getCustomHyphen(),
+                    $this->options->getHyphen(),
+                    $split
+                ));
+                continue;
+            }
+
             $tokens[] = new WordToken($split);
         }
 
