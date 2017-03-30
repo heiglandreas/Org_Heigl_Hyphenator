@@ -10,7 +10,7 @@ This library provides TeX-Hyphenation in PHP.
 
 This package has the following requirements:
 
-* PHP-Version >= 5.3
+* PHP-Version >= 5.6
 * Multibyte-Extension loaded
 * Input has to be UTF8-encoded.
 

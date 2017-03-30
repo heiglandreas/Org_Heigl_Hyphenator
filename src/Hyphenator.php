@@ -362,13 +362,12 @@ final class Hyphenator
         $tokens = $this->_tokenizers->tokenize($string);
         $tokens = $this->getHyphenationPattern($tokens);
         $tokens = $this->filter($tokens);
-        if (1 === sizeof($tokens) && 1 === $this->getFilters()->count()) {
+        if (1 === count($tokens) && 1 === $this->getFilters()->count()) {
             $tokens->rewind();
-            $return = $tokens->current()->getHyphenatedContent();
-        } else {
-            $return = $this->getFilters()->concatenate($tokens);
+            return $tokens->current()->getHyphenatedContent();
         }
-        return $return;
+
+        return $this->getFilters()->concatenate($tokens);
     }
 
     /**
@@ -391,7 +390,6 @@ final class Hyphenator
             if ($minWordLength > $token->length()) {
                 continue;
             }
-            $time = microtime(true);
             $this->getPatternForToken($token);
         }
 
