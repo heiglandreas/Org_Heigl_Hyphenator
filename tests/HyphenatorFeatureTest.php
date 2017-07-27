@@ -110,4 +110,32 @@ class HyphenatorFeatureTest extends \PHPUnit_Framework_TestCase
             ['urinstinkt ', 'de_DE', 'ur^instinkt ', h\Hyphenator::QUALITY_HIGHEST], // Sturm will not be hyphenated…
         ];
     }
+
+    /**
+     * @dataProvider hyphenationOfHtmlWithDefaultOutputProvider
+     */
+    public function testHyphenationOfHtmlWithDefaultOutput($html, $language, $expected, $quality = 9)
+    {
+        $o = new h\Options();
+        $o->setHyphen('^')
+          ->setDefaultLocale($language)
+          ->setRightMin(2)
+          ->setLeftMin(2)
+          ->setWordMin(4)
+          ->setFilters('Simple')
+          ->setQuality($quality)
+          ->setTokenizers('Xml, Whitespace, Punctuation');
+
+        $h = new h\Hyphenator();
+        $h->setOptions($o);
+
+        $this->assertEquals($expected, $h->hyphenate($html));
+    }
+
+    public function hyphenationOfHtmlWithDefaultOutputProvider()
+    {
+        return [
+            ['<xml>Otto<br/>Aussichtsturm</html>', 'de_DE', '<xml>Ot^to<br/>Aus^sicht^sturm</html>', h\Hyphenator::QUALITY_NORMAL],
+        ];
+    }
 }
