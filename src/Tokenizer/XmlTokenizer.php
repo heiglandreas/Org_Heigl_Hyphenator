@@ -106,7 +106,7 @@ class XmlTokenizer implements Tokenizer
             if (! $split) {
                 continue;
             }
-            if (0 === mb_strpos($split,'<')) {
+            if (0 === mb_strpos($split, '<')) {
                 $tokens[] = new NonWordToken($split);
                 continue;
             }
