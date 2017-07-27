@@ -59,6 +59,26 @@ echo $h->hyphenate('We have some really long words in german like sauerstofffeld
 // Thanks to lsmith for the idea!]]></programlisting>
         </para>
     </sect1>
+    <sect1>
+        <title>Hyphenate HTML-content</title>
+        <para>
+            <programlisting language="php"><![CDATA[use \Org\Heigl\Hyphenator as h;
+$o = new h\Options();
+$o->setHyphen('-')
+  ->setDefaultLocale('de_DE')
+  ->setRightMin(2)
+  ->setLeftMin(2)
+  ->setWordMin(5)
+  ->setFilters('Simple')
+  ->setTokenizers('Xml', 'Whitespace', 'Punctuation');
+$h = new h\Hyphenator();
+$h->setOptions($o);
+
+echo $h->hyphenate('<h1>Long Words</h1><p>We have some really long words in german<br />like sauerstofffeldflasche.</p>');
+// prints <h1>Long Words</h1><p>We have some re-al-ly long words in ger-man<br />like sau-er-stoff-feld-fla-sche.</p>
+// Thanks to mablae for the idea!]]></programlisting>
+        </para>
+    </sect1>
     <caution>
         <title>Performance-Hint</title>
         <para>
