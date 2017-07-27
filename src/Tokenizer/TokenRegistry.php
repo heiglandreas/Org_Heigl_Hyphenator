@@ -64,9 +64,8 @@ class TokenRegistry implements \Iterator, \Countable
      */
     public function add(Token $token)
     {
-        //if ( ! in_array($token, $this->_registry)) {
-            $this->_registry[] = $token;
-        //}
+        $this->_registry[] = $token;
+
         return $this;
     }
 
