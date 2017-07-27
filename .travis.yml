@@ -10,6 +10,7 @@ matrix:
       - php: 5.4
       - php: 5.5
       - php: nightly
+      - php: hhvm
   include:
     - php: 5.3
     - php: 5.4
@@ -39,7 +40,7 @@ matrix:
       env:
         - DEPS=locked
         - TEST_COVERAGE=true
-        - CHECK_CS=true
+        - CHECK_CS=false
     - php: 7.1
       env:
         - DEPS=latest

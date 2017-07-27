@@ -119,7 +119,6 @@ class CustomHyphenationTokenizer implements Tokenizer
                 continue;
             }
             if (0 === mb_strpos($split, $this->options->getNoHyphenateString())) {
-
                 $tokens[] = new ExcludedWordToken(str_replace(
                     $this->options->getNoHyphenateString(),
                     '',
@@ -129,7 +128,6 @@ class CustomHyphenationTokenizer implements Tokenizer
             }
 
             if (false !== mb_strpos($split, $this->options->getCustomHyphen())) {
-
                 $tokens[] = new ExcludedWordToken(str_replace(
                     $this->options->getCustomHyphen(),
                     $this->options->getHyphen(),

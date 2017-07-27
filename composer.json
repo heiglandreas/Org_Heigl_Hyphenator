@@ -38,7 +38,7 @@
         ],
         "upload-coverage": "coveralls -v",
         "cs-download" : [
-            "if [ ! -e php-cs-fixer ] ; then curl -o php-cs-fixer -L `curl -s https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/releases | grep browser_download_url | head -n 1 | cut -d '\"' -f 4`; fi",
+            "curl -o php-cs-fixer -L `curl -s https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/releases | grep browser_download_url | head -n 1 | cut -d '\"' -f 4`",
             "chmod 755 php-cs-fixer"
         ],
         "cs-check": [
