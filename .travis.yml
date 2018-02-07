@@ -3,64 +3,63 @@
 sudo: false
 language: php
 
+php:
+ - 5.3
+ - 5.4
+ - 5.5
+ - 5.6
+ - 7.0
+ - 7.1
+ - 7.2
+ - nightly
+
+env:
+ - DEPS=lowest
+ - DEPS=locked
+ - DEPS=latest
+
 matrix:
   fast_finish : true
   allow_failures:
       - php: 5.3
       - php: 5.4
       - php: 5.5
+      - php: 5.6
       - php: nightly
-  include:
+  exclude:
     - php: 5.3
+      env: DEPS=lowest
+    - php: 5.3
+      env: DEPS=locked
     - php: 5.4
+      env: DEPS=lowest
+    - php: 5.4
+      env: DEPS=locked
     - php: 5.5
+      env: DEPS=lowest
+    - php: 5.5
+      env: DEPS=locked
     - php: 5.6
-      env:
-        - DEPS=lowest
+      env: DEPS=lowest
     - php: 5.6
-      env:
-        - DEPS=locked
-    - php: 5.6
-      env:
-        - DEPS=latest
-    - php: 7.0
-      env:
-        - DEPS=lowest
-    - php: 7.0
-      env:
-        - DEPS=locked
-    - php: 7.0
-      env:
-        - DEPS=latest
-    - php: 7.1
-      env:
-        - DEPS=lowest
-    - php: 7.1
-      env:
-        - DEPS=locked
-    - php: 7.1
-      env:
-        - DEPS=latest
-    - php: 7.2
-      env:
-        - DEPS=lowest
+      env: DEPS=locked
+  include:
     - php: 7.2
       env:
         - DEPS=locked
         - TEST_COVERAGE=true
         - CHECK_CS=false
-    - php: 7.2
-      env:
-        - DEPS=latest
-   - php: nightly
-      env:
-        - DEPS=lowest
-    - php: nightly
-      env:
-        - DEPS=locked
-    - php: nightly
-      env:
-        - DEPS=latest
+
+stages:
+  - check
+  - test
+
+jobs:
+  include:
+    - stage: check
+      php: 7.2
+      script:
+        - composer cs-check
 
 before_install:
   - travis_retry composer self-update
@@ -76,7 +75,6 @@ install:
 script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; fi
   - if [[ $TEST_COVERAGE != 'true' ]]; then composer test ; fi
-  - if [[ $CHECK_CS == 'true' ]]; then composer cs-check ; fi
 
 after_script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer upload-coverage ; fi
