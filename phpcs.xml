@@ -77,9 +77,10 @@
        The following tags are equivalent to the command line arguments:
        -report=summary -colors -sp
     -->
-    <arg name="report" value="summary"/>
+    <!--arg name="report" value="summary"/-->
+    <arg name="report" value="full"/>
     <arg name="colors"/>
-    <arg value="sp"/>
+    <arg value="spn"/>
 
     <!--
        You can hard-code custom php.ini settings into your custom standard.

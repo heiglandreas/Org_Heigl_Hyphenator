@@ -38,8 +38,9 @@
         ],
         "upload-coverage": "coveralls -v",
         "cs-download" : [
-            "curl -o phpcs -L `curl -s https://api.github.com/repos/squizlabs/PHP_CodeSniffer/releases | grep browser_download_url | grep phpcs.phar\\\" | head -n 1 | cut -d '\"' -f 4`",
-            "curl -o phpcs.asc -L `curl -s https://api.github.com/repos/squizlabs/PHP_CodeSniffer/releases | grep browser_download_url | grep phpcs.phar.asc\\\" | head -n 1 | cut -d '\"' -f 4`",
+            "curl -o phpcs -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar",
+            "curl -o phpcs.asc -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar.asc",
+            "# gpg --verify phpcs.asc phpcs",
             "chmod 755 phpcs"
         ],
         "cs-check": [
