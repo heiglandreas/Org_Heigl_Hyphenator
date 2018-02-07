@@ -121,14 +121,3 @@ class TokenizerRegistryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry', $tr);
     }
 }
-
-class TestTokenizer implements \Org\Heigl\Hyphenator\Tokenizer\Tokenizer
-{
-    public function run($input)
-    {
-        return $input;
-    }
-}
-class Test1Tokenizer extends TestTokenizer
-{
-}

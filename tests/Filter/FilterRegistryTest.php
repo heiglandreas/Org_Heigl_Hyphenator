@@ -117,19 +117,3 @@ class FilterRegistryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($t, $r->filter($t));
     }
 }
-
-class TestFilter extends \Org\Heigl\Hyphenator\Filter\Filter
-{
-    public function run(t\TokenRegistry $tokens)
-    {
-        return $tokens;
-    }
-
-    protected function _concatenate(t\TokenREgistry $tokens)
-    {
-        return $tokens;
-    }
-}
-class Test1Filter extends TestFilter
-{
-}
