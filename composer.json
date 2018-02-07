@@ -38,16 +38,17 @@
         ],
         "upload-coverage": "coveralls -v",
         "cs-download" : [
-            "curl -o php-cs-fixer -L `curl -s https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/releases | grep browser_download_url | head -n 1 | cut -d '\"' -f 4`",
-            "chmod 755 php-cs-fixer"
+            "curl -o phpcs -L `curl -s https://api.github.com/repos/squizlabs/PHP_CodeSniffer/releases | grep browser_download_url | grep phpcs.phar\\\" | head -n 1 | cut -d '\"' -f 4`",
+            "curl -o phpcs.asc -L `curl -s https://api.github.com/repos/squizlabs/PHP_CodeSniffer/releases | grep browser_download_url | grep phpcs.phar.asc\\\" | head -n 1 | cut -d '\"' -f 4`",
+            "chmod 755 phpcs"
         ],
         "cs-check": [
             "@cs-download",
-            "./php-cs-fixer --version && ./php-cs-fixer fix -v --diff --dry-run"
+            "./phpcs --version && ./phpcs"
         ],
         "cs-fix": [
             "@cs-download",
-            "./php-cs-fixer fix -v"
+            "./phpcs"
         ],
         "test": "phpunit",
         "test-coverage": "phpunit --coverage-clover clover.xml"

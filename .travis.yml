@@ -59,10 +59,6 @@ jobs:
     - stage: check
       php: 7.2
       script:
-        - curl -L -o phpcs https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar
-        - curl -L -o phpcs.asc https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar.asc
-        - gpg --verify phpcs.asc phpcs
-        - chmod a+x phpcs
         - composer cs-check
 
 before_install:
