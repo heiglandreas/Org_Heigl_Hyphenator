@@ -33,9 +33,8 @@
 namespace Org\Heigl\HyphenatorTest\Filter;
 
 use \Org\Heigl\Hyphenator\Filter\CustomMarkupFilter;
-use \Org\Heigl\Hyphenator\Options;
-use \Org\Heigl\Hyphenator\Tokenizer as t;
 use \Mockery as M;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the functionality of the class NonStandardFilter
@@ -49,7 +48,7 @@ use \Mockery as M;
  * @version   2.0.1
  * @since     02.12.2011
  */
-class CustomMarkupFilterTest extends \PHPUnit_Framework_TestCase
+class CustomMarkupFilterTest extends TestCase
 {
     public function testConcatenation()
     {
@@ -68,7 +67,7 @@ class CustomMarkupFilterTest extends \PHPUnit_Framework_TestCase
         $tokenList->shouldReceive('next')->twice();
         $tokenList->shouldReceive('key')->andReturnValues(array(0, 1));
 
-        $method = \UnitTestHelper::getMethod($obj, '_concatenate');
+        $method = \UnitTestHelper::getMethod($obj, 'concatenate');
         $result = $method->invoke($obj, $tokenList);
 
         $this->assertEquals('ab', $result);

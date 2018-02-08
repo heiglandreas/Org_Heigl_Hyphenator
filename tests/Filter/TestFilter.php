@@ -38,7 +38,7 @@ class TestFilter extends \Org\Heigl\Hyphenator\Filter\Filter
         return $tokens;
     }
 
-    protected function _concatenate(t\TokenREgistry $tokens)
+    protected function doConcatenate(t\TokenREgistry $tokens)
     {
         return $tokens;
     }

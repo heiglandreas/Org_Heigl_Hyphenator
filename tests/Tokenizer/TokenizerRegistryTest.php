@@ -31,7 +31,8 @@
 
 namespace Org\Heigl\HyphenatorTest\Tokenizer;
 
-use \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry;
+use Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the functionality of the class Token
@@ -44,20 +45,20 @@ use \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry;
  * @version   2.0.1
  * @since     02.11.2011
  */
-class TokenizerRegistryTest extends \PHPUnit_Framework_TestCase
+class TokenizerRegistryTest extends TestCase
 {
     public function testAddingTokenizer()
     {
         $t1 = new TestTokenizer();
         $t2 = new Test1Tokenizer();
         $r = new TokenizerRegistry();
-        $this->assertAttributeEquals(array(), '_registry', $r);
+        $this->assertAttributeEquals(array(), 'registry', $r);
         $this->assertSame($r, $r->add($t1));
-        $this->assertAttributeEquals(array($t1), '_registry', $r);
+        $this->assertAttributeEquals(array($t1), 'registry', $r);
         $this->assertSame($r, $r->add($t2));
-        $this->assertAttributeEquals(array($t1,$t2), '_registry', $r);
+        $this->assertAttributeEquals(array($t1,$t2), 'registry', $r);
         $this->assertSame($r, $r->cleanup());
-        $this->assertAttributeEquals(array(), '_registry', $r);
+        $this->assertAttributeEquals(array(), 'registry', $r);
     }
 
 

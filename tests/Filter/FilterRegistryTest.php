@@ -34,6 +34,7 @@ namespace Org\Heigl\HyphenatorTest\Filter;
 
 use \Org\Heigl\Hyphenator\Filter\FilterRegistry;
 use \Org\Heigl\Hyphenator\Tokenizer as t;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the functionality of the class Token
@@ -47,20 +48,20 @@ use \Org\Heigl\Hyphenator\Tokenizer as t;
  * @version   2.0.1
  * @since     02.11.2011
  */
-class FilterRegistryTest extends \PHPUnit_Framework_TestCase
+class FilterRegistryTest extends TestCase
 {
     public function testAddingFilter()
     {
         $t1 = new TestFilter();
         $t2 = new Test1Filter();
         $r = new FilterRegistry();
-        $this->assertAttributeEquals(array(), '_registry', $r);
+        $this->assertAttributeEquals(array(), 'registry', $r);
         $this->assertSame($r, $r->add($t1));
-        $this->assertAttributeEquals(array($t1), '_registry', $r);
+        $this->assertAttributeEquals(array($t1), 'registry', $r);
         $this->assertSame($r, $r->add($t2));
-        $this->assertAttributeEquals(array($t1,$t2), '_registry', $r);
+        $this->assertAttributeEquals(array($t1,$t2), 'registry', $r);
         $this->assertSame($r, $r->cleanup());
-        $this->assertAttributeEquals(array(), '_registry', $r);
+        $this->assertAttributeEquals(array(), 'registry', $r);
     }
 
 

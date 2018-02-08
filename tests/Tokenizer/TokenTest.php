@@ -31,10 +31,11 @@
 
 namespace Org\Heigl\HyphenatorTest\Tokenizer;
 
-use \Org\Heigl\Hyphenator\Tokenizer\Token;
-use \Org\Heigl\Hyphenator\Tokenizer\WordToken;
-use \Org\Heigl\Hyphenator\Tokenizer\NonWordToken;
-use \Org\Heigl\Hyphenator\Tokenizer\WhitespaceToken;
+use Org\Heigl\Hyphenator\Tokenizer\Token;
+use Org\Heigl\Hyphenator\Tokenizer\WordToken;
+use Org\Heigl\Hyphenator\Tokenizer\NonWordToken;
+use Org\Heigl\Hyphenator\Tokenizer\WhitespaceToken;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the functionality of the class Token
@@ -47,7 +48,7 @@ use \Org\Heigl\Hyphenator\Tokenizer\WhitespaceToken;
  * @version   2.0.1
  * @since     02.11.2011
  */
-class TokenTest extends \PHPUnit_Framework_TestCase
+class TokenTest extends TestCase
 {
     public function testTokenReturnsCorrectClass()
     {
@@ -63,12 +64,12 @@ class TokenTest extends \PHPUnit_Framework_TestCase
     public function testTokenReturnsCorrectValues()
     {
         $tokenA = new Token('test');
-        $this->assertAttributeEquals('test', '_content', $tokenA);
+        $this->assertAttributeEquals('test', 'content', $tokenA);
         $this->assertEquals('test', $tokenA->get());
-        $this->assertAttributeEquals(array('test'), '_hyphenatedContent', $tokenA);
+        $this->assertAttributeEquals(array('test'), 'hyphenatedContent', $tokenA);
         $this->assertEquals(array('test'), $tokenA->getHyphenatedContent());
         $tokenA->setHyphenatedContent(array('a','B'));
-        $this->assertAttributeEquals(array('a','B'), '_hyphenatedContent', $tokenA);
+        $this->assertAttributeEquals(array('a','B'), 'hyphenatedContent', $tokenA);
         $this->assertEquals(array('a','B'), $tokenA->getHyphenatedContent());
     }
 
