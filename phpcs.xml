@@ -106,4 +106,8 @@
        directory.
     -->
     <rule ref="PSR2"/>
+
+    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+        <exclude-pattern>src/Hyphenator.php</exclude-pattern>
+    </rule>
 </ruleset>
