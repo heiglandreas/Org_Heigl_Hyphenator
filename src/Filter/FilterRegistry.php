@@ -52,9 +52,9 @@ class FilterRegistry implements \Iterator, \Countable
     /**
      * Storage for the Tokenizers.
      *
-     * @var \Org\Heigl\Hyphenator\Filter\Filter[] $_registry
+     * @var \Org\Heigl\Hyphenator\Filter\Filter[] $registry
      */
-    protected $_registry = array();
+    protected $registry = array();
 
     /**
      * Add an item to the registry
@@ -66,8 +66,8 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function add(Filter $filter)
     {
-        if (! in_array($filter, $this->_registry)) {
-            $this->_registry[] = $filter;
+        if (! in_array($filter, $this->registry)) {
+            $this->registry[] = $filter;
         }
 
         return $this;
@@ -82,8 +82,8 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function getFilterWithKey($key)
     {
-        if (array_key_exists($key, $this->_registry)) {
-            return $this->_registry[$key];
+        if (array_key_exists($key, $this->registry)) {
+            return $this->registry[$key];
         }
 
         return null;
@@ -96,7 +96,7 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function cleanup()
     {
-        $this->_registry = array();
+        $this->registry = array();
 
         return $this;
     }
@@ -143,7 +143,7 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function rewind()
     {
-        reset($this->_registry);
+        reset($this->registry);
     }
 
     /**
@@ -155,7 +155,7 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function current()
     {
-        return current($this->_registry);
+        return current($this->registry);
     }
 
     /**
@@ -167,7 +167,7 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function key()
     {
-        return key($this->_registry);
+        return key($this->registry);
     }
 
     /**
@@ -179,7 +179,7 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function count()
     {
-        return count($this->_registry);
+        return count($this->registry);
     }
 
     /**
@@ -191,7 +191,7 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function next()
     {
-        next($this->_registry);
+        next($this->registry);
     }
 
     /**
@@ -203,7 +203,7 @@ class FilterRegistry implements \Iterator, \Countable
      */
     public function valid()
     {
-        if (false === current($this->_registry)) {
+        if (false === current($this->registry)) {
             return false;
         }
 

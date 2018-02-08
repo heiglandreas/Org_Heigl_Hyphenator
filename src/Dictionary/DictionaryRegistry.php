@@ -51,9 +51,9 @@ class DictionaryRegistry implements \Iterator, \Countable
     /**
      * Storage for the Dictionaries.
      *
-     * @var Dictionary[] $_registry
+     * @var Dictionary[] $registry
      */
-    protected $_registry = array();
+    protected $registry = array();
 
     /**
      * Add an item to the registry.
@@ -64,8 +64,8 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function add(Dictionary $dict)
     {
-        if (! in_array($dict, $this->_registry)) {
-            $this->_registry[] = $dict;
+        if (! in_array($dict, $this->registry)) {
+            $this->registry[] = $dict;
         }
 
         return $this;
@@ -80,8 +80,8 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function getDictionaryWithKey($key)
     {
-        if (array_key_exists($key, $this->_registry)) {
-            return $this->_registry[$key];
+        if (array_key_exists($key, $this->registry)) {
+            return $this->registry[$key];
         }
 
         return null;
@@ -113,7 +113,7 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function rewind()
     {
-        reset($this->_registry);
+        reset($this->registry);
     }
 
     /**
@@ -125,7 +125,7 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function current()
     {
-        return current($this->_registry);
+        return current($this->registry);
     }
 
     /**
@@ -137,7 +137,7 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function key()
     {
-        return key($this->_registry);
+        return key($this->registry);
     }
 
     /**
@@ -149,7 +149,7 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function count()
     {
-        return count($this->_registry);
+        return count($this->registry);
     }
 
     /**
@@ -161,7 +161,7 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function next()
     {
-        next($this->_registry);
+        next($this->registry);
     }
 
     /**
@@ -173,7 +173,7 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function valid()
     {
-        if (false === current($this->_registry)) {
+        if (false === current($this->registry)) {
             return false;
         }
 

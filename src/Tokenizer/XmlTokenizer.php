@@ -67,7 +67,7 @@ class XmlTokenizer implements Tokenizer
                 if (! $token instanceof WordToken) {
                     continue;
                 }
-                $newTokens = $this->_tokenize($token->get());
+                $newTokens = $this->tokenize($token->get());
                 if ($newTokens == array($token)) {
                     continue;
                 }
@@ -78,7 +78,7 @@ class XmlTokenizer implements Tokenizer
         }
 
         // Tokenize a simple string.
-        $array =  $this->_tokenize($input);
+        $array =  $this->tokenize($input);
         $registry = new TokenRegistry();
         foreach ($array as $item) {
             $registry->add($item);
@@ -97,7 +97,7 @@ class XmlTokenizer implements Tokenizer
      *
      * @return Token
      */
-    protected function _tokenize($input)
+    private function tokenize($input)
     {
         $tokens = array();
         $splits = preg_split("/(<\/?[^>]+\/?>)/u", $input, -1, PREG_SPLIT_DELIM_CAPTURE);

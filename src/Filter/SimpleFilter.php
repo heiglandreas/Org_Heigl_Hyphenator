@@ -68,17 +68,17 @@ class SimpleFilter extends Filter
                 continue;
             }
             $string = $token->getFilteredContent();
-            $pattern = $token->getMergedPattern($this->_options->getQuality());
+            $pattern = $token->getMergedPattern($this->options->getQuality());
             $length  = $token->length();
             $lastOne = 0;
             $result = array();
 
             for ($i = 1; $i <= $length; $i++) {
                 $currPattern = mb_substr($pattern, $i, 1);
-                if ($i < $this->_options->getLeftMin()) {
+                if ($i < $this->options->getLeftMin()) {
                     continue;
                 }
-                if ($i > ($length - $this->_options->getRightMin())) {
+                if ($i > ($length - $this->options->getRightMin())) {
                     continue;
                 }
                 if (0 == $currPattern) {
@@ -92,7 +92,7 @@ class SimpleFilter extends Filter
                 $result[] = $sylable;
             }
             $result [] = mb_substr($string, $lastOne);
-            $token->setFilteredContent(implode($this->_options->getHyphen(), $result));
+            $token->setFilteredContent(implode($this->options->getHyphen(), $result));
         }
 
         return $tokens;
@@ -107,7 +107,7 @@ class SimpleFilter extends Filter
      * @see Org\Heigl\Hyphenator\Filter\Filter::run()
      * @return \Org\Heigl\Hyphenator\Tokenizer\Token
      */
-    protected function _concatenate(t\TokenRegistry $tokens)
+    protected function doConcatenate(t\TokenRegistry $tokens)
     {
         $string = '';
         foreach ($tokens as $token) {

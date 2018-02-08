@@ -51,16 +51,16 @@ class Pattern
     /**
      * The internal storage of the text.
      *
-     * @var string $_text
+     * @var string $text
      */
-    protected $_text = '';
+    protected $text = '';
 
     /**
      * The internal storage for the pattern.
      *
-     * @var string $_pattern
+     * @var string $pattern
      */
-    protected $_pattern = '';
+    protected $pattern = '';
 
     /**
      * Set the pattern.
@@ -76,15 +76,15 @@ class Pattern
         $return = array();
         for ($i = 0; $i < $strlen; $i++) {
             if ((($i) <= $strlen) && preg_match('/[0-9]/u', mb_substr($item, $i, 1))) {
-                $this->_pattern .= mb_substr($item, $i, 1);
+                $this->pattern .= mb_substr($item, $i, 1);
                 $i++;
             } else {
-                $this->_pattern .= '0';
+                $this->pattern .= '0';
             }
         }
-        $this->_text = preg_replace(array('/[0-9]/u','/\'/u'), array('','\\’'), $item);
-        if (strlen($this->_pattern) == mb_strlen($this->_text)) {
-            $this->_pattern .= '0';
+        $this->text = preg_replace(array('/[0-9]/u','/\'/u'), array('','\\’'), $item);
+        if (strlen($this->pattern) == mb_strlen($this->text)) {
+            $this->pattern .= '0';
         }
 
         return $this;
@@ -123,11 +123,11 @@ class Pattern
      */
     public function getText()
     {
-        if (! $this->_text) {
+        if (! $this->text) {
             throw new \Org\Heigl\Hyphenator\Exception\NoPatternSetException('No Pattern set');
         }
 
-        return $this->_text;
+        return $this->text;
     }
 
     /**
@@ -138,10 +138,10 @@ class Pattern
      */
     public function getPattern()
     {
-        if (! $this->_pattern) {
+        if (! $this->pattern) {
             throw new \Org\Heigl\Hyphenator\Exception\NoPatternSetException('No Pattern set');
         }
 
-        return $this->_pattern;
+        return $this->pattern;
     }
 }

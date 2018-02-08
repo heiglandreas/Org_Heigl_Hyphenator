@@ -80,7 +80,7 @@
     <!--arg name="report" value="summary"/-->
     <arg name="report" value="full"/>
     <arg name="colors"/>
-    <arg value="spn"/>
+    <arg value="sp"/>
 
     <!--
        You can hard-code custom php.ini settings into your custom standard.
