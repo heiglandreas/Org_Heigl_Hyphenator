@@ -37,7 +37,7 @@ jobs:
         - composer cs-check
     - stage: test
     - stage: coverage
-      if: branch = master
+      if: branch = master AND type = push
       php: 7.2
       env: TEST_COVERAGE=true
       script:
