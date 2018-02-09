@@ -32,10 +32,11 @@
 
 namespace Org\Heigl\HyphenatorTest\Filter;
 
-use \Org\Heigl\Hyphenator\Filter\NonStandardFilter;
-use \Org\Heigl\Hyphenator\Options;
-use \Org\Heigl\Hyphenator\Tokenizer as t;
-use \Mockery as M;
+use Org\Heigl\Hyphenator\Filter\NonStandardFilter;
+use Org\Heigl\Hyphenator\Options;
+use Org\Heigl\Hyphenator\Tokenizer as t;
+use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the functionality of the class NonStandardFilter
@@ -49,7 +50,7 @@ use \Mockery as M;
  * @version   2.0.1
  * @since     02.12.2011
  */
-class NonStandardFilterTest extends \PHPUnit_Framework_TestCase
+class NonStandardFilterTest extends TestCase
 {
     /**
      * @dataProvider filterProvider
@@ -71,7 +72,19 @@ class NonStandardFilterTest extends \PHPUnit_Framework_TestCase
     public function filterProvider()
     {
         return array(
-            array('Donaudampfschifffahrt', array('auda' => '00100', 'pfsch'=>'001000', 'fff'=>'0010'), array( 'Donau-dampfschifffahrt','Donaudampf-schifffahrt','Donaudampfschiff-fahrt')),
+            array(
+                'Donaudampfschifffahrt',
+                array(
+                    'auda' => '00100',
+                    'pfsch'=>'001000',
+                    'fff'=>'0010'
+                ),
+                array(
+                    'Donau-dampfschifffahrt',
+                    'Donaudampf-schifffahrt',
+                    'Donaudampfschiff-fahrt'
+                )
+            ),
         );
     }
 
@@ -107,7 +120,7 @@ class NonStandardFilterTest extends \PHPUnit_Framework_TestCase
         $tokenList->shouldReceive('next')->twice();
         $tokenList->shouldReceive('key')->andReturnValues(array(0, 1));
 
-        $method = \UnitTestHelper::getMethod($obj, '_concatenate');
+        $method = \UnitTestHelper::getMethod($obj, 'concatenate');
         $result = $method->invoke($obj, $tokenList);
 
         $this->assertEquals('ab', $result);

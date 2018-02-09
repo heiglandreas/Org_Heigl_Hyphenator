@@ -152,44 +152,44 @@ final class Hyphenator
      * \Org\Heigl\Hyphenator::getConfig()-Method and can then be adapted
      * according to ones needs.
      *
-     * @var string $_homePath
+     * @var string $homePath
      */
-    private $_homePath = null;
+    private $homePath = null;
 
     /**
      * Storage of the default Home-Path.
      *
-     * @var string $_defaultHomePath
+     * @var string $defaultHomePath
      */
-    private static $_defaultHomePath = null;
+    private static $defaultHomePath = null;
 
     /**
      * Storage for the Options-Object.
      *
-     * @var Options $_options
+     * @var Options $options
      */
-    private $_options = null;
+    private $options = null;
 
     /**
      * Storage for the Dictionaries.
      *
-     * @var Dictionary\DictionaryRegistry $_dicts
+     * @var Dictionary\DictionaryRegistry $dicts
      */
-    private $_dicts = null;
+    private $dicts = null;
 
     /**
      * Storage for the Filters.
      *
-     * @var Filter\FilterRegistry $_filters
+     * @var Filter\FilterRegistry $filters
      */
-    private $_filters = null;
+    private $filters = null;
 
     /**
      * Storage for the tokenizers.
      *
-     * @var \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry $_tokenizers
+     * @var \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry $tokenizers
      */
-    private $_tokenizers = null;
+    private $tokenizers = null;
 
     /**
      * Set the Options
@@ -200,9 +200,9 @@ final class Hyphenator
      */
     public function setOptions(Options $options)
     {
-        $this->_options = $options;
-        $this->_tokenizers->cleanup();
-        foreach ($this->_options->getTokenizers() as $tokenizer) {
+        $this->options = $options;
+        $this->tokenizers->cleanup();
+        foreach ($this->options->getTokenizers() as $tokenizer) {
             $this->addTokenizer($tokenizer);
         }
 
@@ -216,12 +216,12 @@ final class Hyphenator
      */
     public function getOptions()
     {
-        if (null === $this->_options) {
+        if (null === $this->options) {
             $optFile = $this->getHomePath() . DIRECTORY_SEPARATOR . 'Hyphenator.properties';
             $this->setOptions(Options::factory($optFile));
         }
 
-        return $this->_options;
+        return $this->options;
     }
 
     /**
@@ -238,7 +238,7 @@ final class Hyphenator
             \Org\Heigl\Hyphenator\Dictionary\Dictionary::setFileLocation($this->getHomePath() . '/files/dictionaries');
             $dictionary = \Org\Heigl\Hyphenator\Dictionary\Dictionary::factory($dictionary);
         }
-        $this->_dicts->add($dictionary);
+        $this->dicts->add($dictionary);
 
         return $this;
     }
@@ -259,7 +259,7 @@ final class Hyphenator
             $filter = new $filter();
         }
         $filter->setOptions($this->getOptions());
-        $this->_filters->add($filter);
+        $this->filters->add($filter);
 
         return $this;
     }
@@ -277,7 +277,7 @@ final class Hyphenator
             $tokenizer = '\\Org\\Heigl\Hyphenator\\Tokenizer\\' . ucfirst($tokenizer) . 'Tokenizer';
             $tokenizer = new $tokenizer();
         }
-        $this->_tokenizers->add($tokenizer);
+        $this->tokenizers->add($tokenizer);
 
         return $this;
     }
@@ -289,13 +289,13 @@ final class Hyphenator
      */
     public function getTokenizers()
     {
-        if (0 == $this->_tokenizers->count()) {
+        if (0 == $this->tokenizers->count()) {
             foreach ($this->getOptions()->getTokenizers() as $tokenizer) {
                 $this->addTokenizer($tokenizer);
             }
         }
 
-        return $this->_tokenizers;
+        return $this->tokenizers;
     }
 
     /**
@@ -305,11 +305,11 @@ final class Hyphenator
      */
     public function getDictionaries()
     {
-        if (0 == $this->_dicts->count()) {
+        if (0 == $this->dicts->count()) {
             $this->addDictionary($this->getOptions()->getDefaultLocale());
         }
 
-        return $this->_dicts;
+        return $this->dicts;
     }
 
     /**
@@ -319,13 +319,13 @@ final class Hyphenator
      */
     public function getFilters()
     {
-        if (0 == $this->_filters->count()) {
+        if (0 == $this->filters->count()) {
             foreach ($this->getOptions()->getFilters() as $filter) {
                 $this->addFilter($filter);
             }
         }
 
-        return $this->_filters;
+        return $this->filters;
     }
 
     /**
@@ -335,9 +335,9 @@ final class Hyphenator
      */
     public function __construct()
     {
-        $this->_dicts = new Dictionary\DictionaryRegistry();
-        $this->_filters = new Filter\FilterRegistry();
-        $this->_tokenizers = new Tokenizer\TokenizerRegistry();
+        $this->dicts      = new Dictionary\DictionaryRegistry();
+        $this->filters    = new Filter\FilterRegistry();
+        $this->tokenizers = new Tokenizer\TokenizerRegistry();
     }
 
     /**
@@ -359,7 +359,7 @@ final class Hyphenator
      */
     public function hyphenate($string)
     {
-        $tokens = $this->_tokenizers->tokenize($string);
+        $tokens = $this->tokenizers->tokenize($string);
         $tokens = $this->getHyphenationPattern($tokens);
         $tokens = $this->filter($tokens);
         if (1 === count($tokens) && 1 === $this->getFilters()->count()) {
@@ -443,7 +443,7 @@ final class Hyphenator
             throw new Exception\PathNotDirException($homePath . ' is not a directory');
         }
 
-        self::$_defaultHomePath = realpath($homePath);
+        self::$defaultHomePath = realpath($homePath);
     }
 
     /**
@@ -453,8 +453,8 @@ final class Hyphenator
      */
     public static function getDefaultHomePath()
     {
-        if (is_Dir(self::$_defaultHomePath)) {
-            return self::$_defaultHomePath;
+        if (is_Dir(self::$defaultHomePath)) {
+            return self::$defaultHomePath;
         }
         if (defined('HYPHENATOR_HOME') && is_Dir(HYPHENATOR_HOME)) {
             return realpath(HYPHENATOR_HOME);
@@ -486,7 +486,7 @@ final class Hyphenator
             throw new Exception\PathNotDirException($homePath . ' is not a directory');
         }
 
-        $this->_homePath = realpath($homePath);
+        $this->homePath = realpath($homePath);
 
         return $this;
     }
@@ -502,11 +502,11 @@ final class Hyphenator
      */
     public function getHomePath()
     {
-        if (! is_dir($this->_homePath)) {
+        if (! is_dir($this->homePath)) {
             return self::getDefaultHomePath();
         }
 
-        return $this->_homePath;
+        return $this->homePath;
     }
 
     /**

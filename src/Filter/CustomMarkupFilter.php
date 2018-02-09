@@ -74,7 +74,7 @@ class CustomMarkupFilter extends Filter
      * @see Org\Heigl\Hyphenator\Filter\Filter::run()
      * @return \Org\Heigl\Hyphenator\Tokenizer\Token
      */
-    protected function _concatenate(t\TokenRegistry $tokens)
+    protected function doConcatenate(t\TokenRegistry $tokens)
     {
         $string = '';
         foreach ($tokens as $token) {

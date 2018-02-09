@@ -14,7 +14,7 @@
         <whitelist>
             <directory suffix=".php">src</directory>
             <exclude>
-                <directory suffix=".php">src/Org/Heigl/Hyphenator/parsedFiles</directory>
+                <directory suffix=".php">src/share</directory>
             </exclude>
         </whitelist>
 	</filter>

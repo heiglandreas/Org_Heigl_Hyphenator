@@ -53,7 +53,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      *
      * @var \Org\Heigl\Hyphenator\Tokenizer\Tokenizer[] $_registry
      */
-    protected $_registry = array();
+    private $registry = array();
 
     /**
      * Add an item to the registry
@@ -65,8 +65,8 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function add(Tokenizer $tokenizer)
     {
-        if (! in_array($tokenizer, $this->_registry)) {
-            $this->_registry[] = $tokenizer;
+        if (! in_array($tokenizer, $this->registry)) {
+            $this->registry[] = $tokenizer;
         }
 
         return $this;
@@ -81,8 +81,8 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function getTokenizerWithKey($key)
     {
-        if (array_key_exists($key, $this->_registry)) {
-            return $this->_registry[$key];
+        if (array_key_exists($key, $this->registry)) {
+            return $this->registry[$key];
         }
 
         return null;
@@ -95,7 +95,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function cleanup()
     {
-        $this->_registry = array();
+        $this->registry = array();
 
         return $this;
     }
@@ -130,7 +130,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function rewind()
     {
-        reset($this->_registry);
+        reset($this->registry);
     }
 
     /**
@@ -142,7 +142,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function current()
     {
-        return current($this->_registry);
+        return current($this->registry);
     }
 
     /**
@@ -154,7 +154,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function key()
     {
-        return key($this->_registry);
+        return key($this->registry);
     }
 
     /**
@@ -166,7 +166,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function count()
     {
-        return count($this->_registry);
+        return count($this->registry);
     }
 
     /**
@@ -178,7 +178,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function next()
     {
-        next($this->_registry);
+        next($this->registry);
     }
 
     /**
@@ -190,7 +190,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      */
     public function valid()
     {
-        if (false === current($this->_registry)) {
+        if (false === current($this->registry)) {
             return false;
         }
 

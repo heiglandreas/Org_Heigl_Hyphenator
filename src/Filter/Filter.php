@@ -54,9 +54,9 @@ abstract class Filter
     /**
      * Storage of the options-object.
      *
-     * @var \Org\Heigl\Hyphenator\Options $_options
+     * @var \Org\Heigl\Hyphenator\Options $options
      */
-    protected $_options = null;
+    protected $options = null;
 
     /**
      * Set the options-object for this filter
@@ -67,7 +67,7 @@ abstract class Filter
      */
     public function setOptions(\Org\Heigl\Hyphenator\Options $options)
     {
-        $this->_options=$options;
+        $this->options =$options;
 
         return $this;
     }
@@ -79,7 +79,7 @@ abstract class Filter
      */
     public function getOptions()
     {
-        return $this->_options;
+        return $this->options;
     }
 
     /**
@@ -100,7 +100,7 @@ abstract class Filter
      *
      * @return mixed
      */
-    abstract protected function _concatenate(t\TokenRegistry $tokens);
+    abstract protected function doConcatenate(t\TokenRegistry $tokens);
 
     /**
      * Take any input and eitehr pass it to the concatenate-method or return it.
@@ -114,7 +114,7 @@ abstract class Filter
     public function concatenate($tokens)
     {
         if ($tokens instanceof t\TokenRegistry) {
-            return $this->_concatenate($tokens);
+            return $this->doConcatenate($tokens);
         }
 
         return $tokens;

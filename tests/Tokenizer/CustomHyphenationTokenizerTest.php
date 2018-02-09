@@ -32,8 +32,9 @@
 namespace Org\Heigl\HyphenatorTest\Tokenizer;
 
 use Org\Heigl\Hyphenator\Options;
-use \Org\Heigl\Hyphenator\Tokenizer as t;
+use Org\Heigl\Hyphenator\Tokenizer as t;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the functionality of the class PunctuationTokenizer
@@ -46,7 +47,7 @@ use Mockery as M;
  * @version   2.0.1
  * @since     02.11.2011
  */
-class CustomHyphenationTokenizerTest extends \PHPUnit_Framework_TestCase
+class CustomHyphenationTokenizerTest extends TestCase
 {
     public function testTokenizingString()
     {

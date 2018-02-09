@@ -3,65 +3,48 @@
 sudo: false
 language: php
 
+php:
+ - 7.0
+ - 7.1
+ - 7.2
+ - nightly
+
+env:
+ - DEPS=lowest
+ - DEPS=locked
+ - DEPS=latest
+
 matrix:
   fast_finish : true
   allow_failures:
-      - php: 5.3
-      - php: 5.4
-      - php: 5.5
       - php: nightly
-      - php: hhvm
   include:
-    - php: 5.3
-    - php: 5.4
-    - php: 5.5
-    - php: 5.6
-      env:
-        - DEPS=lowest
-    - php: 5.6
-      env:
-        - DEPS=locked
-    - php: 5.6
-      env:
-        - DEPS=latest
-    - php: 7.0
-      env:
-        - DEPS=lowest
-    - php: 7.0
-      env:
-        - DEPS=locked
-    - php: 7.0
-      env:
-        - DEPS=latest
-    - php: 7.1
-      env:
-        - DEPS=lowest
-    - php: 7.1
+    - php: 7.2
       env:
         - DEPS=locked
         - TEST_COVERAGE=true
         - CHECK_CS=false
-    - php: 7.1
-      env:
-        - DEPS=latest
-    - php: hhvm
-      env:
-        - DEPS=lowest
-    - php: hhvm
-      env:
-        - DEPS=locked
-    - php: hhvm
-      env:
-        - DEPS=latest
-    - php: nightly
-      env:
-        - DEPS=lowest
-    - php: nightly
-      env:
-        - DEPS=locked
-    - php: nightly
-      env:
-        - DEPS=latest
+
+stages:
+  - check
+  - test
+
+jobs:
+  include:
+    - stage: check
+      php: 7.2
+      script:
+        - composer cs-check
+    - stage: test
+    - stage: coverage
+      if: branch = master AND type = push
+      php: 7.2
+      env: TEST_COVERAGE=true
+      script:
+      after_script:
+       - travis_retry composer require $COMPOSER_ARGS --dev satooshi/php-coveralls ;
+       - composer test-coverage
+       - travis_retry composer upload-coverage
 
 before_install:
   - travis_retry composer self-update
@@ -70,14 +53,8 @@ before_install:
 install:
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
-  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require $COMPOSER_ARGS --dev satooshi/php-coveralls ; fi
   - travis_retry composer install $COMPOSER_ARGS
   - composer show --installed
 
 script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; fi
-  - if [[ $TEST_COVERAGE != 'true' ]]; then composer test ; fi
-  - if [[ $CHECK_CS == 'true' ]]; then composer cs-check ; fi
-
-after_script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer upload-coverage ; fi
+  - composer test

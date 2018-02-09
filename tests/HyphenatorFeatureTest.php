@@ -31,7 +31,8 @@
 
 namespace Org\Heigl\HyphenatorTest;
 
-use \Org\Heigl\Hyphenator as h;
+use Org\Heigl\Hyphenator as h;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the functionality of the class Org_Heigl_Hyphenator
@@ -44,7 +45,7 @@ use \Org\Heigl\Hyphenator as h;
  * @version   2.0.1
  * @since     20.04.2009
  */
-class HyphenatorFeatureTest extends \PHPUnit_Framework_TestCase
+class HyphenatorFeatureTest extends TestCase
 {
     
     /**
@@ -69,7 +70,16 @@ class HyphenatorFeatureTest extends \PHPUnit_Framework_TestCase
     public function hyphenationOfSingleWordWithArrayOutputProvider()
     {
         return [
-            ['donaudampfschifffahrt', 'de_DE', ['do-naudampfschifffahrt', 'donau-dampfschifffahrt', 'donaudampf-schifffahrt', 'donaudampfschiff-fahrt']],
+            [
+                'donaudampfschifffahrt',
+                'de_DE',
+                [
+                    'do-naudampfschifffahrt',
+                    'donau-dampfschifffahrt',
+                    'donaudampf-schifffahrt',
+                    'donaudampfschiff-fahrt'
+                ]
+            ],
 //            ['altbaucharme', 'de_DE', array['alt-baucharme', 'altbau-charme']],
             ['otto', 'de_DE', ['ot-to']],
 
@@ -105,9 +115,13 @@ class HyphenatorFeatureTest extends \PHPUnit_Framework_TestCase
 //            ['altbaucharme', 'de_DE', 'alt-bau-charme'],
             ['otto ', 'de_DE', 'ot^to '],
             ['daniel ', 'de_DE', 'da^niel '],
-            ['aussichtsturm ', 'de_DE', 'aus^sichtsturm '], // Sturm will not be hyphenated…
-            ['aussichtsturm ', 'de_DE', 'aus^sicht^sturm ', h\Hyphenator::QUALITY_NORMAL], // Sturm will not be hyphenated…
-            ['urinstinkt ', 'de_DE', 'ur^instinkt ', h\Hyphenator::QUALITY_HIGHEST], // Sturm will not be hyphenated…
+            // Sturm will not be hyphenated…
+            ['aussichtsturm ', 'de_DE', 'aus^sichtsturm '],
+            // Sturm will be hyphenated…
+            ['aussichtsturm ', 'de_DE', 'aus^sicht^sturm ', h\Hyphenator::QUALITY_NORMAL],
+            ['urinstinkt ', 'de_DE', 'ur^instinkt ', h\Hyphenator::QUALITY_HIGHEST],
+            ['Brücke ', 'de_DE', 'Brü^cke ', h\Hyphenator::QUALITY_NORMAL],
+            ['Röcke ', 'de_DE', 'Rö^cke '],
         ];
     }
 
@@ -135,7 +149,12 @@ class HyphenatorFeatureTest extends \PHPUnit_Framework_TestCase
     public function hyphenationOfHtmlWithDefaultOutputProvider()
     {
         return [
-            ['<xml>Otto<br/>Aussichtsturm</html>', 'de_DE', '<xml>Ot^to<br/>Aus^sicht^sturm</html>', h\Hyphenator::QUALITY_NORMAL],
+            [
+                '<xml>Otto<br/>Aussichtsturm</html>',
+                'de_DE',
+                '<xml>Ot^to<br/>Aus^sicht^sturm</html>',
+                h\Hyphenator::QUALITY_NORMAL
+            ],
         ];
     }
 }

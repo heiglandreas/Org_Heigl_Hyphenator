@@ -111,8 +111,8 @@ class CustomHyphenationTokenizer implements Tokenizer
 
         $splits = preg_split(sprintf(
             '/((?:(?<=\W)%1$s|\b\w+%2$s)\w+?\b)/u',
-                $this->options->getNoHyphenateString(),
-                $this->options->getCustomHyphen()
+            $this->options->getNoHyphenateString(),
+            $this->options->getCustomHyphen()
         ), $input, -1, PREG_SPLIT_DELIM_CAPTURE);
         foreach ($splits as $split) {
             if ('' == $split) {

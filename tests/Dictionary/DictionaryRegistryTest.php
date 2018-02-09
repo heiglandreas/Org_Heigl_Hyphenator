@@ -31,8 +31,9 @@
 
 namespace Org\Heigl\HyphenatorTest\Dictionary;
 
-use \Org\Heigl\Hyphenator\Dictionary\DictionaryRegistry;
-use \Org\Heigl\Hyphenator\Dictionary as d;
+use Org\Heigl\Hyphenator\Dictionary\DictionaryRegistry;
+use Org\Heigl\Hyphenator\Dictionary as d;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the functionality of the class Org_Heigl_Hyphenator
@@ -45,15 +46,15 @@ use \Org\Heigl\Hyphenator\Dictionary as d;
  * @version   2.0.1
  * @since     02.11.2011
  */
-class DictionaryRegistryTest extends \PHPUnit_Framework_TestCase
+class DictionaryRegistryTest extends TestCase
 {
     public function testAddingDictionary()
     {
         $registry = new DictionaryRegistry();
-        $this->assertAttributeEquals(array(), '_registry', $registry);
+        $this->assertAttributeEquals(array(), 'registry', $registry);
         $dict = new d\Dictionary();
         $registry->add($dict);
-        $this->assertAttributeEquals(array($dict), '_registry', $registry);
+        $this->assertAttributeEquals(array($dict), 'registry', $registry);
         $this->assertSame($dict, $registry->getDictionaryWithKey(0));
     }
 

@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<ruleset name="Hyphenator-Standard" namespace="Org\Heigl\Hyphenator\CS\Standard">
+
+    <!--
+       The name attribute of the ruleset tag is displayed
+       when running PHP_CodeSniffer with the -v command line
+       argument.
+
+       If you have custom sniffs, and they use a namespace prefix
+       that is different to the name of the directory containing
+       your ruleset.xml file, you can set the namespace prefix using
+       the namespace attribute of the ruleset tag.
+
+       For example, if your namespace format for sniffs is
+       MyProject\CS\Standard\Sniffs\Category, set the namespace to
+       MyProject\CS\Standard (everything up to \Sniffs\)
+    -->
+
+    <!--
+       The content of the description tag is not displayed anywhere
+       except in this file, so it can contain information for
+       developers who may change this file in the future.
+    -->
+    <description>Coding Standard for the Hyphenator-Project</description>
+
+    <!--
+       You can hard-code config values used by sniffs directly
+       into your custom standard. Note that this does not work
+       for config values that override command line arguments,
+       such as show_warnings and report_format.
+
+       The following tag is equivalent to the command line argument:
+       -runtime-set zend_ca_path /path/to/ZendCodeAnalyzer
+    -->
+    <!--config name="zend_ca_path" value="/path/to/ZendCodeAnalyzer"/-->
+
+    <!--
+        If no files or directories are specified on the command line
+        your custom standard can specify what files should be checked
+        instead.
+
+        Note that file and directory paths specified in a ruleset are
+        relative to the ruleset's location, and that specifying any file or
+        directory path on the command line will ignore all file tags.
+     -->
+    <file>./src</file>
+    <file>./tests</file>
+
+    <!--
+       You can hard-code ignore patterns directly into your
+       custom standard so you don't have to specify the
+       patterns on the command line.
+
+       The following two tags are equivalent to the command line argument:
+       -ignore=*/tests/*,*/data/*
+    -->
+    <exclude-pattern>*/share/*</exclude-pattern>
+    <exclude-pattern>*/tools/*</exclude-pattern>
+    <exclude-pattern>*/bootstrap.php</exclude-pattern>
+
+    <!--
+        Patterns can be specified as relative if you would
+        like the relative path of the file checked instead of the
+        full path. This can sometimes help with portability.
+
+        The relative path is determined based on the paths you
+        pass into PHP_CodeSniffer on the command line.
+     -->
+    <!--exclude-pattern type="relative">^/tests/*</exclude-pattern>
+    <exclude-pattern type="relative">^/data/*</exclude-pattern-->
+
+    <!--
+       You can hard-code command line values into your custom standard.
+       Note that this does not work for the command line values:
+       -v[v][v], -l, -d, -sniffs and -standard
+
+       The following tags are equivalent to the command line arguments:
+       -report=summary -colors -sp
+    -->
+    <!--arg name="report" value="summary"/-->
+    <arg name="report" value="full"/>
+    <arg name="colors"/>
+    <arg value="sp"/>
+
+    <!--
+       You can hard-code custom php.ini settings into your custom standard.
+       The following tag sets the memory limit to 64M.
+    -->
+    <ini name="memory_limit" value="64M"/>
+
+    <!--
+       If your helper classes need custom autoloading rules that you are
+       not able to include in other ways, you can hard-code files to include
+       before the ruleset is processed and any sniff classes have been loaded.
+
+       This is different to bootstrap files, which are loaded after the ruleset
+       has already been processed.
+    -->
+    <!--autoload>/path/to/autoload.php</autoload>
+    <autoload>/path/to/other/autoload.php</autoload-->
+
+    <!--
+       Include all sniffs in the PEAR standard. Note that the
+       path to the standard does not have to be specified as the
+       PEAR standard exists inside the PHP_CodeSniffer install
+       directory.
+    -->
+    <rule ref="PSR2"/>
+
+    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+        <exclude-pattern>src/Hyphenator.php</exclude-pattern>
+    </rule>
+</ruleset>

@@ -51,30 +51,30 @@ class Token
     /**
      * The content of the token.
      *
-     * @var \string $_content
+     * @var \string $content
      */
-    protected $_content = '';
+    protected $content = '';
 
     /**
      * The filtered content of the token.
      *
-     * @var \string $_filteredContent
+     * @var \string $filteredContent
      */
-    protected $_filteredContent = '';
+    protected $filteredContent = '';
 
     /**
      * The hyphenated token.
      *
-     * @var \array $_hyphenatedContent
+     * @var \array $hyphenatedContent
      */
-    protected $_hyphenatedContent = array();
+    protected $hyphenatedContent = array();
 
     /**
      * The hyphenation patterns for this token.
      *
-     * @var \array $_pattern
+     * @var \array $pattern
      */
-    protected $_pattern = array();
+    protected $pattern = array();
 
     /**
      * Create the Token
@@ -85,8 +85,8 @@ class Token
      */
     public function __construct($content)
     {
-        $this->_content = $content;
-        $this->_hyphenatedContent = array( $content );
+        $this->content           = $content;
+        $this->hyphenatedContent = array( $content );
     }
 
     /**
@@ -96,7 +96,7 @@ class Token
      */
     public function get()
     {
-        return $this->_content;
+        return $this->content;
     }
 
     /**
@@ -108,7 +108,7 @@ class Token
      */
     public function setHyphenatedContent(array $hyphenatedContent)
     {
-        $this->_hyphenatedContent = $hyphenatedContent;
+        $this->hyphenatedContent = $hyphenatedContent;
 
         return $this;
     }
@@ -120,7 +120,7 @@ class Token
      */
     public function getHyphenatedContent()
     {
-        return $this->_hyphenatedContent;
+        return $this->hyphenatedContent;
     }
 
     /**
@@ -138,13 +138,13 @@ class Token
      *
      * @return \string
      */
-    public function getFilteredContent()
+    public function &getFilteredContent()
     {
-        if (! $this->_filteredContent) {
-            return $this->_content;
+        if (! $this->filteredContent) {
+            return $this->content;
         }
 
-        return $this->_filteredContent;
+        return $this->filteredContent;
     }
 
     /**
@@ -156,7 +156,7 @@ class Token
      */
     public function setFilteredContent($content)
     {
-        $this->_filteredContent = $content;
+        $this->filteredContent = $content;
 
         return $this;
     }
@@ -168,6 +168,6 @@ class Token
      */
     public function length()
     {
-        return mb_strlen($this->_content);
+        return mb_strlen($this->content);
     }
 }

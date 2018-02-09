@@ -53,7 +53,7 @@ class WordToken extends Token
      *
      * @var \array $_pattern
      */
-    protected $_pattern = array();
+    protected $pattern = array();
 
     /**
      * Add a substring=>pattern array to the already existing ones
@@ -64,7 +64,7 @@ class WordToken extends Token
      */
     public function addPattern(array $pattern)
     {
-        $this->_pattern = array_merge($this->_pattern, $pattern);
+        $this->pattern = array_merge($this->pattern, $pattern);
 
         return $this;
     }
@@ -78,7 +78,7 @@ class WordToken extends Token
      */
     public function getHyphenateContent()
     {
-        return '.' . $this->_content . '.';
+        return '.' . $this->content . '.';
     }
 
     /**
@@ -94,7 +94,7 @@ class WordToken extends Token
     {
         $content = $this->getHyphenateContent();
         $endPattern = str_repeat('0', mb_strlen($content)+1);
-        foreach ($this->_pattern as $string => $pattern) {
+        foreach ($this->pattern as $string => $pattern) {
             $strStart = -1;
             while (false !== $strStart = @mb_strpos($content, $string, $strStart + 1)) {
                 $strLen   = mb_strlen($string);

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2008-2011 Andreas Heigl<andreas@heigl.org>
+ * Copyright (c) Andreas Heigl<andreas@heigl.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,42 +20,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @category  Hyphenator
- * @package   Org\Heigl\Hyphenator
- * @subpackage Filter
- * @author    Andreas Heigl <andreas@heigl.org>
- * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
+ * @author    Andreas Heigl<andreas@heigl.org>
+ * @copyright Andreas Heigl
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   2.0.1
- * @since     02.11.2011
+ * @since     07.02.2018
+ * @link      http://github.com/heiglandreas/Hyphenator
  */
 
 namespace Org\Heigl\HyphenatorTest\Filter;
 
-use Org\Heigl\Hyphenator\Options;
-use PHPUnit\Framework\TestCase;
+use \Org\Heigl\Hyphenator\Tokenizer as t;
 
-/**
- * This class tests the functionality of the class Token
- *
- * @category  Hyphenator
- * @package   Org\Heigl\Hyphenator
- * @subpackage Filter
- * @author    Andreas Heigl <andreas@heigl.org>
- * @copyright 2008-2011 Andreas Heigl<andreas@heigl.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @version   2.0.1
- * @since     02.11.2011
- */
-class FilterTest extends TestCase
+class TestFilter extends \Org\Heigl\Hyphenator\Filter\Filter
 {
-    public function testSettingOptions()
+    public function run(t\TokenRegistry $tokens)
     {
-        $t = new Test2Filter();
-        $o = new Options();
-        $this->assertAttributeEquals(null, 'options', $t);
-        $this->assertSame($t, $t->setOptions($o));
-        $this->assertAttributeSame($o, 'options', $t);
-        $this->assertSame($o, $t->getOptions());
+        return $tokens;
+    }
+
+    protected function doConcatenate(t\TokenREgistry $tokens)
+    {
+        return $tokens;
     }
 }

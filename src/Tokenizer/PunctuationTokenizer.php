@@ -52,9 +52,9 @@ class PunctuationTokenizer implements Tokenizer
     /**
      * The tokens to be handled by this tokenizer as an array.
      *
-     * @var string $_tokens
+     * @var string $tokens
      */
-    protected $_tokens = array(
+    protected $tokens = array(
         '.',
         '?',
         '!',
@@ -115,7 +115,7 @@ class PunctuationTokenizer implements Tokenizer
                 if (! $token instanceof WordToken) {
                     continue;
                 }
-                $newTokens = $this->_tokenize($token->get());
+                $newTokens = $this->tokenize($token->get());
                 if ($newTokens == array($token)) {
                     continue;
                 }
@@ -126,7 +126,7 @@ class PunctuationTokenizer implements Tokenizer
         }
 
         // Tokenize a simple string.
-        $array =  $this->_tokenize($input);
+        $array =  $this->tokenize($input);
         $registry = new TokenRegistry();
         foreach ($array as $item) {
             $registry->add($item);
@@ -145,16 +145,16 @@ class PunctuationTokenizer implements Tokenizer
      *
      * @return Token
      */
-    protected function _tokenize($input)
+    private function tokenize($input)
     {
         $tokens = array();
-        $signs = '\\' . implode('\\', $this->_tokens);
+        $signs = '\\' . implode('\\', $this->tokens);
         $splits = preg_split('/([' . $signs . ']+)/u', $input, -1, PREG_SPLIT_DELIM_CAPTURE);
         foreach ($splits as $split) {
             if ('' == $split) {
                 continue;
             }
-            if (in_array(mb_substr($split, 0, 1), $this->_tokens)) {
+            if (in_array(mb_substr($split, 0, 1), $this->tokens)) {
                 $tokens[] = new NonWordToken($split);
                 continue;
             }

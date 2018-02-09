@@ -53,7 +53,7 @@ class TokenRegistry implements \Iterator, \Countable
      *
      * @var \Org\Heigl\Hyphenator\Tokenizer\Token[] $_registry
      */
-    protected $_registry = array();
+    private $registry = array();
 
     /**
      * Add an item to the registry
@@ -64,7 +64,7 @@ class TokenRegistry implements \Iterator, \Countable
      */
     public function add(Token $token)
     {
-        $this->_registry[] = $token;
+        $this->registry[] = $token;
 
         return $this;
     }
@@ -83,7 +83,7 @@ class TokenRegistry implements \Iterator, \Countable
     public function replace(Token $oldToken, array $newTokens)
     {
         // Get the current key of the element.
-        $key = array_search($oldToken, $this->_registry, true);
+        $key = array_search($oldToken, $this->registry, true);
         if (false === $key) {
             return $this;
         }
@@ -98,7 +98,7 @@ class TokenRegistry implements \Iterator, \Countable
         }
 
         // Replace the old element with the newly created array
-        array_splice($this->_registry, $key, 1, $replacement);
+        array_splice($this->registry, $key, 1, $replacement);
 
         return $this;
     }
@@ -112,8 +112,8 @@ class TokenRegistry implements \Iterator, \Countable
      */
     public function getTokenWithKey($key)
     {
-        if (array_key_exists($key, $this->_registry)) {
-            return $this->_registry[$key];
+        if (array_key_exists($key, $this->registry)) {
+            return $this->registry[$key];
         }
 
         return null;
@@ -128,7 +128,7 @@ class TokenRegistry implements \Iterator, \Countable
      */
     public function rewind()
     {
-        reset($this->_registry);
+        reset($this->registry);
     }
 
     /**
@@ -140,7 +140,7 @@ class TokenRegistry implements \Iterator, \Countable
      */
     public function current()
     {
-        return current($this->_registry);
+        return current($this->registry);
     }
 
     /**
@@ -152,7 +152,7 @@ class TokenRegistry implements \Iterator, \Countable
      */
     public function key()
     {
-        return key($this->_registry);
+        return key($this->registry);
     }
 
     /**
@@ -164,7 +164,7 @@ class TokenRegistry implements \Iterator, \Countable
      */
     public function count()
     {
-        return count($this->_registry);
+        return count($this->registry);
     }
 
     /**
@@ -176,7 +176,7 @@ class TokenRegistry implements \Iterator, \Countable
      */
     public function next()
     {
-        next($this->_registry);
+        next($this->registry);
     }
 
     /**
@@ -188,7 +188,7 @@ class TokenRegistry implements \Iterator, \Countable
      */
     public function valid()
     {
-        if (false === current($this->_registry)) {
+        if (false === current($this->registry)) {
             return false;
         }
 

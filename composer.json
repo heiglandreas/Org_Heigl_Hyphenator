@@ -18,8 +18,8 @@
         "ext-mbstring" : "*"
     },
     "require-dev" : {
-        "mockery/mockery" : "^0.9",
-        "phpunit/phpunit": "^4.8||^5.3"
+        "mockery/mockery" : "^1.0",
+        "phpunit/phpunit": "^6.0"
     },
     "autoload" : {
         "psr-4" : {
@@ -36,18 +36,24 @@
             "@cs-check",
             "@test"
         ],
-        "upload-coverage": "coveralls -v",
+        "upload-coverage": [
+            "curl -o coveralls -L https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar",
+            "chmod 755 coveralls",
+            "./coveralls -v"
+        ],
         "cs-download" : [
-            "curl -o php-cs-fixer -L `curl -s https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/releases | grep browser_download_url | head -n 1 | cut -d '\"' -f 4`",
-            "chmod 755 php-cs-fixer"
+            "curl -o phpcs -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar",
+            "curl -o phpcs.asc -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar.asc",
+            "# gpg --verify phpcs.asc phpcs",
+            "chmod 755 phpcs"
         ],
         "cs-check": [
             "@cs-download",
-            "./php-cs-fixer --version && ./php-cs-fixer fix -v --diff --dry-run"
+            "./phpcs --version && ./phpcs"
         ],
         "cs-fix": [
             "@cs-download",
-            "./php-cs-fixer fix -v"
+            "./phpcs"
         ],
         "test": "phpunit",
         "test-coverage": "phpunit --coverage-clover clover.xml"

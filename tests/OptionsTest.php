@@ -32,8 +32,9 @@
 
 namespace Org\Heigl\HyphenatorTest;
 
-use \Org\Heigl\Hyphenator\Options;
+use Org\Heigl\Hyphenator\Options;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the functionality of the class Org_Heigl_Hyphenator
@@ -46,51 +47,51 @@ use Mockery as M;
  * @version   2.0.1
  * @since     02.11.2011
  */
-class OptionsTest extends \PHPUnit_Framework_TestCase
+class OptionsTest extends TestCase
 {
     public function testSettingHyphen()
     {
         $o = new Options();
-        $this->assertAttributeEquals("\xAD", '_hyphen', $o);
+        $this->assertAttributeEquals("\xAD", 'hyphen', $o);
         $this->assertEquals(chr(173), $o->getHyphen());
         $this->assertSame($o, $o->setHyphen('test'));
-        $this->assertAttributeEquals('test', '_hyphen', $o);
+        $this->assertAttributeEquals('test', 'hyphen', $o);
         $this->assertEquals('test', $o->getHyphen());
     }
 
     public function testSettingNoHyphenateString()
     {
         $o = new Options();
-        $this->assertAttributeEquals('', '_noHyphenateString', $o);
+        $this->assertAttributeEquals('', 'noHyphenateString', $o);
         $this->assertEquals('', $o->getNoHyphenateString());
         $this->assertSame($o, $o->setNoHyphenateString('test'));
-        $this->assertAttributeEquals('test', '_noHyphenateString', $o);
+        $this->assertAttributeEquals('test', 'noHyphenateString', $o);
         $this->assertEquals('test', $o->getNoHyphenateString());
     }
 
     public function testSettingLeftMin()
     {
         $o = new Options();
-        $this->assertAttributeSame(2, '_leftMin', $o);
+        $this->assertAttributeSame(2, 'leftMin', $o);
         $this->assertSame(2, $o->getLeftMin());
         $this->assertSame($o, $o->setLeftMin('test'));
-        $this->assertAttributeSame(0, '_leftMin', $o);
+        $this->assertAttributeSame(0, 'leftMin', $o);
         $this->assertSame(0, $o->getLeftMin());
         $this->assertSame($o, $o->setLeftMin(5));
-        $this->assertAttributeSame(5, '_leftMin', $o);
+        $this->assertAttributeSame(5, 'leftMin', $o);
         $this->assertSame(5, $o->getLeftMin());
     }
 
     public function testSettingRightMin()
     {
         $o = new Options();
-        $this->assertAttributeSame(2, '_rightMin', $o);
+        $this->assertAttributeSame(2, 'rightMin', $o);
         $this->assertSame(2, $o->getRightMin());
         $this->assertSame($o, $o->setRightMin('test'));
-        $this->assertAttributeSame(0, '_rightMin', $o);
+        $this->assertAttributeSame(0, 'rightMin', $o);
         $this->assertSame(0, $o->getRightMin());
         $this->assertSame($o, $o->setRightMin(5));
-        $this->assertAttributeSame(5, '_rightMin', $o);
+        $this->assertAttributeSame(5, 'rightMin', $o);
         $this->assertSame(5, $o->getRightMin());
     }
 
@@ -98,42 +99,42 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
     public function testSettingMinWordSize()
     {
         $o = new Options();
-        $this->assertAttributeSame(6, '_wordMin', $o);
+        $this->assertAttributeSame(6, 'wordMin', $o);
         $this->assertSame(6, $o->getMinWordLength());
         $this->assertSame($o, $o->setMinWordLength(''));
-        $this->assertAttributeSame(0, '_wordMin', $o);
+        $this->assertAttributeSame(0, 'wordMin', $o);
         $this->assertSame(0, $o->getMinWordLength());
         $this->assertSame($o, $o->setMinWordLength(PHP_INT_MAX));
-        $this->assertAttributeSame(PHP_INT_MAX, '_wordMin', $o);
+        $this->assertAttributeSame(PHP_INT_MAX, 'wordMin', $o);
         $this->assertSame(PHP_INT_MAX, $o->getMinWordLength());
     }
 
     public function testSettingCustomHyphen()
     {
         $o = new Options;
-        $this->assertAttributeEquals('--', '_customHyphen', $o);
+        $this->assertAttributeEquals('--', 'customHyphen', $o);
         $this->assertEquals('--', $o->getCustomHyphen());
         $this->assertSame($o, $o->setCustomHyphen('++'));
-        $this->assertAttributeEquals('++', '_customHyphen', $o);
+        $this->assertAttributeEquals('++', 'customHyphen', $o);
         $this->assertEquals('++', $o->getCustomHyphen());
     }
 
     public function testSettingFilters()
     {
         $o = new Options();
-        $this->assertAttributeEquals(array(), '_filters', $o);
+        $this->assertAttributeEquals(array(), 'filters', $o);
         $this->assertSame(array(), $o->getFilters());
         $this->assertSame($o, $o->setFilters(''));
-        $this->assertAttributeEquals(array(), '_filters', $o);
+        $this->assertAttributeEquals(array(), 'filters', $o);
         $this->assertSame(array(), $o->getFilters());
         $this->assertSame($o, $o->setFilters('filterA, filterB'));
-        $this->assertAttributeEquals(array('filterA','filterB'), '_filters', $o);
+        $this->assertAttributeEquals(array('filterA','filterB'), 'filters', $o);
         $this->assertSame(array('filterA', 'filterB'), $o->getFilters());
         $this->assertSame($o, $o->setFilters(''));
-        $this->assertAttributeEquals(array(), '_filters', $o);
+        $this->assertAttributeEquals(array(), 'filters', $o);
         $this->assertSame(array(), $o->getFilters());
         $this->assertSame($o, $o->setFilters(array('filterC','filterD')));
-        $this->assertAttributeEquals(array('filterC','filterD'), '_filters', $o);
+        $this->assertAttributeEquals(array('filterC','filterD'), 'filters', $o);
         $this->assertSame(array('filterC','filterD'), $o->getFilters());
     }
 
@@ -143,10 +144,10 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
 
         $filter = M::mock('Org\Heigl\Hyphenator\Filter\Filter');
 
-        $this->assertAttributeEquals(array(), '_filters', $o);
+        $this->assertAttributeEquals(array(), 'filters', $o);
         $this->assertSame(array(), $o->getFilters());
         $this->assertSame($o, $o->addFilter($filter));
-        $this->assertAttributeEquals(array($filter), '_filters', $o);
+        $this->assertAttributeEquals(array($filter), 'filters', $o);
     }
 
     /**
@@ -174,10 +175,10 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
 
         $tokenizer = M::mock('Org\Heigl\Hyphenator\Tokenizer\Tokenizer');
 
-        $this->assertAttributeEquals(array(), '_tokenizers', $o);
+        $this->assertAttributeEquals(array(), 'tokenizers', $o);
         $this->assertSame(array(), $o->getTokenizers());
         $this->assertSame($o, $o->addTokenizer($tokenizer));
-        $this->assertAttributeEquals(array($tokenizer), '_tokenizers', $o);
+        $this->assertAttributeEquals(array($tokenizer), 'tokenizers', $o);
     }
     /**
      * @expectedException \UnexpectedValueException
@@ -202,19 +203,19 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
     public function testSettingTokenizers()
     {
         $o = new Options();
-        $this->assertAttributeEquals(array(), '_tokenizers', $o);
+        $this->assertAttributeEquals(array(), 'tokenizers', $o);
         $this->assertSame(array(), $o->getTokenizers());
         $this->assertSame($o, $o->setTokenizers(''));
-        $this->assertAttributeEquals(array(), '_tokenizers', $o);
+        $this->assertAttributeEquals(array(), 'tokenizers', $o);
         $this->assertSame(array(), $o->getTokenizers());
         $this->assertSame($o, $o->setTokenizers('filterA, filterB'));
-        $this->assertAttributeEquals(array('filterA','filterB'), '_tokenizers', $o);
+        $this->assertAttributeEquals(array('filterA','filterB'), 'tokenizers', $o);
         $this->assertSame(array('filterA', 'filterB'), $o->getTokenizers());
         $this->assertSame($o, $o->setTokenizers(''));
-        $this->assertAttributeEquals(array(), '_tokenizers', $o);
+        $this->assertAttributeEquals(array(), 'tokenizers', $o);
         $this->assertSame(array(), $o->getTokenizers());
         $this->assertSame($o, $o->setTokenizers(array('filterC','filterD')));
-        $this->assertAttributeEquals(array('filterC','filterD'), '_tokenizers', $o);
+        $this->assertAttributeEquals(array('filterC','filterD'), 'tokenizers', $o);
         $this->assertSame(array('filterC','filterD'), $o->getTokenizers());
     }
 
@@ -236,16 +237,16 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Options', $o);
         $o = Options::factory(__DIR__ . '/share/parseable.ini');
         $this->assertInstanceof('\Org\Heigl\Hyphenator\Options', $o);
-        $this->assertAttributeEquals('test', '_hyphen', $o);
-        $this->assertAttributeEquals('test', '_noHyphenateString', $o);
-        $this->assertAttributeEquals(5, '_leftMin', $o);
-        $this->assertAttributeEquals(5, '_rightMin', $o);
-        $this->assertAttributeEquals(5, '_wordMin', $o);
-        $this->assertAttributeEquals(5, '_quality', $o);
-        $this->assertAttributeEquals('test', '_customHyphen', $o);
-        $this->assertAttributeEquals(array('test1','test2'), '_tokenizers', $o);
-        $this->assertAttributeEquals(array('test3','test4'), '_filters', $o);
-        $this->assertAttributeEquals('test', '_defaultLocale', $o);
+        $this->assertAttributeEquals('test', 'hyphen', $o);
+        $this->assertAttributeEquals('test', 'noHyphenateString', $o);
+        $this->assertAttributeEquals(5, 'leftMin', $o);
+        $this->assertAttributeEquals(5, 'rightMin', $o);
+        $this->assertAttributeEquals(5, 'wordMin', $o);
+        $this->assertAttributeEquals(5, 'quality', $o);
+        $this->assertAttributeEquals('test', 'customHyphen', $o);
+        $this->assertAttributeEquals(array('test1','test2'), 'tokenizers', $o);
+        $this->assertAttributeEquals(array('test3','test4'), 'filters', $o);
+        $this->assertAttributeEquals('test', 'defaultLocale', $o);
     }
 
     public function testDefaultLocale()
@@ -253,7 +254,7 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
         $o = new Options();
         $this->assertEquals('en_EN', $o->getDefaultLocale());
         $this->assertSame($o, $o->setDefaultLocale('test'));
-        $this->assertAttributeEquals('test', '_defaultLocale', $o);
+        $this->assertAttributeEquals('test', 'defaultLocale', $o);
         $this->assertEquals('test', $o->getDefaultLocale());
     }
 }

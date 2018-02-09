@@ -51,16 +51,16 @@ class Dictionary
     /**
      * The internal storage for the dictionary.
      *
-     * @var array $_dictionary
+     * @var array $dictionary
      */
-    protected $_dictionary = array();
+    private $dictionary = array();
 
     /**
      * Where to look for the basic files.
      *
      * @var string $_fileLocation
      */
-    protected static $_fileLocation = '';
+    private static $fileLocation = '';
 
     /**
      * Set the file-location.
@@ -71,7 +71,7 @@ class Dictionary
      */
     public static function setFileLocation($fileLocation)
     {
-        self::$_fileLocation = $fileLocation;
+        self::$fileLocation = $fileLocation;
     }
 
     /**
@@ -107,14 +107,14 @@ class Dictionary
      */
     public function load($locale)
     {
-        $locale = $this->_unifyLocale($locale);
-        $file = self::$_fileLocation . DIRECTORY_SEPARATOR . $locale . '.ini';
-        $this->_dictionary = array();
+        $locale           = $this->unifyLocale($locale);
+        $file             = self::$fileLocation . DIRECTORY_SEPARATOR . $locale . '.ini';
+        $this->dictionary = array();
         if (! file_exists(realpath($file))) {
             return $this;
         }
         foreach (parse_ini_file($file) as $key => $val) {
-            $this->_dictionary[str_replace('@:', '', $key)] = $val;
+            $this->dictionary[str_replace('@:', '', $key)] = $val;
         }
 
         return $this;
@@ -130,7 +130,7 @@ class Dictionary
      */
     public static function parseFile($locale)
     {
-        $path = self::$_fileLocation . DIRECTORY_SEPARATOR;
+        $path = self::$fileLocation . DIRECTORY_SEPARATOR;
         $file = $path . 'hyph_' . $locale . '.dic';
         if (! file_Exists($file)) {
             throw new \Org\Heigl\Hyphenator\Exception\PathNotFoundException('The given Path does not exist');
@@ -187,10 +187,10 @@ class Dictionary
         for ($i = 0; $i <= $strlen; $i ++) {
             for ($j = 2; $j <= ($strlen-$i); $j++) {
                 $substr = mb_substr($word, $i, $j);
-                if (! isset($this->_dictionary[$substr])) {
+                if (! isset($this->dictionary[$substr])) {
                     continue;
                 }
-                $return[$substr] = $this->_dictionary[$substr];
+                $return[$substr] = $this->dictionary[$substr];
             }
         }
 
@@ -207,13 +207,13 @@ class Dictionary
      */
     public function addPAttern($string, $pattern)
     {
-        $this->_dictionary[$string] = $pattern;
+        $this->dictionary[$string] = $pattern;
 
         return $this;
     }
 
     /**
-     * Unify the given locale to a defsult format.
+     * Unify the given locale to a default format.
      *
      * For that in a 2 by 2 format the whole string is splited, the first part
      * lowercased, the sewcond part upercased and concatenated with n under-
@@ -227,7 +227,7 @@ class Dictionary
      *
      * @return string
      */
-    protected function _unifyLocale($locale)
+    private function unifyLocale($locale)
     {
         if (2 == strlen($locale)) {
             return strtolower($locale);

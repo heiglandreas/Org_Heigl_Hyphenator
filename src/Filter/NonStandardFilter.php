@@ -68,15 +68,15 @@ class NonStandardFilter extends Filter
                 continue;
             }
             $string = $token->getFilteredContent();
-            $pattern = $token->getMergedPattern($this->_options->getQuality());
+            $pattern = $token->getMergedPattern($this->options->getQuality());
             $length  = $token->length();
             $result = array();
             for ($i = 1; $i <= $length; $i++) {
                 $currPattern = mb_substr($pattern, $i, 1);
-                if ($i < $this->_options->getLeftMin()) {
+                if ($i < $this->options->getLeftMin()) {
                     continue;
                 }
-                if ($i > $length - $this->_options->getRightMin()) {
+                if ($i > $length - $this->options->getRightMin()) {
                     continue;
                 }
                 if (0 == $currPattern) {
@@ -87,7 +87,7 @@ class NonStandardFilter extends Filter
                 }
                 $start = mb_substr($string, 0, $i);
                 $end   = mb_substr($string, $i);
-                $result[] = $start . $this->_options->getHyphen() . $end;
+                $result[] = $start . $this->options->getHyphen() . $end;
             }
             $token->setHyphenatedContent($result);
         }
@@ -104,7 +104,7 @@ class NonStandardFilter extends Filter
      * @see Org\Heigl\Hyphenator\Filter\Filter::run()
      * @return \Org\Heigl\Hyphenator\Tokenizer\Token
      */
-    protected function _concatenate(t\TokenRegistry $tokens)
+    protected function doConcatenate(t\TokenRegistry $tokens)
     {
         $string = '';
         foreach ($tokens as $token) {

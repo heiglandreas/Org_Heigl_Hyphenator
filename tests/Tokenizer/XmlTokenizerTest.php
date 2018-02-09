@@ -31,7 +31,8 @@
 
 namespace Org\Heigl\HyphenatorTest\Tokenizer;
 
-use \Org\Heigl\Hyphenator\Tokenizer as t;
+use Org\Heigl\Hyphenator\Tokenizer as t;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class tests the functionality of the class Token
@@ -44,7 +45,7 @@ use \Org\Heigl\Hyphenator\Tokenizer as t;
  * @version   2.0.1
  * @since     02.11.2011
  */
-class XmlTokenizerTest extends \PHPUnit_Framework_TestCase
+class XmlTokenizerTest extends TestCase
 {
     public function testTokenizingString()
     {
