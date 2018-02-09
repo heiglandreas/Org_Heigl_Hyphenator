@@ -37,9 +37,11 @@ jobs:
         - composer cs-check
     - stage: test
     - stage: coverage
+      if: branch = master
       php: 7.2
       env: TEST_COVERAGE=true
       script:
+      after_script:
        - travis_retry composer require $COMPOSER_ARGS --dev satooshi/php-coveralls ;
        - composer test-coverage
        - travis_retry composer upload-coverage
@@ -51,13 +53,8 @@ before_install:
 install:
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
-  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require $COMPOSER_ARGS --dev satooshi/php-coveralls ; fi
   - travis_retry composer install $COMPOSER_ARGS
   - composer show --installed
 
 script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; fi
-  - if [[ $TEST_COVERAGE != 'true' ]]; then composer test ; fi
-
-after_script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer upload-coverage ; fi
+  - composer test

@@ -36,7 +36,11 @@
             "@cs-check",
             "@test"
         ],
-        "upload-coverage": "coveralls -v",
+        "upload-coverage": [
+            "curl -o coveralls -L https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar",
+            "chmod 755 coveralls",
+            "./coveralls -v"
+        ],
         "cs-download" : [
             "curl -o phpcs -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar",
             "curl -o phpcs.asc -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar.asc",
