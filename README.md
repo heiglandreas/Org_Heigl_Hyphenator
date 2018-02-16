@@ -14,33 +14,29 @@ This package has the following requirements:
 * Multibyte-Extension loaded
 * Input has to be UTF8-encoded.
 
-On loading the ````\Org\Heigl\Hyphenator\Hyphenator```-class the internal encoding for
+On loading the `\Org\Heigl\Hyphenator\Hyphenator`-class the internal encoding for
 the Multibyte-String-Extension will be set to UTF8.
 
 # Installation: 
  
-There are three ways to install this package:
+This package is best installed via [composer](https://getcomposer.org):
 
- * via PEAR 
- * via composer
- * copy the 'Org/Heigl/Hyphenator'-folder somewhere to your PHP-include-
-   directory.
+```bash
+composer require Org_Heigl/Hyphenator
+```
 
 More information can be found in the doc-section
 
 # Usage: 
 
 ```php
-<?php
 use \Org\Heigl\Hyphenator as h;
 // Create a hyphenator-instance based on a given config-file
 $hyphenator = h\Hyphenator::factory('/path/to/the/config/file.properties');
  
 // And hyphenate a given string
-$hyphenatedText = $hyphenator->hyphenate($string);
-   
-echo $hyphenatedText;
-?>
+echo $hyphenator->hyphenate('Hyphenation');
+// Hy-phe-na-ti-on
 ```
 
 # Documentation:
