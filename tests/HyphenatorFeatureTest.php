@@ -163,6 +163,6 @@ class HyphenatorFeatureTest extends TestCase
         $hyphenator = h\Hyphenator::factory('/path/to/the/config/file.properties');
         $hyphenator->getOptions()->setHyphen('-');
 
-        $this->assertEquals('Hy-phe-na-tion', $hyphenator->hyphenate('Hyphenation'));
+        $this->assertEquals('Hy-phe-na-ti-on', $hyphenator->hyphenate('Hyphenation'));
     }
 }
