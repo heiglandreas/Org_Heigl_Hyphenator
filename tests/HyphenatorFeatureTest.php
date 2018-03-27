@@ -165,4 +165,32 @@ class HyphenatorFeatureTest extends TestCase
 
         $this->assertEquals('Hy-phe-na-ti-on', $hyphenator->hyphenate('Hyphenation'));
     }
+
+    public function testUserStory1()
+    {
+        $source = 'Selten können vergleichbare Arzneimittel eine Kombination von '
+         . 'Fieber, raschem Atmen, Schwitzen, Muskelsteifheit und Benommenheit '
+         . 'oder Schläfrigkeit hervorrufen. Wenn dies eintritt, setzen Sie sich '
+         . 'sofort mit einem Arzt in Verbindung.';
+
+        $expected = 'Selten können ver&shy;gleich&shy;ba&shy;re Arz&shy;nei&shy;'
+         . 'mit&shy;tel eine Kom&shy;bi&shy;na&shy;ti&shy;on von Fieber, ras'
+         . 'chem Atmen, Schwit&shy;zen, Mus&shy;kel&shy;steif&shy;heit und Be&sh'
+         . 'y;nom&shy;men&shy;heit oder Schläf&shy;rig&shy;keit her&shy;vor&shy;'
+         . 'ru&shy;fen. Wenn dies ein&shy;tritt, setzen Sie sich sofort mit'
+         . ' einem Arzt in Ver&shy;bin&shy;dung.';
+
+        $o = new h\Options();
+        $o->setHyphen('&shy;')
+          ->setDefaultLocale("de_DE")
+          ->setRightMin(2)
+          ->setLeftMin(2)
+          ->setWordMin(8)
+          ->setFilters('Simple,CustomMarkup')
+          ->setTokenizers(['Whitespace', 'Punctuation']);
+        $h = new h\Hyphenator();
+        $h->setOptions($o);
+
+        self::assertEquals($expected, $h->hyphenate($source));
+    }
 }
