@@ -57,7 +57,7 @@ Invoke the ``Hyphenator`` manually
       ->setLeftMin(2)
       ->setWordMin(5)
       ->setFilters('Simple')
-      ->setTokenizers('Whitespace','Punctuation');
+      ->setTokenizers(['Whitespace', 'Punctuation']);
     $h = new h\Hyphenator();
     $h->setOptions($o);
     echo $h->hyphenate('We have some really long words in german like sauerstofffeldflasche.');
@@ -78,7 +78,7 @@ Get the hyphenation of a single word as array
       ->setLeftMin(2)
       ->setWordMin(5)
       ->setFilters('NonStandard')
-      ->setTokenizers('Whitespace','Punctuation');
+      ->setTokenizers(['Whitespace', 'Punctuation']);
     $h = new h\Hyphenator();
     $h->setOptions($o);
     var_Dump($h->hyphenate('Donaudampfschifffahrt'));
