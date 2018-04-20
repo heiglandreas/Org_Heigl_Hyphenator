@@ -193,4 +193,24 @@ class HyphenatorFeatureTest extends TestCase
 
         self::assertEquals($expected, $h->hyphenate($source));
     }
+
+    public function testIssue40()
+    {
+        $source = 'Wasserwirtschaft';
+
+        $expected = 'Was-ser-wirt-schaft';
+
+        $o = new h\Options();
+        $o->setHyphen('-')
+          ->setDefaultLocale("de_DE")
+          ->setRightMin(2)
+          ->setLeftMin(2)
+          ->setWordMin(8)
+          ->setFilters('Simple,CustomMarkup')
+          ->setTokenizers(['Whitespace', 'Punctuation']);
+        $h = new h\Hyphenator();
+        $h->setOptions($o);
+
+        self::assertEquals($expected, $h->hyphenate($source));
+    }
 }
