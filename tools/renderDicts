@@ -1,16 +1,13 @@
-#!//usr/local/php5/bin/php
+#!/usr/bin/env php
 <?php
 namespace Org\Heigl\Hyphenator\Dictionary;
 
-ini_set('include_path',realpath(__DIR__ . '/../src/:.' ));
+require_once __DIR__ . '/../vendor/autoload.php';
 
-include_once __DIR__ . '/../src/Org/Heigl/Hyphenator/Hyphenator.php';
-\Org\Heigl\Hyphenator\Hyphenator::registerAutoload();
-
-$share = realpath(__DIR__ . '/../src/Org/Heigl/Hyphenator/share/files/dictionaries');
+$share = realpath(__DIR__ . '/../src/share/files/dictionaries');
 
 $iterator = new \DirectoryIterator($share);
-Dictionary::setFileLocation(__DIR__ . '/../src/Org/Heigl/Hyphenator/share/files/dictionaries');
+Dictionary::setFileLocation(__DIR__ . '/../src/share/files/dictionaries');
 foreach ( $iterator as $file ) {
     if ( ! preg_match('/hyph_([\w\_]+)\.dic/',$file->getFileName(),$result) ) {
         continue;
