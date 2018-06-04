@@ -109,6 +109,10 @@ class WhitespaceTokenizer implements Tokenizer
         $splits = preg_split("/([".implode("", $this->whitespaces)."]+)/u", $input, -1, PREG_SPLIT_DELIM_CAPTURE);
 
         foreach ($splits as $split) {
+            if ($split === '') {
+                $tokens[] = new EmptyToken($split);
+                continue;
+            }
             if (preg_match("/^[".implode("", $this->whitespaces)."]+$/um", $split)) {
                 $tokens[] = new WhitespaceToken($split);
                 continue;
