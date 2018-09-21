@@ -58,7 +58,7 @@ class Options
      *
      * @var string noHyphenateString
      */
-    private $noHyphenateString = null;
+    private $noHyphenateString = '';
 
     /**
      * This property defines the default hyphenation-character.
@@ -143,7 +143,7 @@ class Options
      */
     public function setNoHyphenateString($noHyphenateString)
     {
-        $this->noHyphenateString = $noHyphenateString;
+        $this->noHyphenateString = (string) $noHyphenateString;
 
         return $this;
     }
@@ -167,7 +167,7 @@ class Options
      */
     public function setHyphen($hyphen)
     {
-        $this->hyphen = $hyphen;
+        $this->hyphen = (string) $hyphen;
 
         return $this;
     }
