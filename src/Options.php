@@ -203,7 +203,7 @@ class Options
      */
     public function getLeftMin()
     {
-        return (int) $this->leftMin;
+        return $this->leftMin;
     }
 
     /**
@@ -227,7 +227,7 @@ class Options
      */
     public function getRightMin()
     {
-        return (int) $this->rightMin;
+        return $this->rightMin;
     }
 
     /**
@@ -289,7 +289,7 @@ class Options
      */
     public function getMinWordLength()
     {
-        return (int) $this->wordMin;
+        return $this->wordMin;
     }
 
     /**
