@@ -52,13 +52,13 @@ use \Org\Heigl\Hyphenator\Tokenizer as t;
 class CustomMarkupFilter extends Filter
 {
     /**
-     * Exteends the abstract Filter::run()
+     * Extends the abstract Filter::run()
      *
      * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
      * to act upon
      *
-     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @see \Org\Heigl\Hyphenator\Filter\Filter::run()
+     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
      */
     public function run(t\TokenRegistry $tokens)
     {
@@ -71,8 +71,8 @@ class CustomMarkupFilter extends Filter
      * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
      * to act upon
      *
-     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @see \Org\Heigl\Hyphenator\Filter\Filter::run()
+     * @return string
      */
     protected function doConcatenate(t\TokenRegistry $tokens)
     {

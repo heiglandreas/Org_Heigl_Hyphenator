@@ -297,7 +297,7 @@ class Options
      *
      * These will be replaced by the set hyphenation character
      *
-     * @param array $customHyphen The custom hyphenation-character
+     * @param string $customHyphen The custom hyphenation-character
      *
      * @return \Org\Heigl\Hyphenator\Options
      */

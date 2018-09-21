@@ -92,7 +92,7 @@ class FilterRegistry implements \Iterator, \Countable
     /**
      * Cleanup the registry
      *
-     * @return Filter\FilterRegistry
+     * @return \Org\Heigl\Hyphenator\Filter\FilterRegistry
      */
     public function cleanup()
     {
@@ -107,7 +107,7 @@ class FilterRegistry implements \Iterator, \Countable
      * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The
      * Registry to filter
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry
+     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
      */
     public function filter(\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens)
     {

@@ -34,7 +34,7 @@
 namespace Org\Heigl\Hyphenator\Tokenizer;
 
 /**
- * Use Punktuation to split any input into tokens
+ * Use Punctuation to split any input into tokens
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
@@ -52,7 +52,7 @@ class PunctuationTokenizer implements Tokenizer
     /**
      * The tokens to be handled by this tokenizer as an array.
      *
-     * @var string $tokens
+     * @var array $tokens
      */
     protected $tokens = array(
         '.',
@@ -143,7 +143,7 @@ class PunctuationTokenizer implements Tokenizer
      *
      * @param \string $input The String to tokenize
      *
-     * @return Token
+     * @return Token[]
      */
     private function tokenize($input)
     {

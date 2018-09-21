@@ -103,7 +103,7 @@ class CustomHyphenationTokenizer implements Tokenizer
      *
      * @param \string $input The String to tokenize
      *
-     * @return Token
+     * @return Token[]
      */
     private function tokenize($input)
     {

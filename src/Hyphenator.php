@@ -230,7 +230,7 @@ final class Hyphenator
      * @param \Org\Heigl\Hyphenator\Dictionary\Dictionary $dictionary The
      * Dictionary wit hyphenation-Patterns to add to this Hyphenator
      *
-     * @return Org\Heigl\Hyphenator\Hyphenator
+     * @return \Org\Heigl\Hyphenator\Hyphenator
      */
     public function addDictionary($dictionary)
     {
@@ -250,7 +250,7 @@ final class Hyphenator
      * non-standard-hyphenation-patterns
      *
      * @link http://hunspell.sourceforge.net/tb87nemeth.pdf
-     * @return Org\Heigl\Hyphenator\Hyphenator
+     * @return \Org\Heigl\Hyphenator\Hyphenator
      */
     public function addFilter($filter)
     {
@@ -269,7 +269,7 @@ final class Hyphenator
      *
      * @param Tokenizer\Tokenizer|string $tokenizer The tokenizer to add
      *
-     * @return Hyphenator
+     * @return \Org\Heigl\Hyphenator\Hyphenator
      */
     public function addTokenizer($tokenizer)
     {
@@ -285,7 +285,7 @@ final class Hyphenator
     /**
      * Get the tokenizers
      *
-     * @return Tokenizer\TokenizerRegistry
+     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry
      */
     public function getTokenizers()
     {
@@ -301,7 +301,7 @@ final class Hyphenator
     /**
      * Get the dictionaries
      *
-     * @return Dictionaries\DictionaryRegistry
+     * @return \Org\Heigl\Hyphenator\Dictionary\DictionaryRegistry
      */
     public function getDictionaries()
     {
@@ -315,7 +315,7 @@ final class Hyphenator
     /**
      * Get the filters
      *
-     * @return Filter\FilterRegistry
+     * @return \Org\Heigl\Hyphenator\Filter\FilterRegistry
      */
     public function getFilters()
     {
@@ -378,7 +378,7 @@ final class Hyphenator
      * @param Tokenizer\TokenRegistry $registry The Hyphenator object containing the
      * dictionaries and options
      *
-     * @return Tokenizer\TokenRegistry
+     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
      */
     public function getHyphenationPattern(Tokenizer\TokenRegistry $registry)
     {
@@ -412,9 +412,9 @@ final class Hyphenator
     /**
      * Hyphenate a Token-Object
      *
-     * @param Tokenizer\Token $token The token to hyphenate
+     * @param Tokenizer\WordToken $token The token to hyphenate
      *
-     * @return Tokenizer\Token
+     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
      */
     public function getPatternForToken(Tokenizer\WordToken $token)
     {
@@ -539,7 +539,7 @@ final class Hyphenator
      *
      * @param string $className the name of the class to load
      *
-     * @return void
+     * @return bool
      */
     public static function __autoload($className)
     {
@@ -562,7 +562,7 @@ final class Hyphenator
     /**
      * Register this packages autoloader with the autoload-stack
      *
-     * @return void
+     * @return bool
      */
     public static function registerAutoload()
     {

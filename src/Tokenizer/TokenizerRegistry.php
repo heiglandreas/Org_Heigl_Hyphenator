@@ -91,7 +91,7 @@ class TokenizerRegistry implements \Iterator, \Countable
     /**
      * Cleanup the registry
      *
-     * @return Tokenizer\TokenizerRegistry
+     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry
      */
     public function cleanup()
     {
@@ -105,7 +105,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      *
      * @param string $string The String to be tokenized
      *
-     * @return \Org\Heigl\Hyphenator\TokenRegistry
+     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
      */
     public function tokenize($string)
     {

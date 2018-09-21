@@ -58,8 +58,8 @@ class SimpleFilter extends Filter
      * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
      * to act upon
      *
-     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @see \Org\Heigl\Hyphenator\Filter\Filter::run()
+     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
      */
     public function run(t\TokenRegistry $tokens)
     {
@@ -104,8 +104,8 @@ class SimpleFilter extends Filter
      * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
      * to act upon
      *
-     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @see \Org\Heigl\Hyphenator\Filter\Filter::run()
+     * @return string
      */
     protected function doConcatenate(t\TokenRegistry $tokens)
     {
