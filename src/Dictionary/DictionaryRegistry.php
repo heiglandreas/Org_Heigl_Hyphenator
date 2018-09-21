@@ -90,11 +90,25 @@ class DictionaryRegistry implements \Iterator, \Countable
     /**
      * Get an array of hyphenation-patterns for a given word.
      *
+     * @deprecated use getHyphenationPatterns() instead
+     *
      * @param string $word The word to get the patterns for.
      *
      * @return array
      */
     public function getHyphenationPattterns($word)
+    {
+        return $this->getHyphenationPatterns($word);
+    }
+
+    /**
+     * Get an array of hyphenation-patterns for a given word.
+     *
+     * @param string $word The word to get the patterns for.
+     *
+     * @return array
+     */
+    public function getHyphenationPatterns($word)
     {
         $pattern = array();
         foreach ($this as $dictionary) {

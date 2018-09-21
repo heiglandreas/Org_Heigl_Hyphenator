@@ -72,7 +72,7 @@ class DictionaryRegistryTest extends TestCase
         $registry->add($dict1)
                  ->add($dict2);
         $expected = array('te' => '012','es'=>'010','st'=>'110');
-        $this->assertEquals($expected, $registry->getHyphenationPattterns('test'));
+        $this->assertEquals($expected, $registry->getHyphenationPatterns('test'));
     }
 
     public function testRegistryImplementsItterator()
