@@ -33,7 +33,6 @@
 
 namespace Org\Heigl\Hyphenator;
 
-use \Org\Heigl\Hyphenator\Exception;
 use \Org\Heigl\Hyphenator\Tokenizer\Tokenizer;
 use \Org\Heigl\Hyphenator\Filter\Filter;
 
