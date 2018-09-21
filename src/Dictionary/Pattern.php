@@ -73,7 +73,6 @@ class Pattern
     {
         $item = trim($pattern);
         $strlen = mb_strlen($item);
-        $return = array();
         for ($i = 0; $i < $strlen; $i++) {
             if ((($i) <= $strlen) && preg_match('/[0-9]/u', mb_substr($item, $i, 1))) {
                 $this->pattern .= mb_substr($item, $i, 1);
