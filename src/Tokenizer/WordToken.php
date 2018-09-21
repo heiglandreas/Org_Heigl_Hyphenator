@@ -49,13 +49,6 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
 class WordToken extends Token
 {
     /**
-     * The hyphenation patterns for this token.
-     *
-     * @var \array $_pattern
-     */
-    protected $pattern = array();
-
-    /**
      * Add a substring=>pattern array to the already existing ones
      *
      * @param \array $pattern The new patterns to add
