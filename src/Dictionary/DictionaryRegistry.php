@@ -110,12 +110,12 @@ class DictionaryRegistry implements \Iterator, \Countable
      */
     public function getHyphenationPatterns($word)
     {
-        $pattern = array();
+        $pattern = array(array());
         foreach ($this as $dictionary) {
-            $pattern = array_merge($pattern, $dictionary->getPatternsForWord($word));
+            $pattern[] = $dictionary->getPatternsForWord($word);
         }
 
-        return $pattern;
+        return array_merge(...$pattern);
     }
 
     /**
