@@ -66,15 +66,16 @@ class WhitespaceTokenizer extends AbstractTokenizer
      */
     protected function tokenize($input)
     {
+        $whitespaces = implode('', $this->whitespaces);
+        $splits = preg_split('/([' . $whitespaces . ']+)/u', $input, -1, PREG_SPLIT_DELIM_CAPTURE);
         $tokens = array();
-        $splits = preg_split("/([".implode("", $this->whitespaces)."]+)/u", $input, -1, PREG_SPLIT_DELIM_CAPTURE);
 
         foreach ($splits as $split) {
             if ($split === '') {
                 $tokens[] = new EmptyToken($split);
                 continue;
             }
-            if (preg_match("/^[".implode("", $this->whitespaces)."]+$/um", $split)) {
+            if (preg_match('/^[' . $whitespaces . ']+$/um', $split)) {
                 $tokens[] = new WhitespaceToken($split);
                 continue;
             }
