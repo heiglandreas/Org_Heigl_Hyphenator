@@ -69,6 +69,7 @@ class WhitespaceTokenizer implements Tokenizer
     {
         if ($input instanceof TokenRegistry) {
             // Tokenize a TokenRegistry
+            $f = clone($input);
             foreach ($input as $token) {
                 if (! $token instanceof WordToken) {
                     continue;
@@ -77,10 +78,10 @@ class WhitespaceTokenizer implements Tokenizer
                 if ($newTokens == array($token)) {
                     continue;
                 }
-                $input->replace($token, $newTokens);
+                $f->replace($token, $newTokens);
             }
 
-            return $input ;
+            return $f ;
         }
 
         // Tokenize a simple string.
