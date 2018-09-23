@@ -36,7 +36,7 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
 use Org\Heigl\Hyphenator\Options;
 
 /**
- * Use Punktuation to split any input into tokens
+ * Use custom markers to split any input into tokens
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
@@ -48,9 +48,8 @@ use Org\Heigl\Hyphenator\Options;
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      04.11.2011
  */
-class CustomHyphenationTokenizer implements Tokenizer
+class CustomHyphenationTokenizer extends AbstractTokenizer
 {
-
     private $options;
 
     public function __construct(Options $options)
@@ -59,53 +58,17 @@ class CustomHyphenationTokenizer implements Tokenizer
     }
 
     /**
-     * Split the given input into tokens using punktuation marks as splitter
+     * Split the given string into tokens using custom markers.
      *
-     * The input can be a string or a tokenRegistry. If the input is a
-     * TokenRegistry, each item will be tokenized.
-     *
-     * @param string|\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $input The
-     * input to be tokenized
-     *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
-     */
-    public function run($input)
-    {
-        if ($input instanceof TokenRegistry) {
-            // Tokenize a TokenRegistry
-            $f = clone($input);
-            foreach ($input as $token) {
-                if (! $token instanceof WordToken) {
-                    continue;
-                }
-                $newTokens = $this->tokenize($token->get());
-                $f->replace($token, $newTokens);
-            }
-
-            return $f ;
-        }
-
-        // Tokenize a simple string.
-        $array =  $this->tokenize($input);
-        $registry = new TokenRegistry();
-        foreach ($array as $item) {
-            $registry->add($item);
-        }
-
-        return $registry;
-    }
-
-    /**
-     * Split the given string into tokens using whitespace.
-     *
-     * Each whitespace is placed in a WhitespaceToken and everything else is
-     * placed in a WordToken-Object
+     * Each word starting with the "noHyphenateString" or containing the
+     * "customHyphen" marker is placed in a ExcludedWordToken and everything
+     * else is  placed in a WordToken-Object
      *
      * @param \string $input The String to tokenize
      *
-     * @return Token
+     * @return Token[]
      */
-    private function tokenize($input)
+    protected function tokenize($input)
     {
         $tokens = [];
 

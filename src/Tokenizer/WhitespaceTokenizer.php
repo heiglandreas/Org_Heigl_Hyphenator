@@ -46,7 +46,7 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      04.11.2011
  */
-class WhitespaceTokenizer implements Tokenizer
+class WhitespaceTokenizer extends AbstractTokenizer
 {
     protected $whitespaces = array(
       '\s',           // white space
@@ -55,56 +55,16 @@ class WhitespaceTokenizer implements Tokenizer
     );
 
     /**
-     * Split the given input into tokens using whitespace as splitter
-     *
-     * The input can be a string or a tokenRegistry. If the input is a
-     * TokenRegistry, each item will be tokenized.
-     *
-     * @param string|\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $input The
-     * input to be tokenized
-     *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
-     */
-    public function run($input)
-    {
-        if ($input instanceof TokenRegistry) {
-            // Tokenize a TokenRegistry
-            $f = clone($input);
-            foreach ($input as $token) {
-                if (! $token instanceof WordToken) {
-                    continue;
-                }
-                $newTokens = $this->tokenize($token->get());
-                if ($newTokens == array($token)) {
-                    continue;
-                }
-                $f->replace($token, $newTokens);
-            }
-
-            return $f ;
-        }
-
-        // Tokenize a simple string.
-        $array =  $this->tokenize($input);
-        $registry = new TokenRegistry();
-        foreach ($array as $item) {
-            $registry->add($item);
-        }
-
-        return $registry;
-    }
-
-    /**
-     * Split the given string into tokens using whitespace.
+     * Split the given string into tokens using whitespace as splitter.
      *
      * Each whitespace is placed in a WhitespaceToken and everything else is
      * placed in a WordToken-Object
      *
      * @param string $input The String to tokenize
      *
-     * @return Token
+     * @return Token[]
      */
-    private function tokenize($input)
+    protected function tokenize($input)
     {
         $tokens = array();
         $splits = preg_split("/([".implode("", $this->whitespaces)."]+)/u", $input, -1, PREG_SPLIT_DELIM_CAPTURE);
