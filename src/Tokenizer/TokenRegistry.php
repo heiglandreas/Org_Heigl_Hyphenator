@@ -34,7 +34,7 @@
 namespace Org\Heigl\Hyphenator\Tokenizer;
 
 /**
- * This class provides a registry for toring Tokens
+ * This class provides a registry for storing Tokens
  *
  * @category   Hyphenation
  * @package    Org\Heigl\Hyphenator
@@ -51,7 +51,7 @@ class TokenRegistry implements \Iterator, \Countable
     /**
      * Storage for the Tokens.
      *
-     * @var \Org\Heigl\Hyphenator\Tokenizer\Token[] $_registry
+     * @var \Org\Heigl\Hyphenator\Tokenizer\Token[] $registry
      */
     private $registry = array();
 
@@ -104,7 +104,7 @@ class TokenRegistry implements \Iterator, \Countable
     }
 
     /**
-     * Get a Token entry by it's key
+     * Get a Token entry by its key
      *
      * @param mixed $key The key to get the token for
      *

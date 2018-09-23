@@ -74,7 +74,7 @@ class FilterRegistry implements \Iterator, \Countable
     }
 
     /**
-     * Get a Filters entry by it's key
+     * Get a Filters entry by its key
      *
      * @param mixed $key The key to get the Filter for.
      *

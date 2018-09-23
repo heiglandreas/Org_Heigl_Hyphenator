@@ -72,7 +72,7 @@ class DictionaryRegistry implements \Iterator, \Countable
     }
 
     /**
-     * Get a dictionary entry by it's key
+     * Get a dictionary entry by its key
      *
      * @param mixed $key The key to retrieve the Dictionary for
      *

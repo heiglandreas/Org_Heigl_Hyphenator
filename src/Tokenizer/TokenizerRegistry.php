@@ -51,14 +51,14 @@ class TokenizerRegistry implements \Iterator, \Countable
     /**
      * Storage for the Tokenizers.
      *
-     * @var \Org\Heigl\Hyphenator\Tokenizer\Tokenizer[] $_registry
+     * @var \Org\Heigl\Hyphenator\Tokenizer\Tokenizer[] $registry
      */
     private $registry = array();
 
     /**
      * Add an item to the registry
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\Tokenizer $tokenizer The tokeniter
+     * @param \Org\Heigl\Hyphenator\Tokenizer\Tokenizer $tokenizer The tokenizer
      * to be added
      *
      * @return \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry
@@ -73,7 +73,7 @@ class TokenizerRegistry implements \Iterator, \Countable
     }
 
     /**
-     * Get a dictionary entry by it's key
+     * Get a dictionary entry by its key
      *
      * @param mixed $key The key to get the tokenizer for.
      *
@@ -103,7 +103,8 @@ class TokenizerRegistry implements \Iterator, \Countable
     /**
      * Pass the given string through the given tokenizers
      *
-     * @param string $string The String to be tokenized
+     * @param string|\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $string The
+     * String to be tokenized
      *
      * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
      */
@@ -138,7 +139,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      *
      * @see \Iterator::current()
      *
-     * @return \Org\Heigl\Hyphenator\Dictionary\Dictionary
+     * @return \Org\Heigl\Hyphenator\Tokenizer\Tokenizer
      */
     public function current()
     {

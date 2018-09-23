@@ -100,7 +100,7 @@ class Pattern
     }
 
     /**
-     * Createa Pattern-Inatance and provide it with the given Pattern
+     * Creates Pattern-Instance and provide it with the given Pattern
      *
      * @param string $pattern The pattern to store
      *

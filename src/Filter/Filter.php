@@ -37,7 +37,7 @@ namespace Org\Heigl\Hyphenator\Filter;
 use \Org\Heigl\Hyphenator\Tokenizer as t;
 
 /**
- * This nterface provides a filter for non-standard hyphenation-patterns
+ * This class provides a filter for non-standard hyphenation-patterns
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
@@ -103,7 +103,7 @@ abstract class Filter
     abstract protected function doConcatenate(t\TokenRegistry $tokens);
 
     /**
-     * Take any input and eitehr pass it to the concatenate-method or return it.
+     * Take any input and either pass it to the concatenate-method or return it.
      *
      * If the input is a TokenRegistry, we process it, otherwise we just return it.
      *

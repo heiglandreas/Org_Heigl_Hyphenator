@@ -127,9 +127,9 @@ class Options
     private $tokenizers = array();
 
     /**
-     * THe locale to be used.
+     * The locale to be used.
      *
-     * @var string $_locale
+     * @var string $defaultLocale
      */
     private $defaultLocale = 'en_EN';
 
