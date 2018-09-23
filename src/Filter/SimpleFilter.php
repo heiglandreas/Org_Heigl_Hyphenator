@@ -87,9 +87,9 @@ class SimpleFilter extends Filter
                 if (0 === (int) $currPattern % 2) {
                     continue;
                 }
-                $sylable = mb_substr($string, $lastOne, $i-$lastOne);
+                $syllable = mb_substr($string, $lastOne, $i-$lastOne);
                 $lastOne = $i;
-                $result[] = $sylable;
+                $result[] = $syllable;
             }
             $result [] = mb_substr($string, $lastOne);
             $token->setFilteredContent(implode($this->options->getHyphen(), $result));
