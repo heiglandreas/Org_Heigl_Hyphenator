@@ -1,5 +1,5 @@
 {
-    "name" : "Org_Heigl/Hyphenator",
+    "name" : "org_heigl/hyphenator",
     "type" : "library",
     "description" : "Word-Hyphenation for PHP based on the TeX-Hyphenation algorithm",
     "keywords" : [ "hyphenation", "hyphenate"],
@@ -42,8 +42,8 @@
             "./coveralls -v"
         ],
         "cs-download" : [
-            "curl -o phpcs -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar",
-            "curl -o phpcs.asc -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar.asc",
+            "curl -o phpcs -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.4.2/phpcs.phar",
+            "curl -o phpcs.asc -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.4.2/phpcs.phar.asc",
             "# gpg --verify phpcs.asc phpcs",
             "chmod 755 phpcs"
         ],
