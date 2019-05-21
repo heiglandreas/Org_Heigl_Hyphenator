@@ -43,9 +43,7 @@
         ],
         "cs-download" : [
             "curl -o phpcs -L https://api.getlatestassets.com/github/squizlabs/PHP_CodeSniffer/phpcs.phar",
-            "curl -o phpcs.asc -L https://api.getlatestassets.com/github/squizlabs/PHP_CodeSniffer/phpcs.phar.asc",
-            "gpg --keyserver pool.sks-keyservers.net --recv-keys A972B9ABB95D0B760B51442231C7E470E2138192",
-            "gpg --verify phpcs.asc phpcs",
+            "if command -v gpg > /dev/null; then curl -o phpcs.asc -L https://api.getlatestassets.com/github/squizlabs/PHP_CodeSniffer/phpcs.phar.asc; gpg --keyserver pool.sks-keyservers.net --recv-keys A972B9ABB95D0B760B51442231C7E470E2138192; gpg --verify phpcs.asc phpcs; fi",
             "chmod 755 phpcs"
         ],
         "cs-check": [
