@@ -138,7 +138,7 @@ class Token
      *
      * @return \string
      */
-    public function &getFilteredContent()
+    public function getFilteredContent()
     {
         if (! $this->filteredContent) {
             return $this->content;

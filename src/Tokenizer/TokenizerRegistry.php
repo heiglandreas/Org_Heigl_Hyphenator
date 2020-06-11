@@ -35,7 +35,6 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
 
 use Countable;
 use Iterator;
-use Org\Heigl\Hyphenator\Dictionary\Dictionary;
 
 /**
  * This class provides a registry for storing multiple Tokenizers
@@ -62,8 +61,7 @@ class TokenizerRegistry implements Iterator, Countable
     /**
      * Add an item to the registry
      *
-     * @param Tokenizer $tokenizer The tokeniter
-     * to be added
+     * @param Tokenizer $tokenizer The tokeniter to be added
      *
      * @return TokenizerRegistry
      */
@@ -77,7 +75,7 @@ class TokenizerRegistry implements Iterator, Countable
     }
 
     /**
-     * Get a dictionary entry by it's key
+     * Get a dictionary entry by its key
      *
      * @param mixed $key The key to get the tokenizer for.
      *
