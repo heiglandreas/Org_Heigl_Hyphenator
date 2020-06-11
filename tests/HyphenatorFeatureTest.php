@@ -47,7 +47,7 @@ use PHPUnit\Framework\TestCase;
  */
 class HyphenatorFeatureTest extends TestCase
 {
-    
+
     /**
      * @dataProvider hyphenationOfSingleWordWithArrayOutputProvider
      */
@@ -61,7 +61,7 @@ class HyphenatorFeatureTest extends TestCase
           ->setWordMin(4)
           ->setFilters('NonStandard')
           ->setTokenizers('Whitespace, Punctuation');
-        
+
         $h = new h\Hyphenator();
         $h->setOptions($o);
         $this->assertEquals($expected, $h->hyphenate($word));
@@ -114,12 +114,12 @@ class HyphenatorFeatureTest extends TestCase
             ['donaudampfschifffahrt ', 'de_DE', 'do^nau^dampf^schiff^fahrt '],
 //            ['altbaucharme', 'de_DE', 'alt-bau-charme'],
             ['otto ', 'de_DE', 'ot^to '],
-            ['daniel ', 'de_DE', 'da^niel '],
+            ['daniel ', 'de_DE', 'da^ni^el '],
             // Sturm will not be hyphenated…
-            ['aussichtsturm ', 'de_DE', 'aus^sichtsturm '],
+            ['aussichtsturm ', 'de_DE', 'aus^sichts^turm '],
             // Sturm will be hyphenated…
-            ['aussichtsturm ', 'de_DE', 'aus^sicht^sturm ', h\Hyphenator::QUALITY_NORMAL],
-            ['urinstinkt ', 'de_DE', 'ur^instinkt ', h\Hyphenator::QUALITY_HIGHEST],
+            ['aussichtsturm ', 'de_DE', 'aus^sicht^s^turm ', h\Hyphenator::QUALITY_NORMAL],
+            ['urinstinkt ', 'de_DE', 'ur^in^stinkt ', h\Hyphenator::QUALITY_HIGHEST],
             ['Brücke ', 'de_DE', 'Brü^cke ', h\Hyphenator::QUALITY_NORMAL],
             ['Röcke ', 'de_DE', 'Rö^cke '],
         ];
