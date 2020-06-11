@@ -12,6 +12,7 @@ php:
 stages:
   - check
   - test
+  - analyze
   - coverage
 
 jobs:
@@ -21,27 +22,32 @@ jobs:
   include:
     - stage: check
       php: 7.4
+      install: skip
       script:
         - composer cs-check
     - stage: test
+    - stage: analyze
+      php: 7.4
       script:
-        - composer test
+        - composer analyze
     - stage: coverage
       if: branch = main AND type = push
       php: 7.4
-      env: TEST_COVERAGE=true
-      script:
+      before_install:
+        - travis_retry composer self-update
+      script: skip
       after_script:
-       - travis_retry composer require $COMPOSER_ARGS --dev satooshi/php-coveralls ;
+       - travis_retry composer require --dev php-coveralls/php-coveralls ;
        - composer test-coverage
        - travis_retry composer upload-coverage
 
 before_install:
   - travis_retry composer self-update
-  - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
+  - phpenv config-rm xdebug.ini
 
 install:
-  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
-  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
-  - travis_retry composer install $COMPOSER_ARGS
+  - travis_retry composer install
   - composer show --installed
+
+script:
+  - composer test
