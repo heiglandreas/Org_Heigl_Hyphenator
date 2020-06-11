@@ -108,7 +108,7 @@ class TokenRegistry implements \Iterator, \Countable
      *
      * @param mixed $key The key to get the token for
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @return Token|null
      */
     public function getTokenWithKey($key)
     {

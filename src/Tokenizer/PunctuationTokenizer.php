@@ -52,9 +52,9 @@ class PunctuationTokenizer implements Tokenizer
     /**
      * The tokens to be handled by this tokenizer as an array.
      *
-     * @var string $tokens
+     * @var string[] $tokens
      */
-    protected $tokens = array(
+    protected $tokens = [
         '.',
         '?',
         '!',
@@ -93,7 +93,7 @@ class PunctuationTokenizer implements Tokenizer
         "'",
         '-',
         '_',
-    );
+    ];
 
     /**
      * Split the given input into tokens using punktuation marks as splitter
@@ -101,10 +101,10 @@ class PunctuationTokenizer implements Tokenizer
      * The input can be a string or a tokenRegistry. If the input is a
      * TokenRegistry, each item will be tokenized.
      *
-     * @param string|\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $input The
+     * @param string|TokenRegistry $input The
      * input to be tokenized
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
+     * @return TokenRegistry
      */
     public function run($input)
     {
@@ -141,9 +141,9 @@ class PunctuationTokenizer implements Tokenizer
      * Each whitespace is placed in a WhitespaceToken and everything else is
      * placed in a WordToken-Object
      *
-     * @param \string $input The String to tokenize
+     * @param string $input The String to tokenize
      *
-     * @return Token
+     * @return Token[]
      */
     private function tokenize($input)
     {

@@ -33,6 +33,8 @@
 
 namespace Org\Heigl\Hyphenator\Dictionary;
 
+use function mb_substr;
+
 /**
  * This class provides a generic dictionary contianing hyphenation-patterns
  *

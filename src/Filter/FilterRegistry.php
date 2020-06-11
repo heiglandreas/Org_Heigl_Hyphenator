@@ -34,6 +34,11 @@
 
 namespace Org\Heigl\Hyphenator\Filter;
 
+use Countable;
+use Iterator;
+use Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry;
+use Org\Heigl\Hyphenator\Tokenizer\TokenRegistry;
+
 /**
  * This class provides a registry for storing multiple filters
  *
@@ -47,22 +52,22 @@ namespace Org\Heigl\Hyphenator\Filter;
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      02.11.2011s
  */
-class FilterRegistry implements \Iterator, \Countable
+class FilterRegistry implements Iterator, Countable
 {
     /**
      * Storage for the Tokenizers.
      *
-     * @var \Org\Heigl\Hyphenator\Filter\Filter[] $registry
+     * @var Filter[]
      */
     protected $registry = array();
 
     /**
      * Add an item to the registry
      *
-     * @param \Org\Heigl\Hyphenator\Filter\Filter $filter The Filter
+     * @param Filter $filter The Filter
      * to be added
      *
-     * @return \Org\Heigl\Hyphenator\Filter\FilterRegistry
+     * @return FilterRegistry
      */
     public function add(Filter $filter)
     {
@@ -78,7 +83,7 @@ class FilterRegistry implements \Iterator, \Countable
      *
      * @param mixed $key The key to get the Filter for.
      *
-     * @return \Org\Heigl\Hyphenator\Filter\Filter
+     * @return Filter|null
      */
     public function getFilterWithKey($key)
     {
@@ -92,7 +97,7 @@ class FilterRegistry implements \Iterator, \Countable
     /**
      * Cleanup the registry
      *
-     * @return Filter\FilterRegistry
+     * @return FilterRegistry
      */
     public function cleanup()
     {
@@ -104,12 +109,12 @@ class FilterRegistry implements \Iterator, \Countable
     /**
      * Pass the given string through the given Filter
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The
+     * @param TokenRegistry $tokens The
      * Registry to filter
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry
+     * @return TokenRegistry
      */
-    public function filter(\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens)
+    public function filter(TokenRegistry $tokens)
     {
         foreach ($this as $filter) {
             $tokens = $filter->run($tokens);
@@ -121,12 +126,12 @@ class FilterRegistry implements \Iterator, \Countable
     /**
      * Concatenate the content of the given TokenRegistry
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The
+     * @param TokenRegistry $tokens The
      * Registry to filter
      *
      * @return mixed
      */
-    public function concatenate(\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens)
+    public function concatenate(TokenRegistry $tokens)
     {
         foreach ($this as $filter) {
             $tokens = $filter->concatenate($tokens);
@@ -135,9 +140,9 @@ class FilterRegistry implements \Iterator, \Countable
         return $tokens;
     }
     /**
-     * Implementation of \Iterator
+     * Implementation of Iterator
      *
-     * @see \Iterator::rewind()
+     * @see Iterator::rewind()
      *
      * @return void
      */
@@ -149,9 +154,9 @@ class FilterRegistry implements \Iterator, \Countable
     /**
      * Get the current object
      *
-     * @see \Iterator::current()
+     * @see Iterator::current()
      *
-     * @return \Org\Heigl\Hyphenator\Filter\Filter
+     * @return Filter
      */
     public function current()
     {
@@ -161,7 +166,7 @@ class FilterRegistry implements \Iterator, \Countable
     /**
      * Get the current key
      *
-     * @see \Iterator::key()
+     * @see Iterator::key()
      *
      * @return mixed
      */
@@ -173,7 +178,7 @@ class FilterRegistry implements \Iterator, \Countable
     /**
      * Get the number of items in the registry
      *
-     * @see \Countable::count()
+     * @see Countable::count()
      *
      * @return int
      */
@@ -185,7 +190,7 @@ class FilterRegistry implements \Iterator, \Countable
     /**
      * Push the internal pointer forward one step
      *
-     * @see \Iterator::next()
+     * @see Iterator::next()
      *
      * @return void
      */
@@ -197,7 +202,7 @@ class FilterRegistry implements \Iterator, \Countable
     /**
      * Check whether the current pointer is in a valid place
      *
-     * @see \Iterator::valid()
+     * @see Iterator::valid()
      *
      * @return boolean
      */

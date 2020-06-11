@@ -53,9 +53,9 @@ class FilterTest extends TestCase
     {
         $t = new Test2Filter();
         $o = new Options();
-        $this->assertAttributeEquals(null, 'options', $t);
+
+        self::assertNotSame($o, $t->getOptions());
         $this->assertSame($t, $t->setOptions($o));
-        $this->assertAttributeSame($o, 'options', $t);
         $this->assertSame($o, $t->getOptions());
     }
 }

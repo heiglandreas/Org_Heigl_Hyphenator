@@ -32,7 +32,7 @@
 namespace Org\Heigl\HyphenatorTest\Dictionary;
 
 use Org\Heigl\Hyphenator\Dictionary\Pattern;
-use Org\Heigl\Hyphenator\Exception as e;
+use Org\Heigl\Hyphenator\Exception\NoPatternSetException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -51,23 +51,22 @@ class PatternTest extends TestCase
     public function testSettingPattern()
     {
         $p = new Pattern();
-        $this->assertAttributeEquals('', 'text', $p);
-        $this->assertAttributeEquals('', 'pattern', $p);
+
         try {
             $p->getText();
             $this->fail('No Exception raised');
-        } catch (e\NoPatternSetException $e) {
+        } catch (NoPatternSetException $e) {
             $this->assertTrue(true);
         }
         try {
             $p->getPattern();
             $this->fail('No Exception raised');
-        } catch (e\NoPatternSetException $e) {
+        } catch (NoPatternSetException $e) {
             $this->assertTrue(true);
         }
         $this->assertSame($p, $p->setPattern('te8st'));
-        $this->assertAttributeEquals('test', 'text', $p);
-        $this->assertAttributeEquals('00800', 'pattern', $p);
+        TestCase::assertSame('test', $p->getText());
+        TestCase::assertSame('00800', $p->getPattern());
     }
 
     /**
@@ -76,8 +75,6 @@ class PatternTest extends TestCase
     public function testPatternCreation($input, $text, $pattern)
     {
         $p = Pattern::factory($input);
-        $this->assertAttributeEquals($text, 'text', $p);
-        $this->assertAttributeEquals($pattern, 'pattern', $p);
         $this->assertEquals($text, $p->getText());
         $this->assertEquals($pattern, $p->getPattern());
     }

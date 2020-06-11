@@ -54,11 +54,11 @@ class CustomMarkupFilter extends Filter
     /**
      * Exteends the abstract Filter::run()
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
+     * @param t\TokenRegistry $tokens The registry
      * to act upon
      *
-     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @see Filter::run()
+     * @return t\TokenRegistry
      */
     public function run(t\TokenRegistry $tokens)
     {
@@ -68,11 +68,11 @@ class CustomMarkupFilter extends Filter
     /**
      * Implements interface Filter
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
+     * @param t\TokenRegistry $tokens The registry
      * to act upon
      *
-     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @see Filter::run()
+     * @return mixed
      */
     protected function doConcatenate(t\TokenRegistry $tokens)
     {

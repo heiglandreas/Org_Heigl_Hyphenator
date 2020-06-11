@@ -34,7 +34,8 @@
 
 namespace Org\Heigl\Hyphenator\Filter;
 
-use \Org\Heigl\Hyphenator\Tokenizer as t;
+use Org\Heigl\Hyphenator\Options;
+use Org\Heigl\Hyphenator\Tokenizer\TokenRegistry;
 
 /**
  * This nterface provides a filter for non-standard hyphenation-patterns
@@ -54,20 +55,20 @@ abstract class Filter
     /**
      * Storage of the options-object.
      *
-     * @var \Org\Heigl\Hyphenator\Options $options
+     * @var Options $options
      */
     protected $options = null;
 
     /**
      * Set the options-object for this filter
      *
-     * @param \Org\Heigl\Hyphenator\Options $options The options to set
+     * @param Options $options The options to set
      *
-     * @return Filter
+     * @return self
      */
-    public function setOptions(\Org\Heigl\Hyphenator\Options $options)
+    public function setOptions(Options $options)
     {
-        $this->options =$options;
+        $this->options = $options;
 
         return $this;
     }
@@ -75,7 +76,7 @@ abstract class Filter
     /**
      * Get the currently defined Options
      *
-     * @return \Org\Heigl\Hyphenator\Options
+     * @return Options
      */
     public function getOptions()
     {
@@ -85,22 +86,22 @@ abstract class Filter
     /**
      * Run the filter over the given Token
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
+     * @param TokenRegistry $tokens The registry
      * to apply the filter to
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
+     * @return TokenRegistry
      */
-    abstract public function run(t\TokenRegistry $tokens);
+    abstract public function run(TokenRegistry $tokens);
 
     /**
      * Concatenate the given TokenRegistry to return one result
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
+     * @param TokenRegistry $tokens The registry
      * to apply the filter to
      *
      * @return mixed
      */
-    abstract protected function doConcatenate(t\TokenRegistry $tokens);
+    abstract protected function doConcatenate(TokenRegistry $tokens);
 
     /**
      * Take any input and eitehr pass it to the concatenate-method or return it.
@@ -113,7 +114,7 @@ abstract class Filter
      */
     public function concatenate($tokens)
     {
-        if ($tokens instanceof t\TokenRegistry) {
+        if ($tokens instanceof TokenRegistry) {
             return $this->doConcatenate($tokens);
         }
 

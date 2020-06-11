@@ -33,6 +33,7 @@ namespace Org\Heigl\HyphenatorTest\Dictionary;
 
 use Org\Heigl\Hyphenator\Dictionary\Dictionary;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
  * This class tests the functionality of the class Org_Heigl_Hyphenator
@@ -49,9 +50,12 @@ class DictionaryTest extends TestCase
 {
     public function testSettingDefaultFilePath()
     {
-        $this->assertAttributeEquals('', 'fileLocation', '\Org\Heigl\Hyphenator\Dictionary\Dictionary');
+        $rc = new ReflectionClass(Dictionary::class);
+        $rp = $rc->getProperty('fileLocation');
+        $rp->setAccessible(true);
+        TestCase::assertSame('', $rp->getValue());
         Dictionary::setFileLocation('foo');
-        $this->assertAttributeEquals('foo', 'fileLocation', '\Org\Heigl\Hyphenator\Dictionary\Dictionary');
+        TestCase::assertSame('foo', $rp->getValue());
     }
 
     public function testParsingOnDictionaryCreationDoesNotWorks()
@@ -66,7 +70,12 @@ class DictionaryTest extends TestCase
     {
         Dictionary::setFileLocation(__DIR__ . '/../share/test3/files/dictionaries');
         $dict = Dictionary::factory('de-de');
-        $this->assertAttributeNotEquals(array(), 'dictionary', $dict);
+
+        $rc = new ReflectionClass(Dictionary::class);
+        $rp = $rc->getProperty('dictionary');
+        $rp->setAccessible(true);
+
+        TestCase::assertNotSame([], $rp->getValue($dict));
     }
 
     public function testGettingPatterns()
@@ -79,16 +88,24 @@ class DictionaryTest extends TestCase
 
     public function testSettingPatterns()
     {
+        $rc = new ReflectionClass(Dictionary::class);
+        $rp = $rc->getProperty('dictionary');
+        $rp->setAccessible(true);
+
         $dictionary = new Dictionary();
         $dictionary->addPattern('test', '01234');
-        $this->assertAttributeEquals(array('test'=>'01234'), 'dictionary', $dictionary);
+        TestCase::assertSame(['test' => '01234'], $rp->getValue($dictionary));
     }
 
     public function testCreationOfNotExistentLocale()
     {
+        $rc = new ReflectionClass(Dictionary::class);
+        $rp = $rc->getProperty('dictionary');
+        $rp->setAccessible(true);
+
         Dictionary::setFileLocation(__DIR__ . '/share/');
         $dictionary = Dictionary::factory('xx_XX');
-        $this->assertAttributeEquals(array(), 'dictionary', $dictionary);
+        TestCase::assertSame([], $rp->getValue($dictionary));
         $result = $dictionary->getPatternsForWord('Donaudampfschifffahrtskapitänsmütze');
         $this->assertEquals(array(), $result);
     }

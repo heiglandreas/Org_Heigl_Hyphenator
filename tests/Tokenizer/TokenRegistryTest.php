@@ -51,15 +51,17 @@ class TokenRegistryTest extends TestCase
 {
     public function testAddingToken()
     {
-        $w = new Token('a');
         $t = new WordToken('a');
         $t1 = new WordToken('a');
         $r = new TokenRegistry();
-        $this->assertAttributeEquals(array(), 'registry', $r);
+        self::assertEquals(0, $r->count());
         $this->assertSame($r, $r->add($t));
-        $this->assertAttributeEquals(array($t), 'registry', $r);
+        self::assertEquals(1, $r->count());
+        self::assertSame($t, $r->getTokenWithKey(0));
         $this->assertSame($r, $r->add($t1));
-        $this->assertAttributeEquals(array($t,$t1), 'registry', $r);
+        self::assertEquals(2, $r->count());
+        self::assertSame($t, $r->getTokenWithKey(0));
+        self::assertSame($t1, $r->getTokenWithKey(1));
     }
 
     public function testGettingToken()
@@ -114,10 +116,20 @@ class TokenRegistryTest extends TestCase
         $r->add($wt1);
         $r->add($wt2);
         $r->add($wt3);
-        $this->assertAttributeEquals(array($wt1, $wt2, $wt3), 'registry', $r);
+        self::assertEquals(3, $r->count());
+        self::assertSame($wt1, $r->getTokenWithKey(0));
+        self::assertSame($wt2, $r->getTokenWithKey(1));
+        self::assertSame($wt3, $r->getTokenWithKey(2));
         $r->replace($wt4, array());
-        $this->assertAttributeEquals(array($wt1, $wt2, $wt3), 'registry', $r);
+        self::assertEquals(3, $r->count());
+        self::assertSame($wt1, $r->getTokenWithKey(0));
+        self::assertSame($wt2, $r->getTokenWithKey(1));
+        self::assertSame($wt3, $r->getTokenWithKey(2));
         $r->replace($wt2, array( $wt4, 'foo', $wt5));
-        $this->assertAttributeEquals(array($wt1, $wt4, $wt5, $wt3), 'registry', $r);
+        self::assertEquals(4, $r->count());
+        self::assertSame($wt1, $r->getTokenWithKey(0));
+        self::assertSame($wt4, $r->getTokenWithKey(1));
+        self::assertSame($wt5, $r->getTokenWithKey(2));
+        self::assertSame($wt3, $r->getTokenWithKey(3));
     }
 }

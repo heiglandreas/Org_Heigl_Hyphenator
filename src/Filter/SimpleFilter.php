@@ -34,7 +34,9 @@
 
 namespace Org\Heigl\Hyphenator\Filter;
 
-use \Org\Heigl\Hyphenator\Tokenizer as t;
+use Org\Heigl\Hyphenator\Tokenizer\Token;
+use Org\Heigl\Hyphenator\Tokenizer\TokenRegistry;
+use Org\Heigl\Hyphenator\Tokenizer\WordToken;
 
 /**
  * This class provides a filter for non-standard hyphenation-patterns
@@ -55,16 +57,16 @@ class SimpleFilter extends Filter
     /**
      * Implements interface Filter
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
+     * @param TokenRegistry $tokens The registry
      * to act upon
      *
-     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @see Filter::run()
+     * @return TokenRegistry
      */
-    public function run(t\TokenRegistry $tokens)
+    public function run(TokenRegistry $tokens)
     {
         foreach ($tokens as $token) {
-            if (! $token instanceof t\WordToken) {
+            if (! $token instanceof WordToken) {
                 continue;
             }
             $string = $token->getFilteredContent();
@@ -101,13 +103,13 @@ class SimpleFilter extends Filter
     /**
      * Implements interface Filter
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $tokens The registry
+     * @param TokenRegistry $tokens The registry
      * to act upon
      *
-     * @see Org\Heigl\Hyphenator\Filter\Filter::run()
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Token
+     * @see Filter::run()
+     * @return mixed
      */
-    protected function doConcatenate(t\TokenRegistry $tokens)
+    protected function doConcatenate(TokenRegistry $tokens)
     {
         $string = '';
         foreach ($tokens as $token) {

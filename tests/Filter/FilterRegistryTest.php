@@ -55,13 +55,16 @@ class FilterRegistryTest extends TestCase
         $t1 = new TestFilter();
         $t2 = new Test1Filter();
         $r = new FilterRegistry();
-        $this->assertAttributeEquals(array(), 'registry', $r);
-        $this->assertSame($r, $r->add($t1));
-        $this->assertAttributeEquals(array($t1), 'registry', $r);
-        $this->assertSame($r, $r->add($t2));
-        $this->assertAttributeEquals(array($t1,$t2), 'registry', $r);
-        $this->assertSame($r, $r->cleanup());
-        $this->assertAttributeEquals(array(), 'registry', $r);
+        TestCase::assertSame(0, $r->count());
+        self::assertSame($r, $r->add($t1));
+        self::assertSame(1, $r->count());
+        self::assertSame($t1, $r->getFilterWithKey(0));
+        self::assertSame($r, $r->add($t2));
+        self::assertSame(2, $r->count());
+        self::assertSame($t1, $r->getFilterWithKey(0));
+        self::assertSame($t2, $r->getFilterWithKey(1));
+        self::assertSame($r, $r->cleanup());
+        self::assertSame(0, $r->count());
     }
 
 

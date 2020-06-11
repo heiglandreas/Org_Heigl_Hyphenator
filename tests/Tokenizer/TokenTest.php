@@ -64,13 +64,12 @@ class TokenTest extends TestCase
     public function testTokenReturnsCorrectValues()
     {
         $tokenA = new Token('test');
-        $this->assertAttributeEquals('test', 'content', $tokenA);
-        $this->assertEquals('test', $tokenA->get());
-        $this->assertAttributeEquals(array('test'), 'hyphenatedContent', $tokenA);
-        $this->assertEquals(array('test'), $tokenA->getHyphenatedContent());
+
+        self::assertEquals('test', $tokenA->get());
+        self::assertEquals(['test'], $tokenA->getHyphenatedContent());
+
         $tokenA->setHyphenatedContent(array('a','B'));
-        $this->assertAttributeEquals(array('a','B'), 'hyphenatedContent', $tokenA);
-        $this->assertEquals(array('a','B'), $tokenA->getHyphenatedContent());
+        $this->assertEquals(['a','B'], $tokenA->getHyphenatedContent());
     }
 
     /**

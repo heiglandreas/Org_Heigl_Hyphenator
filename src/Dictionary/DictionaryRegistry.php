@@ -76,7 +76,7 @@ class DictionaryRegistry implements \Iterator, \Countable
      *
      * @param mixed $key The key to retrieve the Dictionary for
      *
-     * @return \Org\Heigl\Hyphenator\Dictionary\Dictionary
+     * @return Dictionary|null
      */
     public function getDictionaryWithKey($key)
     {

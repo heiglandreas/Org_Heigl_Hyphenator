@@ -54,10 +54,10 @@ interface Tokenizer
      * The input can be a string or a tokenRegistry. If the input is a
      * TokenRegistry, each item will be tokenized.
      *
-     * @param string|\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry $input The
+     * @param string|TokenRegistry $input The
      * input to be tokenized
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenRegistry
+     * @return TokenRegistry
      */
     public function run($input);
 }

@@ -33,6 +33,10 @@
 
 namespace Org\Heigl\Hyphenator\Tokenizer;
 
+use Countable;
+use Iterator;
+use Org\Heigl\Hyphenator\Dictionary\Dictionary;
+
 /**
  * This class provides a registry for storing multiple Tokenizers
  *
@@ -46,22 +50,22 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      04.11.2011
  */
-class TokenizerRegistry implements \Iterator, \Countable
+class TokenizerRegistry implements Iterator, Countable
 {
     /**
      * Storage for the Tokenizers.
      *
-     * @var \Org\Heigl\Hyphenator\Tokenizer\Tokenizer[] $_registry
+     * @var Tokenizer[] $_registry
      */
     private $registry = array();
 
     /**
      * Add an item to the registry
      *
-     * @param \Org\Heigl\Hyphenator\Tokenizer\Tokenizer $tokenizer The tokeniter
+     * @param Tokenizer $tokenizer The tokeniter
      * to be added
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry
+     * @return TokenizerRegistry
      */
     public function add(Tokenizer $tokenizer)
     {
@@ -77,7 +81,7 @@ class TokenizerRegistry implements \Iterator, \Countable
      *
      * @param mixed $key The key to get the tokenizer for.
      *
-     * @return \Org\Heigl\Hyphenator\Tokenizer\Tokenizer
+     * @return Tokenizer|null
      */
     public function getTokenizerWithKey($key)
     {
@@ -91,7 +95,7 @@ class TokenizerRegistry implements \Iterator, \Countable
     /**
      * Cleanup the registry
      *
-     * @return Tokenizer\TokenizerRegistry
+     * @return TokenizerRegistry
      */
     public function cleanup()
     {
@@ -103,9 +107,9 @@ class TokenizerRegistry implements \Iterator, \Countable
     /**
      * Pass the given string through the given tokenizers
      *
-     * @param string $string The String to be tokenized
+     * @param string|TokenRegistry $string The String to be tokenized
      *
-     * @return \Org\Heigl\Hyphenator\TokenRegistry
+     * @return TokenRegistry
      */
     public function tokenize($string)
     {
@@ -122,9 +126,9 @@ class TokenizerRegistry implements \Iterator, \Countable
     }
 
     /**
-     * Implementation of \Iterator
+     * Implementation of Iterator
      *
-     * @see \Iterator::rewind()
+     * @see Iterator::rewind()
      *
      * @return void
      */
@@ -136,9 +140,9 @@ class TokenizerRegistry implements \Iterator, \Countable
     /**
      * Get the current object
      *
-     * @see \Iterator::current()
+     * @see Iterator::current()
      *
-     * @return \Org\Heigl\Hyphenator\Dictionary\Dictionary
+     * @return Tokenizer
      */
     public function current()
     {
@@ -148,7 +152,7 @@ class TokenizerRegistry implements \Iterator, \Countable
     /**
      * Get the current key
      *
-     * @see \Iterator::key()
+     * @see Iterator::key()
      *
      * @return mixed
      */
@@ -160,7 +164,7 @@ class TokenizerRegistry implements \Iterator, \Countable
     /**
      * Get the number of items in the registry
      *
-     * @see \Countable::count()
+     * @see Countable::count()
      *
      * @return int
      */
@@ -172,7 +176,7 @@ class TokenizerRegistry implements \Iterator, \Countable
     /**
      * Push the internal pointer forward one step
      *
-     * @see \Iterator::next()
+     * @see Iterator::next()
      *
      * @return void
      */
@@ -184,7 +188,7 @@ class TokenizerRegistry implements \Iterator, \Countable
     /**
      * Check whether the current pointer is in a valid place
      *
-     * @see \Iterator::valid()
+     * @see Iterator::valid()
      *
      * @return boolean
      */

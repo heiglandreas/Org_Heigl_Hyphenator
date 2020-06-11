@@ -65,14 +65,14 @@ class Token
     /**
      * The hyphenated token.
      *
-     * @var \array $hyphenatedContent
+     * @var array $hyphenatedContent
      */
     protected $hyphenatedContent = array();
 
     /**
      * The hyphenation patterns for this token.
      *
-     * @var \array $pattern
+     * @var array $pattern
      */
     protected $pattern = array();
 
@@ -116,7 +116,7 @@ class Token
     /**
      * Get the hyphenated content
      *
-     * @return \array
+     * @return array
      */
     public function getHyphenatedContent()
     {

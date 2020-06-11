@@ -59,7 +59,7 @@ class Options
      *
      * @var string noHyphenateString
      */
-    private $noHyphenateString = null;
+    private $noHyphenateString = '';
 
     /**
      * This property defines the default hyphenation-character.
@@ -298,9 +298,9 @@ class Options
      *
      * These will be replaced by the set hyphenation character
      *
-     * @param array $customHyphen The custom hyphenation-character
+     * @param string $customHyphen The custom hyphenation-character
      *
-     * @return \Org\Heigl\Hyphenator\Options
+     * @return Options
      */
     public function setCustomHyphen($customHyphen)
     {
@@ -398,7 +398,7 @@ class Options
      *
      * @param string|Tokenizer $tokenizer The tokenizer to add
      *
-     * @return \Org\Heigl\Hyphenator\Options
+     * @return self
      */
     public function addTokenizer($tokenizer)
     {

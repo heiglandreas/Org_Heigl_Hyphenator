@@ -52,13 +52,16 @@ class TokenizerRegistryTest extends TestCase
         $t1 = new TestTokenizer();
         $t2 = new Test1Tokenizer();
         $r = new TokenizerRegistry();
-        $this->assertAttributeEquals(array(), 'registry', $r);
+        $this->assertEquals(0, $r->count());
         $this->assertSame($r, $r->add($t1));
-        $this->assertAttributeEquals(array($t1), 'registry', $r);
+        $this->assertEquals(1, $r->count());
+        $this->assertSame($t1, $r->getTokenizerWithKey(0));
         $this->assertSame($r, $r->add($t2));
-        $this->assertAttributeEquals(array($t1,$t2), 'registry', $r);
+        $this->assertEquals(2, $r->count());
+        $this->assertSame($t1, $r->getTokenizerWithKey(0));
+        $this->assertSame($t2, $r->getTokenizerWithKey(1));
         $this->assertSame($r, $r->cleanup());
-        $this->assertAttributeEquals(array(), 'registry', $r);
+        $this->assertEquals(0, $r->count());
     }
 
 
