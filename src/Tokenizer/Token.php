@@ -51,14 +51,14 @@ class Token
     /**
      * The content of the token.
      *
-     * @var \string $content
+     * @var string $content
      */
     protected $content = '';
 
     /**
      * The filtered content of the token.
      *
-     * @var \string $filteredContent
+     * @var string $filteredContent
      */
     protected $filteredContent = '';
 
@@ -79,9 +79,7 @@ class Token
     /**
      * Create the Token
      *
-     * @param \string $content The content to be stored in the token.
-     *
-     * @return \void
+     * @param string $content The content to be stored in the token.
      */
     public function __construct($content)
     {
@@ -92,7 +90,7 @@ class Token
     /**
      * Get the tokens content
      *
-     * @return \string
+     * @return string
      */
     public function get()
     {
@@ -102,7 +100,7 @@ class Token
     /**
      * Set the tokens hyphenated content
      *
-     * @param \array $hyphenatedContent all possible hyphenations
+     * @param array $hyphenatedContent all possible hyphenations
      *
      * @return Token
      */
@@ -126,7 +124,7 @@ class Token
     /**
      * Get the type of this token
      *
-     * @return \string
+     * @return string
      */
     public function getType()
     {
@@ -136,7 +134,7 @@ class Token
     /**
      * Get the already filtered content of the token.
      *
-     * @return \string
+     * @return string
      */
     public function getFilteredContent()
     {
@@ -150,7 +148,7 @@ class Token
     /**
      * Set the filtered content
      *
-     * @param \string $content The Filtered Content
+     * @param string $content The Filtered Content
      *
      * @return Token
      */
@@ -164,7 +162,7 @@ class Token
     /**
      * Get the length of the contained (unhyphenated) token
      *
-     * @return \int
+     * @return int
      */
     public function length()
     {

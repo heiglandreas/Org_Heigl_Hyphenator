@@ -77,15 +77,6 @@ class Dictionary
     }
 
     /**
-     * Create a new Instance of the Dictionary
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Create an instance for a given file
      *
      * @param string $locale The locale to be set for this Dictionary

@@ -101,7 +101,7 @@ class CustomHyphenationTokenizer implements Tokenizer
      * Each whitespace is placed in a WhitespaceToken and everything else is
      * placed in a WordToken-Object
      *
-     * @param \string $input The String to tokenize
+     * @param string $input The String to tokenize
      *
      * @return Token[]
      */

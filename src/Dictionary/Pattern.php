@@ -90,16 +90,6 @@ class Pattern
     }
 
     /**
-     * Create a new Instance of the Pattern
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        // Nothing to do on instantiation
-    }
-
-    /**
      * Creates Pattern-Instance and provide it with the given Pattern
      *
      * @param string $pattern The pattern to store

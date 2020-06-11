@@ -337,11 +337,6 @@ final class Hyphenator
         return $this->filters;
     }
 
-    /**
-     * The constructor initializing the Object
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->dicts      = new DictionaryRegistry();
