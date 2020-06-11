@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/heiglandreas/Org_Heigl_Hyphenator.png?branch=master)](https://travis-ci.org/heiglandreas/Org_Heigl_Hyphenator)
+[![Build Status](https://travis-ci.org/heiglandreas/Org_Heigl_Hyphenator.png?branch=main)](https://travis-ci.org/heiglandreas/Org_Heigl_Hyphenator)
 [![Latest Stable Version](https://poser.pugx.org/org_heigl/hyphenator/v/stable.png)](https://packagist.org/packages/org_heigl/hyphenator)
 [![Total Downloads](https://poser.pugx.org/org_heigl/hyphenator/downloads.png)](https://packagist.org/packages/org_heigl/hyphenator)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/heiglandreas/Org_Heigl_Hyphenator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/heiglandreas/Org_Heigl_Hyphenator/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/heiglandreas/Org_Heigl_Hyphenator/badge.svg?branch=master)](https://coveralls.io/github/heiglandreas/Org_Heigl_Hyphenator?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/heiglandreas/Org_Heigl_Hyphenator/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/heiglandreas/Org_Heigl_Hyphenator/?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/heiglandreas/Org_Heigl_Hyphenator/badge.svg?branch=main)](https://coveralls.io/github/heiglandreas/Org_Heigl_Hyphenator?branch=main)
 [![Stories in Ready](https://badge.waffle.io/heiglandreas/Org_Heigl_Hyphenator.png?label=ready)](https://waffle.io/heiglandreas/Org_Heigl_Hyphenator)  
 
 This library provides TeX-Hyphenation in PHP.
