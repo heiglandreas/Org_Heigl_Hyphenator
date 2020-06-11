@@ -13,16 +13,12 @@ matrix:
   fast_finish : true
   allow_failures:
       - php: nightly
-  include:
-    - php: 7.4
-      env:
-        - DEPS=locked
-        - TEST_COVERAGE=true
-        - CHECK_CS=false
+
 
 stages:
   - check
   - test
+  - coverage
 
 jobs:
   include:
@@ -31,8 +27,10 @@ jobs:
       script:
         - composer cs-check
     - stage: test
+      script:
+        - composer test
     - stage: coverage
-      if: branch = master AND type = push
+      if: branch = main AND type = push
       php: 7.4
       env: TEST_COVERAGE=true
       script:
@@ -50,6 +48,3 @@ install:
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
   - travis_retry composer install $COMPOSER_ARGS
   - composer show --installed
-
-script:
-  - composer test
