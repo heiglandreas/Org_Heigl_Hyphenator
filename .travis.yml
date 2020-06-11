@@ -4,20 +4,17 @@ sudo: false
 language: php
 
 php:
- - 5.6
- - 7.0
- - 7.1
  - 7.2
  - 7.3
+ - 7.4
  - nightly
 
 matrix:
   fast_finish : true
   allow_failures:
       - php: nightly
-      - php: 5.6
   include:
-    - php: 7.3
+    - php: 7.4
       env:
         - DEPS=locked
         - TEST_COVERAGE=true
@@ -30,13 +27,13 @@ stages:
 jobs:
   include:
     - stage: check
-      php: 7.3
+      php: 7.4
       script:
         - composer cs-check
     - stage: test
     - stage: coverage
       if: branch = master AND type = push
-      php: 7.3
+      php: 7.4
       env: TEST_COVERAGE=true
       script:
       after_script:

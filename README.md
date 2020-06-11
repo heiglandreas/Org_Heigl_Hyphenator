@@ -11,7 +11,7 @@ This library provides TeX-Hyphenation in PHP.
 
 This package has the following requirements:
 
-* PHP-Version >= 5.6
+* PHP-Version >= 7.2
 * Multibyte-Extension loaded
 * Input has to be UTF8-encoded.
 
@@ -23,7 +23,7 @@ the Multibyte-String-Extension will be set to UTF8.
 This package is best installed via [composer](https://getcomposer.org):
 
 ```bash
-composer require Org_Heigl/Hyphenator
+composer require org_heigl/hyphenator
 ```
 
 More information can be found in the doc-section

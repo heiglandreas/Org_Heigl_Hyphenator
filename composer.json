@@ -14,12 +14,12 @@
         }
     ],
     "require" : {
-        "php" : "^5.6||^7.0",
+        "php" : "^7.2",
         "ext-mbstring" : "*"
     },
     "require-dev" : {
         "mockery/mockery" : "^1.2",
-        "phpunit/phpunit": "^5.7||^6.0||^8.0",
+        "phpunit/phpunit": "^8.0",
         "psalm/phar": "^3.11"
     },
     "autoload" : {
@@ -56,6 +56,7 @@
             "./phpcs"
         ],
         "test": "phpunit",
-        "test-coverage": "phpunit --coverage-clover clover.xml"
+        "test-coverage": "phpunit --coverage-clover clover.xml",
+        "bc-check": "docker run --rm -v `pwd`:/app nyholm/roave-bc-check"
     }
 }
