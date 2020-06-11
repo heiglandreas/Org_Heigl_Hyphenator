@@ -34,7 +34,7 @@
 namespace Org\Heigl\Hyphenator\Tokenizer;
 
 /**
- * Use Punktuation to split any input into tokens
+ * Use Punctuation to split any input into tokens
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator

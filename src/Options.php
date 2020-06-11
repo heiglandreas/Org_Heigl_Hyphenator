@@ -33,7 +33,6 @@
 
 namespace Org\Heigl\Hyphenator;
 
-use \Org\Heigl\Hyphenator\Exception;
 use \Org\Heigl\Hyphenator\Tokenizer\Tokenizer;
 use \Org\Heigl\Hyphenator\Filter\Filter;
 
@@ -128,9 +127,9 @@ class Options
     private $tokenizers = array();
 
     /**
-     * THe locale to be used.
+     * The locale to be used.
      *
-     * @var string $_locale
+     * @var string $defaultLocale
      */
     private $defaultLocale = 'en_EN';
 
@@ -144,7 +143,7 @@ class Options
      */
     public function setNoHyphenateString($noHyphenateString)
     {
-        $this->noHyphenateString = $noHyphenateString;
+        $this->noHyphenateString = (string) $noHyphenateString;
 
         return $this;
     }
@@ -168,7 +167,7 @@ class Options
      */
     public function setHyphen($hyphen)
     {
-        $this->hyphen = $hyphen;
+        $this->hyphen = (string) $hyphen;
 
         return $this;
     }
@@ -204,7 +203,7 @@ class Options
      */
     public function getLeftMin()
     {
-        return (int) $this->leftMin;
+        return $this->leftMin;
     }
 
     /**
@@ -228,7 +227,7 @@ class Options
      */
     public function getRightMin()
     {
-        return (int) $this->rightMin;
+        return $this->rightMin;
     }
 
     /**
@@ -290,7 +289,7 @@ class Options
      */
     public function getMinWordLength()
     {
-        return (int) $this->wordMin;
+        return $this->wordMin;
     }
 
     /**

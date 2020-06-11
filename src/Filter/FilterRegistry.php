@@ -36,7 +36,6 @@ namespace Org\Heigl\Hyphenator\Filter;
 
 use Countable;
 use Iterator;
-use Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry;
 use Org\Heigl\Hyphenator\Tokenizer\TokenRegistry;
 
 /**
@@ -79,7 +78,7 @@ class FilterRegistry implements Iterator, Countable
     }
 
     /**
-     * Get a Filters entry by it's key
+     * Get a Filters entry by its key
      *
      * @param mixed $key The key to get the Filter for.
      *

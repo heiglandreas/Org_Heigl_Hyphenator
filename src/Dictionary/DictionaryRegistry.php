@@ -72,7 +72,7 @@ class DictionaryRegistry implements \Iterator, \Countable
     }
 
     /**
-     * Get a dictionary entry by it's key
+     * Get a dictionary entry by its key
      *
      * @param mixed $key The key to retrieve the Dictionary for
      *
@@ -90,18 +90,32 @@ class DictionaryRegistry implements \Iterator, \Countable
     /**
      * Get an array of hyphenation-patterns for a given word.
      *
+     * @deprecated use getHyphenationPatterns() instead
+     *
      * @param string $word The word to get the patterns for.
      *
      * @return array
      */
     public function getHyphenationPattterns($word)
     {
-        $pattern = array();
+        return $this->getHyphenationPatterns($word);
+    }
+
+    /**
+     * Get an array of hyphenation-patterns for a given word.
+     *
+     * @param string $word The word to get the patterns for.
+     *
+     * @return array
+     */
+    public function getHyphenationPatterns($word)
+    {
+        $pattern = array(array());
         foreach ($this as $dictionary) {
-            $pattern = array_merge($pattern, $dictionary->getPatternsForWord($word));
+            $pattern[] = $dictionary->getPatternsForWord($word);
         }
 
-        return $pattern;
+        return array_merge(...$pattern);
     }
 
     /**

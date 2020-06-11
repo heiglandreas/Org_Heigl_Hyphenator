@@ -36,7 +36,7 @@ namespace Org\Heigl\Hyphenator\Dictionary;
 use function mb_substr;
 
 /**
- * This class provides a generic dictionary contianing hyphenation-patterns
+ * This class provides a generic dictionary containing hyphenation-patterns
  *
  * @category   Hyphenation
  * @package    Org_Heigl_Hyphenator
@@ -60,7 +60,7 @@ class Dictionary
     /**
      * Where to look for the basic files.
      *
-     * @var string $_fileLocation
+     * @var string $fileLocation
      */
     private static $fileLocation = '';
 
@@ -123,7 +123,7 @@ class Dictionary
     }
 
     /**
-     * parse a dictionary-file to create an ini-file from it.
+     * Parse a dictionary-file to create an ini-file from it.
      *
      * @param string $locale Parse the file for the given locale
      *
@@ -202,7 +202,7 @@ class Dictionary
     /**
      * Manually add or overwrite a pattern
      *
-     * @param string $string  String to be maatched
+     * @param string $string  String to be matched
      * @param string $pattern Numerical hyphenation-pattern
      *
      * @return \Org\Heigl\Hyphenator\Dictionary\Dictionary
@@ -217,11 +217,11 @@ class Dictionary
     /**
      * Unify the given locale to a default format.
      *
-     * For that in a 2 by 2 format the whole string is splited, the first part
-     * lowercased, the sewcond part upercased and concatenated with n under-
+     * For that in a 2 by 2 format the whole string is split, the first part
+     * lowercased, the second part uppercased and concatenated with n under-
      * score.
      *
-     * a 2letter locae will simply be lowercased.
+     * a 2-letter locale will simply be lowercased.
      *
      * everything else will be returned AS IS
      *

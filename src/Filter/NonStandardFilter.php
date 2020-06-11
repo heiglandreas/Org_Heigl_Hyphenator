@@ -34,7 +34,6 @@
 
 namespace Org\Heigl\Hyphenator\Filter;
 
-use Org\Heigl\Hyphenator\Tokenizer\Token;
 use Org\Heigl\Hyphenator\Tokenizer\TokenRegistry;
 use Org\Heigl\Hyphenator\Tokenizer\WordToken;
 
