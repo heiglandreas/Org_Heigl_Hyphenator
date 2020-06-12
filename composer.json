@@ -59,5 +59,8 @@
         "test-coverage": "phpunit --coverage-clover clover.xml",
         "bc-check": "docker run --rm -v `pwd`:/app nyholm/roave-bc-check",
 		"analyze": "./vendor/bin/psalm.phar"
-    }
+    },
+	"non-feature-branches": [
+		"main"
+	]
 }
