@@ -206,10 +206,11 @@ class Dictionary
         for ($i = 0; $i <= $strlen; $i ++) {
             for ($j = 2; $j <= ($strlen-$i); $j++) {
                 $substr = mb_substr($word, $i, $j);
-                if (! isset($this->dictionary[$substr])) {
+                $lowerSubstring = mb_strtolower($substr);
+                if (! isset($this->dictionary[$lowerSubstring])) {
                     continue;
                 }
-                $return[$substr] = $this->dictionary[$substr];
+                $return[$substr] = $this->dictionary[$lowerSubstring];
             }
         }
 
