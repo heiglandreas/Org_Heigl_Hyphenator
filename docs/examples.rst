@@ -105,6 +105,7 @@ Add your own dictionary rules to the hyphenator
 ===============================================
 
 ::
+    <?php
     use \Org\Heigl\Hyphenator\Hyphenator;
     use Org\Heigl\Hyphenator\Dictionary\Dictionary;
 
