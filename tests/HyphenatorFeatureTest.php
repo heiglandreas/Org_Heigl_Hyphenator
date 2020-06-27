@@ -105,6 +105,10 @@ class HyphenatorFeatureTest extends TestCase
         $h = new h\Hyphenator();
         $h->setOptions($o);
 
+        $h->getDictionaries()->add(h\Dictionary\Dictionary::fromFile(__DIR__ . '/share/de_DE.ini'));
+
+//        $h->getDictionaries()->getDictionaryWithKey(0)->addPattern('strategie', '9800000000');
+
         $this->assertEquals($expected, $h->hyphenate($word));
     }
 

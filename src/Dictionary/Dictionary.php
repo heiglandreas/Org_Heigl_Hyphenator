@@ -33,7 +33,10 @@
 
 namespace Org\Heigl\Hyphenator\Dictionary;
 
+use RuntimeException;
 use function mb_substr;
+use function parse_ini_file;
+use function str_replace;
 
 /**
  * This class provides a generic dictionary containing hyphenation-patterns
@@ -89,6 +92,29 @@ class Dictionary
         $dict->load($locale);
 
         return $dict;
+    }
+
+    public static function fromLocale($locale): Dictionary
+    {
+        $dictionary = new Dictionary();
+        $dictionary->load($locale);
+
+        return $dictionary;
+    }
+
+    public static function fromFile(string $file): Dictionary
+    {
+        if (! is_file($file)) {
+            throw new RuntimeException(sprintf("The file \"%s\" is not readable", $file));
+        }
+
+        $dictionary = new Dictionary();
+
+        foreach (parse_ini_file($file) as $key => $val) {
+            $dictionary->dictionary[str_replace('@:', '', $key)] = $val;
+        }
+
+        return $dictionary;
     }
 
     /**
