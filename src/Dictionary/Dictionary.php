@@ -225,7 +225,7 @@ class Dictionary
      *
      * @return \Org\Heigl\Hyphenator\Dictionary\Dictionary
      */
-    public function addPAttern($string, $pattern)
+    public function addPattern($string, $pattern)
     {
         $this->dictionary[$string] = $pattern;
 
