@@ -425,9 +425,7 @@ final class Hyphenator
      */
     public function getPatternForToken(WordToken $token)
     {
-        foreach ($this->getDictionaries() as $dictionary) {
-            $token->addPattern($dictionary->getPatternsForWord($token->get()));
-        }
+        $token->addPattern($this->getDictionaries()->getHyphenationPatterns($token->get()));
 
         return $token;
     }
