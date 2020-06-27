@@ -1,7 +1,7 @@
 extensions = []
 master_doc = 'index'
 project = u'Org\Heigl\Hyphenator'
-copyright = u'2011-2012, Andreas Heigl <andreas@heigl.org>'
+copyright = u'2008-2020, Andreas Heigl <andreas@heigl.org>'
 exclude_patterns = ['_build']
 highlight_language = 'php'
 html_theme = 'nature'

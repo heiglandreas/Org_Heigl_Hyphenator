@@ -7,7 +7,7 @@ Hyphenator-Package
 ``Org\Heigl\Hyphenator`` is released unter the
 `MIT-License <http://www.opensource.org/licenses/mit-license.php>`_.
 
-Copyright (c) 2008-2011 `Andreas
+Copyright (c) 2008-2020 `Andreas
 Heigl <mailto:andreas@heigl.org>`_
 
 Permission is hereby granted, free of charge, to any person obtaining
