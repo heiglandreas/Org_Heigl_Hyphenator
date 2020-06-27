@@ -33,7 +33,10 @@
 
 namespace Org\Heigl\Hyphenator\Dictionary;
 
+use RuntimeException;
 use function mb_substr;
+use function parse_ini_file;
+use function str_replace;
 
 /**
  * This class provides a generic dictionary containing hyphenation-patterns
@@ -89,6 +92,29 @@ class Dictionary
         $dict->load($locale);
 
         return $dict;
+    }
+
+    public static function fromLocale($locale): Dictionary
+    {
+        $dictionary = new Dictionary();
+        $dictionary->load($locale);
+
+        return $dictionary;
+    }
+
+    public static function fromFile(string $file): Dictionary
+    {
+        if (! is_file($file)) {
+            throw new RuntimeException(sprintf("The file \"%s\" is not readable", $file));
+        }
+
+        $dictionary = new Dictionary();
+
+        foreach (parse_ini_file($file) as $key => $val) {
+            $dictionary->dictionary[str_replace('@:', '', $key)] = $val;
+        }
+
+        return $dictionary;
     }
 
     /**
@@ -180,10 +206,11 @@ class Dictionary
         for ($i = 0; $i <= $strlen; $i ++) {
             for ($j = 2; $j <= ($strlen-$i); $j++) {
                 $substr = mb_substr($word, $i, $j);
-                if (! isset($this->dictionary[$substr])) {
+                $lowerSubstring = mb_strtolower($substr);
+                if (! isset($this->dictionary[$lowerSubstring])) {
                     continue;
                 }
-                $return[$substr] = $this->dictionary[$substr];
+                $return[$substr] = $this->dictionary[$lowerSubstring];
             }
         }
 
@@ -198,7 +225,7 @@ class Dictionary
      *
      * @return \Org\Heigl\Hyphenator\Dictionary\Dictionary
      */
-    public function addPAttern($string, $pattern)
+    public function addPattern($string, $pattern)
     {
         $this->dictionary[$string] = $pattern;
 

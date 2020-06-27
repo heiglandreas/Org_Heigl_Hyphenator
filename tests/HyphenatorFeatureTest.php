@@ -105,6 +105,10 @@ class HyphenatorFeatureTest extends TestCase
         $h = new h\Hyphenator();
         $h->setOptions($o);
 
+        $h->getDictionaries()->add(h\Dictionary\Dictionary::fromFile(__DIR__ . '/share/de_DE.ini'));
+
+//        $h->getDictionaries()->getDictionaryWithKey(0)->addPattern('strategie', '9800000000');
+
         $this->assertEquals($expected, $h->hyphenate($word));
     }
 
@@ -122,6 +126,7 @@ class HyphenatorFeatureTest extends TestCase
             ['urinstinkt ', 'de_DE', 'ur^in^stinkt ', h\Hyphenator::QUALITY_HIGHEST],
             ['Brücke ', 'de_DE', 'Brü^cke ', h\Hyphenator::QUALITY_NORMAL],
             ['Röcke ', 'de_DE', 'Rö^cke '],
+            ['Produktionsstrategie ', 'de_DE', 'Pro^duk^ti^ons^stra^te^gie '],
         ];
     }
 
@@ -152,7 +157,7 @@ class HyphenatorFeatureTest extends TestCase
             [
                 '<xml>Otto<br/>Aussichtsturm</html>',
                 'de_DE',
-                '<xml>Ot^to<br/>Aus^sicht^sturm</html>',
+                '<xml>Ot^to<br/>Aus^sicht^s^turm</html>',
                 h\Hyphenator::QUALITY_NORMAL
             ],
         ];
