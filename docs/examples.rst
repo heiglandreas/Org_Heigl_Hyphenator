@@ -9,7 +9,7 @@ add the provided autoloader either using your own autoloader or by
 invoking the ``Hyphenators`` own autoloader
 
 ::
-    
+
     <?php
     require_once 'path/to/Org/Heigl/Hyphenator/Hyphenator.php';
     \Org\Heigl\Hyphenator\Hyphenator::registerAutoload()
@@ -18,7 +18,7 @@ Simple Example
 ==============
 
 ::
-    
+
     <?php
     use \Org\Heigl\Hyphenator as h;
     $hyphenator = h\Hyphenator::factory();
@@ -47,7 +47,7 @@ Invoke the ``Hyphenator`` manually
 ==================================
 
 ::
-    
+
     <?php
     use \Org\Heigl\Hyphenator as h;
     $o = new h\Options();
@@ -68,7 +68,7 @@ Get the hyphenation of a single word as array
 =============================================
 
 ::
-    
+
     <?php
     use \Org\Heigl\Hyphenator as h;
     $o = new h\Options();
@@ -100,3 +100,28 @@ Get the hyphenation of a single word as array
    reuse the once created instance.
    Reading the largest hyphenation-pattern-file takes up to one
    second on a 2.5GHz Intel Core2 Duo using 4GB RAM.
+
+Add your own dictionary rules to the hyphenator
+===============================================
+
+::
+    use \Org\Heigl\Hyphenator\Hyphenator;
+    use Org\Heigl\Hyphenator\Dictionary\Dictionary;
+
+    $hyphenator = new Hyphenator();
+    $dictionary = Dictionary::fromFile('/path/to/my/dictionary/file.ini');
+    $hyphenator->getDictionaries()->addDictionary($dictionary);
+
+This will add the hyphenation patterns in file `file.ini` as further patterns.
+
+.. note::
+
+  The patterns in file `file.ini` need to look like this: `@:[string]="[numerical pattern]"`
+  where `[string]` is the string that will be matched and `[numerical pattern]` describes the
+  hyphenation pattern in digits from 0 to 9 where odd numbers mark hyphenation positions and
+  even numbers mark positions where a hyphenation is forbidden. The higher the number the
+  later it will be respected. Higher numbers will overwrite lower numbers when the patterns
+  are merged. The pattern always consists of one number more than the number of characters
+  of the string. The first number marks the position before the first character of the string,
+  the second number marks the position between the first and the second character and so on until the
+  last number which marks the position after the last character.
