@@ -116,7 +116,8 @@ class HyphenatorFeatureTest extends TestCase
     {
         return [
             ['donaudampfschifffahrt ', 'de_DE', 'do^nau^dampf^schiff^fahrt '],
-//            ['altbaucharme', 'de_DE', 'alt-bau-charme'],
+            ['Donaudampfschifffahrt ', 'de_DE', 'Do^nau^dampf^schiff^fahrt '],
+            //['Altbaucharme ', 'de_DE', 'Alt-bau-charme '],
             ['otto ', 'de_DE', 'ot^to '],
             ['daniel ', 'de_DE', 'da^ni^el '],
             // Sturm will not be hyphenated…
@@ -124,6 +125,7 @@ class HyphenatorFeatureTest extends TestCase
             // Sturm will be hyphenated…
             ['aussichtsturm ', 'de_DE', 'aus^sicht^s^turm ', h\Hyphenator::QUALITY_NORMAL],
             ['urinstinkt ', 'de_DE', 'ur^in^stinkt ', h\Hyphenator::QUALITY_HIGHEST],
+            ['Urinstinkt ', 'de_DE', 'Ur^in^stinkt ', h\Hyphenator::QUALITY_HIGHEST],
             ['Brücke ', 'de_DE', 'Brü^cke ', h\Hyphenator::QUALITY_NORMAL],
             ['Röcke ', 'de_DE', 'Rö^cke '],
             ['Produktionsstrategie ', 'de_DE', 'Pro^duk^ti^ons^stra^te^gie '],

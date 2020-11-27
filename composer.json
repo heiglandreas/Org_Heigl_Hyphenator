@@ -19,8 +19,7 @@
     },
     "require-dev" : {
         "mockery/mockery" : "^1.2",
-        "phpunit/phpunit": "^8.0||^9.0",
-        "psalm/phar": "^3.11"
+        "phpunit/phpunit": "^8.0||^9.0"
     },
     "autoload" : {
         "psr-4" : {
