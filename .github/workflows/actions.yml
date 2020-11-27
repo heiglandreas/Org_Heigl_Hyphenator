@@ -75,10 +75,12 @@ jobs:
           php-version: "7.4"
           coverage: xdebug
       - name: Install
-        run: composer require --dev php-coveralls/php-coveralls
+        run: composer update
       - name: run testsuite
         run: composer test-coverage
-      - name: upload coverage
-        run: composer upload-coverage
+      - name: send coverage-results
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
 
