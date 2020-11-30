@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.org/heiglandreas/Org_Heigl_Hyphenator.png?branch=main)](https://travis-ci.org/heiglandreas/Org_Heigl_Hyphenator)
+![Build](https://github.com/heiglandreas/Org_Heigl_Hyphenator/workflows/Build/badge.svg)
 [![Latest Stable Version](https://poser.pugx.org/org_heigl/hyphenator/v/stable.png)](https://packagist.org/packages/org_heigl/hyphenator)
 [![Total Downloads](https://poser.pugx.org/org_heigl/hyphenator/downloads.png)](https://packagist.org/packages/org_heigl/hyphenator)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/heiglandreas/Org_Heigl_Hyphenator/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/heiglandreas/Org_Heigl_Hyphenator/?branch=main)
 [![Coverage Status](https://coveralls.io/repos/github/heiglandreas/Org_Heigl_Hyphenator/badge.svg?branch=main)](https://coveralls.io/github/heiglandreas/Org_Heigl_Hyphenator?branch=main)
-[![Stories in Ready](https://badge.waffle.io/heiglandreas/Org_Heigl_Hyphenator.png?label=ready)](https://waffle.io/heiglandreas/Org_Heigl_Hyphenator)  
+[![Stories in Ready](https://badge.waffle.io/heiglandreas/Org_Heigl_Hyphenator.png?label=ready)](https://waffle.io/heiglandreas/Org_Heigl_Hyphenator)
 
 This library provides TeX-Hyphenation in PHP.
 
@@ -18,8 +18,8 @@ This package has the following requirements:
 On loading the `\Org\Heigl\Hyphenator\Hyphenator`-class the internal encoding for
 the Multibyte-String-Extension will be set to UTF8.
 
-# Installation: 
- 
+# Installation:
+
 This package is best installed via [composer](https://getcomposer.org):
 
 ```bash
@@ -28,20 +28,20 @@ composer require org_heigl/hyphenator
 
 More information can be found in the doc-section
 
-# Usage: 
+# Usage:
 
 ```php
 use \Org\Heigl\Hyphenator as h;
 // Create a hyphenator-instance based on a given config-file
 $hyphenator = h\Hyphenator::factory('/path/to/the/config/file.properties');
- 
+
 // And hyphenate a given string
 echo $hyphenator->hyphenate('Hyphenation');
 // Hy-phe-na-ti-on
 ```
 
 # Documentation:
- 
+
 More documentation can be found at http://orgheiglhyphenator.readthedocs.org/en/latest/
 
 Build-Status of the latest release can be found at http://travis-ci.org/#!/heiglandreas/Org_Heigl_Hyphenator
