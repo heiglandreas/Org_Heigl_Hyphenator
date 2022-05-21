@@ -34,6 +34,7 @@ namespace Org\Heigl\HyphenatorTest\Filter;
 
 use \Org\Heigl\Hyphenator\Filter\FilterRegistry;
 use \Org\Heigl\Hyphenator\Tokenizer as t;
+use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -96,6 +97,10 @@ class FilterRegistryTest extends TestCase
         $this->assertSame($t2, $r->current());
         $r->next();
         $this->assertFalse($r->valid());
+        $this->expectException(OutOfBoundsException::class);
+        $r->current();
+        $this->expectException(OutOfBoundsException::class);
+        $r->key();
     }
 
     public function testCountableInterface()

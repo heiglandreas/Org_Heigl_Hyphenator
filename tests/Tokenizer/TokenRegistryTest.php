@@ -34,6 +34,7 @@ namespace Org\Heigl\HyphenatorTest\Tokenizer;
 use Org\Heigl\Hyphenator\Tokenizer\TokenRegistry;
 use Org\Heigl\Hyphenator\Tokenizer\Token;
 use Org\Heigl\Hyphenator\Tokenizer\WordToken;
+use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -91,6 +92,10 @@ class TokenRegistryTest extends TestCase
         $this->assertSame($t2, $r->current());
         $r->next();
         $this->assertFalse($r->valid());
+        $this->expectException(OutOfBoundsException::class);
+        $r->current();
+        $this->expectException(OutOfBoundsException::class);
+        $r->key();
     }
 
     public function testCountableInterface()

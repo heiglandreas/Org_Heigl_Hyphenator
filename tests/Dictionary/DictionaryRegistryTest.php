@@ -35,6 +35,7 @@ use Countable;
 use Iterator;
 use Org\Heigl\Hyphenator\Dictionary\Dictionary;
 use Org\Heigl\Hyphenator\Dictionary\DictionaryRegistry;
+use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -102,6 +103,10 @@ class DictionaryRegistryTest extends TestCase
         $this->assertTrue($registry->valid());
         $registry->next();
         $this->assertFalse($registry->valid());
+        $this->expectException(OutOfBoundsException::class);
+        $registry->current();
+        $this->expectException(OutOfBoundsException::class);
+        $registry->key();
     }
 
     public function testGettingDictionaryById()
