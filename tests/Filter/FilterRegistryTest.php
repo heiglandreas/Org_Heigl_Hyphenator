@@ -34,6 +34,7 @@ namespace Org\Heigl\HyphenatorTest\Filter;
 
 use \Org\Heigl\Hyphenator\Filter\FilterRegistry;
 use \Org\Heigl\Hyphenator\Tokenizer as t;
+use Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 
@@ -97,8 +98,18 @@ class FilterRegistryTest extends TestCase
         $this->assertSame($t2, $r->current());
         $r->next();
         $this->assertFalse($r->valid());
+    }
+
+    public function testAccessingNonexistingObjectThrowsException(): void
+    {
+        $r = new FilterRegistry();
         $this->expectException(OutOfBoundsException::class);
         $r->current();
+    }
+
+    public function testAccessingNonexistingKeyThrowsException(): void
+    {
+        $r = new FilterRegistry();
         $this->expectException(OutOfBoundsException::class);
         $r->key();
     }

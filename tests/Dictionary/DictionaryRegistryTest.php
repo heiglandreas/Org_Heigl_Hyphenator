@@ -35,6 +35,7 @@ use Countable;
 use Iterator;
 use Org\Heigl\Hyphenator\Dictionary\Dictionary;
 use Org\Heigl\Hyphenator\Dictionary\DictionaryRegistry;
+use Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 
@@ -103,10 +104,20 @@ class DictionaryRegistryTest extends TestCase
         $this->assertTrue($registry->valid());
         $registry->next();
         $this->assertFalse($registry->valid());
+    }
+
+    public function testAccessingNonexistingObjectThrowsException(): void
+    {
+        $r = new DictionaryRegistry();
         $this->expectException(OutOfBoundsException::class);
-        $registry->current();
+        $r->current();
+    }
+
+    public function testAccessingNonexistingKeyThrowsException(): void
+    {
+        $r = new DictionaryRegistry();
         $this->expectException(OutOfBoundsException::class);
-        $registry->key();
+        $r->key();
     }
 
     public function testGettingDictionaryById()

@@ -31,6 +31,7 @@
 
 namespace Org\Heigl\HyphenatorTest\Tokenizer;
 
+use Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry;
 use Org\Heigl\Hyphenator\Tokenizer\TokenRegistry;
 use Org\Heigl\Hyphenator\Tokenizer\Token;
 use Org\Heigl\Hyphenator\Tokenizer\WordToken;
@@ -92,8 +93,18 @@ class TokenRegistryTest extends TestCase
         $this->assertSame($t2, $r->current());
         $r->next();
         $this->assertFalse($r->valid());
+    }
+
+    public function testAccessingNonexistingObjectThrowsException(): void
+    {
+        $r = new TokenRegistry();
         $this->expectException(OutOfBoundsException::class);
         $r->current();
+    }
+
+    public function testAccessingNonexistingKeyThrowsException(): void
+    {
+        $r = new TokenRegistry();
         $this->expectException(OutOfBoundsException::class);
         $r->key();
     }

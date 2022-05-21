@@ -94,8 +94,18 @@ class TokenizerRegistryTest extends TestCase
         $this->assertSame($t2, $r->current());
         $r->next();
         $this->assertFalse($r->valid());
+    }
+
+    public function testAccessingNonexistingObjectThrowsException(): void
+    {
+        $r = new TokenizerRegistry();
         $this->expectException(OutOfBoundsException::class);
         $r->current();
+    }
+
+    public function testAccessingNonexistingKeyThrowsException(): void
+    {
+        $r = new TokenizerRegistry();
         $this->expectException(OutOfBoundsException::class);
         $r->key();
     }
