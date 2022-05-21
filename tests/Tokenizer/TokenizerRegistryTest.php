@@ -98,7 +98,6 @@ class TokenizerRegistryTest extends TestCase
         $r->current();
         $this->expectException(OutOfBoundsException::class);
         $r->key();
-
     }
 
     public function testCountableInterface()
