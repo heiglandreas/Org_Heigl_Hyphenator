@@ -35,6 +35,7 @@ namespace Org\Heigl\Hyphenator\Dictionary;
 
 use Iterator;
 use Countable;
+
 /**
  * This class provides a registry for storing multiple dictionaries
  *

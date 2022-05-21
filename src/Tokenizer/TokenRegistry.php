@@ -35,6 +35,7 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
 
 use Iterator;
 use Countable;
+
 /**
  * This class provides a registry for storing Tokens
  *
