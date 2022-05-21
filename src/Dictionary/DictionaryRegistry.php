@@ -33,6 +33,8 @@
 
 namespace Org\Heigl\Hyphenator\Dictionary;
 
+use Iterator;
+use Countable;
 /**
  * This class provides a registry for storing multiple dictionaries
  *
@@ -45,8 +47,9 @@ namespace Org\Heigl\Hyphenator\Dictionary;
  * @version    2.0.1
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      01.11.2011
+ * @template-implements Iterator<Dictionary>
  */
-class DictionaryRegistry implements \Iterator, \Countable
+class DictionaryRegistry implements Iterator, Countable
 {
     /**
      * Storage for the Dictionaries.

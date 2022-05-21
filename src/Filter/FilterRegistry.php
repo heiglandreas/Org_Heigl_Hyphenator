@@ -50,6 +50,7 @@ use Org\Heigl\Hyphenator\Tokenizer\TokenRegistry;
  * @version    2.0.1
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      02.11.2011s
+ * @template-implements Iterator<Filter>
  */
 class FilterRegistry implements Iterator, Countable
 {

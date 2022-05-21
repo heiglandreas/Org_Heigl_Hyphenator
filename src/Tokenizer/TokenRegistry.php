@@ -33,6 +33,8 @@
 
 namespace Org\Heigl\Hyphenator\Tokenizer;
 
+use Iterator;
+use Countable;
 /**
  * This class provides a registry for storing Tokens
  *
@@ -45,8 +47,9 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
  * @version    2.0.1
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      04.11.2011
+ * @template-implements Iterator<Token>
  */
-class TokenRegistry implements \Iterator, \Countable
+class TokenRegistry implements Iterator, Countable
 {
     /**
      * Storage for the Tokens.

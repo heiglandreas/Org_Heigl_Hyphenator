@@ -48,6 +48,7 @@ use Iterator;
  * @version    2.0.1
  * @link       http://github.com/heiglandreas/Hyphenator
  * @since      04.11.2011
+ * @template-implements Iterator<Tokenizer>
  */
 class TokenizerRegistry implements Iterator, Countable
 {
