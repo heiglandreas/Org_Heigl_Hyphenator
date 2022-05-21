@@ -35,6 +35,7 @@ namespace Org\Heigl\Hyphenator\Dictionary;
 
 use Iterator;
 use Countable;
+use OutOfBoundsException;
 
 /**
  * This class provides a registry for storing multiple dictionaries
@@ -63,10 +64,8 @@ class DictionaryRegistry implements Iterator, Countable
      * Add an item to the registry.
      *
      * @param Dictionary $dict The Dictionary to add to the registry
-     *
-     * @return DictionaryRegistry
      */
-    public function add(Dictionary $dict)
+    public function add(Dictionary $dict): self
     {
         if (! in_array($dict, $this->registry)) {
             $this->registry[] = $dict;
@@ -79,10 +78,8 @@ class DictionaryRegistry implements Iterator, Countable
      * Get a dictionary entry by its key
      *
      * @param mixed $key The key to retrieve the Dictionary for
-     *
-     * @return Dictionary|null
      */
-    public function getDictionaryWithKey($key)
+    public function getDictionaryWithKey($key): ?Dictionary
     {
         if (array_key_exists($key, $this->registry)) {
             return $this->registry[$key];
@@ -110,9 +107,9 @@ class DictionaryRegistry implements Iterator, Countable
      *
      * @param string $word The word to get the patterns for.
      *
-     * @return array
+     * @return array<string>
      */
-    public function getHyphenationPatterns($word)
+    public function getHyphenationPatterns($word): array
     {
         $pattern = array(array());
         foreach ($this as $dictionary) {
@@ -123,13 +120,11 @@ class DictionaryRegistry implements Iterator, Countable
     }
 
     /**
-     * Implementation of \Iterator
+     * Implementation of Iterator
      *
-     * @see \Iterator::rewind()
-     *
-     * @return void
+     * @see Iterator::rewind()
      */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->registry);
     }
@@ -137,35 +132,44 @@ class DictionaryRegistry implements Iterator, Countable
     /**
      * Get the current object
      *
-     * @see \Iterator::current()
+     * @see Iterator::current()
      *
      * @return \Org\Heigl\Hyphenator\Dictionary\Dictionary
      */
-    public function current()
+    public function current(): Dictionary
     {
-        return current($this->registry);
+        $current = current($this->registry);
+        if (false === $current) {
+            throw new OutOfBoundsException('You requested a non-existent entry');
+        }
+
+        return $current;
     }
 
     /**
      * Get the current key
      *
-     * @see \Iterator::key()
+     * @see Iterator::key()
      *
      * @return mixed
      */
-    public function key()
+    public function key(): int
     {
-        return key($this->registry);
+        $key = key($this->registry);
+
+        if (null === $key) {
+            throw new OutOfBoundsException('You requested a non-existend key');
+        }
+
+        return $key;
     }
 
     /**
      * Get the number of items in the registry
      *
-     * @see \Countable::count()
-     *
-     * @return int
+     * @see Countable::count()
      */
-    public function count()
+    public function count(): int
     {
         return count($this->registry);
     }
@@ -173,11 +177,9 @@ class DictionaryRegistry implements Iterator, Countable
     /**
      * Push the internal pointer forward one step
      *
-     * @see \Iterator::next()
-     *
-     * @return void
+     * @see Iterator::next()
      */
-    public function next()
+    public function next(): void
     {
         next($this->registry);
     }
@@ -185,16 +187,10 @@ class DictionaryRegistry implements Iterator, Countable
     /**
      * Check whether the current pointer is in a valid place
      *
-     * @see \Iterator::valid()
-     *
-     * @return boolean
+     * @see Iterator::valid()
      */
-    public function valid()
+    public function valid(): bool
     {
-        if (false === current($this->registry)) {
-            return false;
-        }
-
-        return true;
+        return false !== current($this->registry);
     }
 }

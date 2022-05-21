@@ -37,6 +37,7 @@ namespace Org\Heigl\Hyphenator\Filter;
 use Countable;
 use Iterator;
 use Org\Heigl\Hyphenator\Tokenizer\TokenRegistry;
+use OutOfBoundsException;
 
 /**
  * This class provides a registry for storing multiple filters
@@ -66,10 +67,8 @@ class FilterRegistry implements Iterator, Countable
      *
      * @param Filter $filter The Filter
      * to be added
-     *
-     * @return FilterRegistry
      */
-    public function add(Filter $filter)
+    public function add(Filter $filter): self
     {
         if (! in_array($filter, $this->registry)) {
             $this->registry[] = $filter;
@@ -82,10 +81,8 @@ class FilterRegistry implements Iterator, Countable
      * Get a Filters entry by its key
      *
      * @param mixed $key The key to get the Filter for.
-     *
-     * @return Filter|null
      */
-    public function getFilterWithKey($key)
+    public function getFilterWithKey($key): ?Filter
     {
         if (array_key_exists($key, $this->registry)) {
             return $this->registry[$key];
@@ -96,10 +93,8 @@ class FilterRegistry implements Iterator, Countable
 
     /**
      * Cleanup the registry
-     *
-     * @return FilterRegistry
      */
-    public function cleanup()
+    public function cleanup(): self
     {
         $this->registry = array();
 
@@ -111,10 +106,8 @@ class FilterRegistry implements Iterator, Countable
      *
      * @param TokenRegistry $tokens The
      * Registry to filter
-     *
-     * @return TokenRegistry
      */
-    public function filter(TokenRegistry $tokens)
+    public function filter(TokenRegistry $tokens): TokenRegistry
     {
         foreach ($this as $filter) {
             $tokens = $filter->run($tokens);
@@ -143,10 +136,8 @@ class FilterRegistry implements Iterator, Countable
      * Implementation of Iterator
      *
      * @see Iterator::rewind()
-     *
-     * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->registry);
     }
@@ -155,12 +146,15 @@ class FilterRegistry implements Iterator, Countable
      * Get the current object
      *
      * @see Iterator::current()
-     *
-     * @return Filter
      */
-    public function current()
+    public function current(): Filter
     {
-        return current($this->registry);
+        $current = current($this->registry);
+        if (false === $current) {
+            throw new OutOfBoundsException('You requested a non-existend entry');
+        }
+
+        return $current;
     }
 
     /**
@@ -170,19 +164,23 @@ class FilterRegistry implements Iterator, Countable
      *
      * @return mixed
      */
-    public function key()
+    public function key(): int
     {
-        return key($this->registry);
+        $key = key($this->registry);
+
+        if (null === $key) {
+            throw new OutOfBoundsException('You requested a non-existend entry');
+        }
+
+        return $key;
     }
 
     /**
      * Get the number of items in the registry
      *
      * @see Countable::count()
-     *
-     * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->registry);
     }
@@ -191,10 +189,8 @@ class FilterRegistry implements Iterator, Countable
      * Push the internal pointer forward one step
      *
      * @see Iterator::next()
-     *
-     * @return void
      */
-    public function next()
+    public function next(): void
     {
         next($this->registry);
     }
@@ -203,15 +199,9 @@ class FilterRegistry implements Iterator, Countable
      * Check whether the current pointer is in a valid place
      *
      * @see Iterator::valid()
-     *
-     * @return boolean
      */
-    public function valid()
+    public function valid(): bool
     {
-        if (false === current($this->registry)) {
-            return false;
-        }
-
-        return true;
+        return false !== current($this->registry);
     }
 }

@@ -35,6 +35,7 @@ namespace Org\Heigl\Hyphenator\Tokenizer;
 
 use Countable;
 use Iterator;
+use OutOfBoundsException;
 
 /**
  * This class provides a registry for storing multiple Tokenizers
@@ -63,10 +64,8 @@ class TokenizerRegistry implements Iterator, Countable
      * Add an item to the registry
      *
      * @param Tokenizer $tokenizer The tokeniter to be added
-     *
-     * @return TokenizerRegistry
      */
-    public function add(Tokenizer $tokenizer)
+    public function add(Tokenizer $tokenizer): self
     {
         if (! in_array($tokenizer, $this->registry)) {
             $this->registry[] = $tokenizer;
@@ -79,10 +78,8 @@ class TokenizerRegistry implements Iterator, Countable
      * Get a dictionary entry by its key
      *
      * @param mixed $key The key to get the tokenizer for.
-     *
-     * @return Tokenizer|null
      */
-    public function getTokenizerWithKey($key)
+    public function getTokenizerWithKey($key): ?Tokenizer
     {
         if (array_key_exists($key, $this->registry)) {
             return $this->registry[$key];
@@ -93,10 +90,8 @@ class TokenizerRegistry implements Iterator, Countable
 
     /**
      * Cleanup the registry
-     *
-     * @return TokenizerRegistry
      */
-    public function cleanup()
+    public function cleanup(): self
     {
         $this->registry = array();
 
@@ -107,10 +102,8 @@ class TokenizerRegistry implements Iterator, Countable
      * Pass the given string through the given tokenizers
      *
      * @param string|TokenRegistry $string The String to be tokenized
-     *
-     * @return TokenRegistry
      */
-    public function tokenize($string)
+    public function tokenize($string): TokenRegistry
     {
         if (! $string instanceof TokenRegistry) {
             $wt = new WordToken($string);
@@ -128,10 +121,8 @@ class TokenizerRegistry implements Iterator, Countable
      * Implementation of Iterator
      *
      * @see Iterator::rewind()
-     *
-     * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->registry);
     }
@@ -140,34 +131,40 @@ class TokenizerRegistry implements Iterator, Countable
      * Get the current object
      *
      * @see Iterator::current()
-     *
-     * @return Tokenizer
      */
-    public function current()
+    public function current(): Tokenizer
     {
-        return current($this->registry);
+        $current = current($this->registry);
+
+        if (false === $current) {
+            throw new OutOfBoundsException('You requested a non-existend entry');
+        }
+
+        return $current;
     }
 
     /**
      * Get the current key
      *
      * @see Iterator::key()
-     *
-     * @return mixed
      */
-    public function key()
+    public function key(): int
     {
-        return key($this->registry);
+        $key = key($this->registry);
+
+        if (null === $key) {
+            throw new OutOfBoundsException('You requested a non-existend entry');
+        }
+
+        return $key;
     }
 
     /**
      * Get the number of items in the registry
      *
      * @see Countable::count()
-     *
-     * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->registry);
     }
@@ -176,10 +173,8 @@ class TokenizerRegistry implements Iterator, Countable
      * Push the internal pointer forward one step
      *
      * @see Iterator::next()
-     *
-     * @return void
      */
-    public function next()
+    public function next(): void
     {
         next($this->registry);
     }
@@ -188,15 +183,9 @@ class TokenizerRegistry implements Iterator, Countable
      * Check whether the current pointer is in a valid place
      *
      * @see Iterator::valid()
-     *
-     * @return boolean
      */
-    public function valid()
+    public function valid(): bool
     {
-        if (false === current($this->registry)) {
-            return false;
-        }
-
-        return true;
+        return null !== key($this->registry);
     }
 }

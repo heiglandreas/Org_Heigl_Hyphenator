@@ -93,7 +93,7 @@ class NonStandardFilterTest extends TestCase
         $tokenList = M::mock('\Org\Heigl\Hyphenator\Tokenizer\TokenRegistry');
         $tokenList->shouldReceive('rewind')->once();
         $tokenList->shouldReceive('valid')->twice()->andReturnValues(array(true, false));
-        $tokenList->shouldReceive('current')->once()->andReturn('foo');
+        $tokenList->shouldReceive('current')->once()->andReturn(new t\Token('foo'));
         $tokenList->shouldReceive('next')->once();
         $tokenList->shouldReceive('key')->andReturn(0);
 
