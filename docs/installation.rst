@@ -1,39 +1,14 @@
 Installation
 ############
 
-Installation using PEAR
-=======================
-
-Probably the easiest way of installing the ``Hyphenator``-package
-is using the PEAR-Installer
-
-Only the following two steps are needed:
-
-::
-
-    pear channel-discover pear.heigl.org
-    pear install org.heigl/Hyphenator
-
 Installation using packagist
 ============================
 
-The ``Hyphenator``-package can also be installed via packagist. Simply include
-the following in your ``composer.json``-File:
-
-.. code-block:: json
-
-    {
-        "require" : {
-            [...]
-            "org_heigl/hyphenator": "2.0.*"
-        }
-    }
-
-After that you can run packagist using
+The ``Hyphenator``-package can be installed via packagist.
 
 .. code-block:: bash
 
-    php composer.phar install
+    php composer.phar require org_heigl/hyphenator
 
 Installation from a downloaded package
 ======================================
