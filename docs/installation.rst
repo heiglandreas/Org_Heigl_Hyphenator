@@ -13,7 +13,7 @@ Only the following two steps are needed:
 
     pear channel-discover pear.heigl.org
     pear install org.heigl/Hyphenator
-    
+
 Installation using packagist
 ============================
 
@@ -28,8 +28,8 @@ the following in your ``composer.json``-File:
             "org_heigl/hyphenator": "2.0.*"
         }
     }
-    
-After that you can run packagist using 
+
+After that you can run packagist using
 
 .. code-block:: bash
 
@@ -41,7 +41,7 @@ Installation from a downloaded package
 This installation is not much more complicated and probably the
 best way for hosted installations
 
-#. Take the :file:`Org`-Folder and place it somewhere your include-path reaches 
+#. Take the :file:`Org`-Folder and place it somewhere your include-path reaches
    it.
 #. Optionally you can copy the folder :file:`Org/Heigl/Hyphenator/shared`
    to any location you like and set the ``HYPHERNATOR_HOME``-Environment
@@ -60,29 +60,43 @@ This Link will break as soon as the OpenOffice.org-Project comes out
 of the apache-incubator.
 
 - af_ZA
+- bg_BG
 - ca
+- cs_CZ
 - da_DK
 - de_AT
 - de_CH
 - de_DE
+- el_GR
 - en_GB
 - en_UK
+- es
 - et_EE
 - fr
+- gl
 - hr_HR
 - hu_HU
+- is_ID
+- is
 - it_IT
+- lt
 - lt_LT
+- lv_LV
 - nb_NO
 - nn_NO
 - nl_NL
 - pl_PL
 - pt_BR
+- pt_PT
 - ro_RO
 - ru_RU
+- sh
 - sk_SK
 - sl_SI
 - sr
+- sv
+- te_IN
+- uk_UA
 - zu_ZA
 
 These are the hyphenation-files that are included in OpenOffice.org.
