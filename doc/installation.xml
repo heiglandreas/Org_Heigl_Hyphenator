@@ -36,46 +36,59 @@ pear install org.heigl/Hyphenator</programlisting>
     <sect1>
         <title>Installed Hyphenation-Patterns</title>
         <para>
-            This package includes hyphenation-patterns for the following locales. 
+            This package includes hyphenation-patterns for the following locales.
             These are taken from the svn-directory of the OpenOffice.org-CVS hosted at
             apache.org. For more inforamtions have a look at <ulink rel="https://svn.apache.org/repos/asf/incubator/ooo/trunk/main/dictionaries">
-            https://svn.apache.org/repos/asf/incubator/ooo/trunk/main/dictionaries</ulink>. 
-            This Link will break as soon as the OpenOffice.org-Project comes out 
+            https://svn.apache.org/repos/asf/incubator/ooo/trunk/main/dictionaries</ulink>.
+            This Link will break as soon as the OpenOffice.org-Project comes out
             of the apache-incubator.
         </para>
         <para>
             <itemizedlist>
                 <listitem>af_ZA</listitem>
+							  <listitem><bg_BG></bg_BG></listitem>
                 <listitem>ca</listitem>
+							  <listitem>cs_CZ</listitem>
                 <listitem>da_DK</listitem>
                 <listitem>de_AT</listitem>
                 <listitem>de_CH</listitem>
                 <listitem>de_DE</listitem>
+							  <listitem>el_GR</listitem>
                 <listitem>en_GB</listitem>
                 <listitem>en_UK</listitem>
+							  <listitem>es</listitem>
                 <listitem>et_EE</listitem>
                 <listitem>fr</listitem>
+							  <listitem>gl</listitem>
                 <listitem>hr_HR</listitem>
                 <listitem>hu_HU</listitem>
+							  <listitem>id_ID</listitem>
+							  <listitem>is</listitem>
                 <listitem>it_IT</listitem>
+                <listitem>lt</listitem>
                 <listitem>lt_LT</listitem>
+                <listitem>lv_LV</listitem>
                 <listitem>nb_NO</listitem>
                 <listitem>nn_NO</listitem>
                 <listitem>nl_NL</listitem>
                 <listitem>pl_PL</listitem>
                 <listitem>pt_BR</listitem>
+                <listitem>pt_PT</listitem>
                 <listitem>ro_RO</listitem>
                 <listitem>ru_RU</listitem>
+                <listitem>sh</listitem>
                 <listitem>sk_SK</listitem>
                 <listitem>sl_SI</listitem>
                 <listitem>sr</listitem>
+                <listitem>sv</listitem>
+                <listitem>te_IN</listitem>
                 <listitem>zu_ZA</listitem>
             </itemizedlist>
             These are the hyphenation-files that are included in OpenOffice.org.
-            If you found another hyphenation-file, feel free to contact me or 
+            If you found another hyphenation-file, feel free to contact me or
             the OpenOffice.org-Team!
         </para>
-        <para> 
+        <para>
             All other locales will simply not be hyphenated but the string to be
             hyphenated will be returned "AS IS"
         </para>
