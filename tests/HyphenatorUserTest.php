@@ -28,4 +28,29 @@ class HyphenatorUserTest extends TestCase
 
         $this->assertEquals('Hand-tuch-spen-der', $hyphenator->hyphenate('Handtuchspender'));
     }
+
+    public function testMultipleHyphenationCallsResultInSameHyphenation()
+    {
+        $service = HyphenatorService::singleton();
+
+        $this->assertEquals([
+            'Hand-tuchspender',
+            'Handtuch-spender',
+            'Handtuchspen-der'
+        ], $service->hyphenate('Handtuchspender'));
+        $this->assertEquals([
+            'Hand-tuchspender',
+            'Handtuch-spender',
+            'Handtuchspen-der'
+        ], $service->hyphenate('Handtuchspender'));
+
+        $service2 = HyphenatorService::singleton();
+        $this->assertEquals([
+            'Hand-tuchspender',
+            'Handtuch-spender',
+            'Handtuchspen-der'
+        ], $service->hyphenate('Handtuchspender'));
+
+        $this->assertSame($service, $service2);
+    }
 }
