@@ -10,7 +10,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.1"
+          php-version: "8.3"
           tools: phive
       - name: Download codesniffer
         run: phive --no-progress install --trust-gpg-keys 31C7E470E2138192,5E6DDE998AB73B8E phpcs
@@ -53,7 +53,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.1"
+          php-version: "8.3"
           tools: phive
       - name: Download psalm
         run: phive --no-progress install --trust-gpg-keys 8A03EA3B385DBAA1,12CE0F1D262429A5 psalm
@@ -72,7 +72,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.1"
+          php-version: "8.3"
           coverage: xdebug
       - name: Install
         run: composer update
