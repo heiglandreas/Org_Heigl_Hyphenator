@@ -111,10 +111,7 @@ class Dictionary
         $dictionary = new Dictionary();
 
         foreach (parse_ini_file($file) as $key => $val) {
-            if (is_array($key)) {
-                continue;
-            }
-            $dictionary->dictionary[str_replace('@:', '', $key)] = $val;
+            $dictionary->dictionary[(string) str_replace('@:', '', $key)] = $val;
         }
 
         return $dictionary;
@@ -139,7 +136,7 @@ class Dictionary
             if (is_array($key)) {
                 continue;
             }
-            $this->dictionary[str_replace('@:', '', $key)] = $val;
+            $this->dictionary[(string) str_replace('@:', '', $key)] = $val;
         }
 
         return $this;
