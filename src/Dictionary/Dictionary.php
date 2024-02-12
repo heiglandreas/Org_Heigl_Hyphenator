@@ -111,6 +111,9 @@ class Dictionary
         $dictionary = new Dictionary();
 
         foreach (parse_ini_file($file) as $key => $val) {
+            if (is_array($val)) {
+                continue;
+            }
             $dictionary->dictionary[str_replace('@:', '', $key)] = $val;
         }
 
@@ -133,6 +136,9 @@ class Dictionary
             return $this;
         }
         foreach (parse_ini_file($file) as $key => $val) {
+            if (is_array($val)) {
+                continue;
+            }
             $this->dictionary[str_replace('@:', '', $key)] = $val;
         }
 
