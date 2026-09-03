@@ -56,9 +56,10 @@ projects, and two scripts install them:
   [hyph-utf8](https://github.com/hyphenation/tex-hyphen). For German it also
   keeps the compound word list of the LibreOffice dictionary, because the
   patterns alone do not mark compound boundaries.
-* `tools/updateHyphenationFilesFromLibreOffice.sh` installs all remaining
-  locales from
-  [LibreOffice/dictionaries](https://github.com/LibreOffice/dictionaries).
+* `tools/updateHyphenationFilesFromLibreOffice.sh` imports every locale from
+  [LibreOffice/dictionaries](https://github.com/LibreOffice/dictionaries) and
+  then runs the hyph-utf8 script again, so the locales in its mapping table
+  keep their hyph-utf8 dictionaries.
 
 The hyph-utf8 script pins its sources to a commit, so a repeated run produces
 byte identical files. Both scripts render the `<locale>.ini` files the runtime

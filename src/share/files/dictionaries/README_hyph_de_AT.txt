@@ -95,29 +95,29 @@ section 1. The header of the file follows verbatim.
 
     This is the hyphenation file "hyph_de_DE.dic" of the German dictionary
     according to the reform of 2006-08-01	(i.e. reformed or new spelling)
-    
+
     Language: German (de DE)
-    
+
     Version:  2017-01-12
               New: using the COMPOUND feature for improved hyphenation
               New: list with over 69,000 words and compounds by Karl Zeiler
-    
+
     Origin:   Based on the TeX hyphenation tables	"dehyphn.tex", revision level 31.
               http://www.ctan.org/tex-archive/language/hyphenation/dehyphn.tex
               The TeX hyphenation tables are released under the LaTeX Project
               Public License (LPPL)
-    
+
     License:  OpenOffice.org Adaptions of this package are licensed under the
               GNU Lesser General Public License (LGPL 2 or later) and are under
               Copyright by
-    
+
     Authors:  conversion author: Marco Huggenberger <marco@by-night.ch>
               revised conversion: Daniel Naber <naber@danielnaber.de>
               improvements: Karl Zeiler <karl.zeiler@t-online.de>
-    
+
     Please note, this dictionary is based on syllable matching patterns
     and thus should be suitable under other variations of German
-    
+
     HYPH de DE hyph_de_DE
     HYPH de AT hyph_de_AT
     HYPH de CH hyph_de_CH

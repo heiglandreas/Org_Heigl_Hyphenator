@@ -291,7 +291,7 @@ its NEXTLEVEL directive. Its own pattern level is replaced by the patterns of
 section 1. The header of the file follows verbatim.
 
 EOF
-        sed 's/^/    /' "$WORK/compound-header-$language.txt" >> "$readme"
+        sed '/./s/^/    /' "$WORK/compound-header-$language.txt" >> "$readme"
         cat "$WORK/compound-$language.txt" >> "$dic"
     else
         cat >> "$dic" <<EOF
@@ -393,7 +393,10 @@ that carries the verbatim upstream headers, including the full licence texts.
 Of the $dic_count \`hyph_*.dic\` files in this directory, $migrated_count are built by the script
 above. The other $remaining_count are the files that
 \`tools/updateHyphenationFilesFromLibreOffice.sh\` installs, and this script
-leaves them untouched. $remaining_with_ini of them have a rendered \`.ini\`:
+leaves them untouched. The LibreOffice script copies every locale, including
+the ones listed above, and therefore runs this script again at its end so
+that they keep their hyph-utf8 dictionaries. $remaining_with_ini of the
+$remaining_count have a rendered \`.ini\`:
 
 | Locale | Rendered \`.ini\` |
 | ------ | -------------- |
@@ -456,20 +459,26 @@ echo 'rendering .ini files'
 tools/renderDicts
 
 # renderDicts swallows exceptions from parseFile(), so a failed conversion
-# leaves an empty or truncated .ini behind instead of an error. Compare the
-# rendered line count against the number of source lines that went in.
+# leaves an empty or truncated .ini behind instead of an error. Every source
+# line has to come out as exactly one .ini line. The only lines parseFile()
+# is known to drop are those containing "=" (reported above), so they are
+# taken out of the expected count; anything else missing is an error.
+usable_lines() {
+    echo $(( $(count_lines "$1") - $(grep -c '=' "$1" || true) ))
+}
+
 while read -r locale code compound_path; do
     ini="$DICT_DIR/$locale.ini"
-    expected="$(count_lines "$WORK/patterns-$code.txt")"
+    expected="$(usable_lines "$WORK/patterns-$code.txt")"
     if [ "$compound_path" != '-' ]; then
-        expected=$((expected + $(count_lines "$WORK/compound-${compound_path%%/*}.txt")))
+        expected=$((expected + $(usable_lines "$WORK/compound-${compound_path%%/*}.txt")))
     fi
     if [ ! -f "$ini" ]; then
         abort "$ini was not rendered"
     fi
     rendered="$(count_lines "$ini")"
-    if [ "$((rendered * 100))" -lt "$((expected * 90))" ]; then
-        abort "$ini has $rendered lines, expected at least 90% of $expected"
+    if [ "$rendered" -ne "$expected" ]; then
+        abort "$ini has $rendered lines but $expected were expected - Dictionary::parseFile() dropped or failed on some lines"
     fi
     echo "  $locale.ini: $rendered lines from $expected source lines"
 done < <(read_mapping)

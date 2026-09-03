@@ -32,7 +32,10 @@ that carries the verbatim upstream headers, including the full licence texts.
 Of the 40 `hyph_*.dic` files in this directory, 3 are built by the script
 above. The other 37 are the files that
 `tools/updateHyphenationFilesFromLibreOffice.sh` installs, and this script
-leaves them untouched. 36 of them have a rendered `.ini`:
+leaves them untouched. The LibreOffice script copies every locale, including
+the ones listed above, and therefore runs this script again at its end so
+that they keep their hyph-utf8 dictionaries. 36 of the
+37 have a rendered `.ini`:
 
 | Locale | Rendered `.ini` |
 | ------ | -------------- |
