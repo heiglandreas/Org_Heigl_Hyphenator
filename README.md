@@ -46,6 +46,29 @@ More documentation can be found at http://orgheiglhyphenator.readthedocs.org/en/
 
 Build-Status of the latest release can be found at http://travis-ci.org/#!/heiglandreas/Org_Heigl_Hyphenator
 
+# Hyphenation patterns
+
+The dictionaries in `src/share/files/dictionaries` come from two upstream
+projects, and two scripts install them:
+
+* `tools/updateHyphenationFilesFromTexHyphen.sh` builds the locales listed in
+  its mapping table from the TeX hyphenation patterns of
+  [hyph-utf8](https://github.com/hyphenation/tex-hyphen). For German it also
+  keeps the compound word list of the LibreOffice dictionary, because the
+  patterns alone do not mark compound boundaries.
+* `tools/updateHyphenationFilesFromLibreOffice.sh` installs all remaining
+  locales from
+  [LibreOffice/dictionaries](https://github.com/LibreOffice/dictionaries).
+
+The hyph-utf8 script pins its sources to a commit, so a repeated run produces
+byte identical files. Both scripts render the `<locale>.ini` files the runtime
+reads through `tools/renderDicts`. Dictionaries and rendered files are
+committed.
+
+`src/share/files/dictionaries/SOURCES.md` records the source, version, licence
+and pinned commit for every locale, and explains how to update the pins or
+migrate another locale.
+
 # Legal Stuff
 
 Copyright (c) 2011-2016 Andreas Heigl<andreas@heigl.org>
