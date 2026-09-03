@@ -23,7 +23,9 @@ final class HyphenatorUserTest extends TestCase
         $hyphenator->getOptions()->setHyphen('-');
 
         $de_DE = Dictionary::fromLocale('de_DE');
-        $de_DE->addPattern('spender', '08000000');
+        // The dictionary no longer hyphenates "spender" on its own, so the
+        // added pattern asks for the point instead of suppressing a wrong one.
+        $de_DE->addPattern('spender', '00001000');
         $hyphenator->addDictionary($de_DE);
 
         $this->assertEquals('Hand-tuch-spen-der', $hyphenator->hyphenate('Handtuchspender'));
