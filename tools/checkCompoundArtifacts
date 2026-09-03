@@ -1,0 +1,236 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Looks for hyphenation points that only exist because a compound word list
+ * and a set of hyphenation patterns share one pattern space.
+ *
+ * A dictionary built by tools/updateHyphenationFilesFromTexHyphen.sh is flat:
+ * the entries of the compound word list sit in front of the patterns and are
+ * matched like patterns, anywhere inside a word. That is what makes the word
+ * list useful, and it is also the one thing that can go wrong.
+ *
+ * For every word of the list this tool hyphenates with three dictionaries: the
+ * combined one, the patterns on their own and the word list on its own. A
+ * hyphenation point that the combined dictionary produces while neither source
+ * produces it on its own exists only because the two share one pattern space,
+ * and gets reported.
+ *
+ * Comparing against the word list as a whole matters: an entry is matched
+ * anywhere inside a word, so a word is regularly hyphenated by entries other
+ * than its own. "Bildung" is the example - the patterns forbid that point
+ * (bil4da, bil4d5in, bil4d3r), and it comes from the entry bil1dung, which is
+ * why every word containing "bildungs" depends on a foreign entry.
+ *
+ * Run tools/updateHyphenationFilesFromTexHyphen.sh first; this reads the
+ * intermediate files it leaves in tmp/.
+ *
+ * Usage:
+ *     tools/checkCompoundArtifacts [<dictionary directory>]
+ *
+ * The directory defaults to src/share/files/dictionaries and holds the
+ * combined dictionary. Pass another one to check a dictionary that is not
+ * installed, for instance to confirm that the tool does report the artifacts
+ * of an older dictionary. The two reference dictionaries are always rendered
+ * from the tmp/ files of the last update run.
+ *
+ * Exit codes: 0 no artifacts, 1 artifacts found, 2 tmp/ files missing.
+ */
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Org\Heigl\Hyphenator\Dictionary\Dictionary;
+use Org\Heigl\Hyphenator\Hyphenator;
+
+ini_set('memory_limit', '512M');
+
+const HYPHEN = '-';
+const LOCALE = 'de_DE';
+const PATTERN_FILE = 'tmp/patterns-de-1996.txt';
+const COMPOUND_FILE = 'tmp/compound-de.txt';
+
+/**
+ * Build a hyphenator for the dictionary in the given directory.
+ *
+ * The dictionary is loaded here and handed over as an object on purpose.
+ * Hyphenator::addDictionary() resets the static file location as soon as it is
+ * given a locale string, and getDictionaries() loads the default locale while
+ * the registry is still empty - either would silently give both hyphenators
+ * the same dictionary.
+ *
+ * @param string $directory
+ *
+ * @return Hyphenator
+ */
+function buildHyphenator($directory)
+{
+    Dictionary::setFileLocation($directory);
+    $dictionary = Dictionary::fromLocale(LOCALE);
+
+    $hyphenator = Hyphenator::factory();
+    $options = $hyphenator->getOptions();
+    $options->setHyphen(HYPHEN);
+    $options->setLeftMin(2);
+    $options->setRightMin(2);
+    $options->setWordMin(6);
+    $options->setQuality(Hyphenator::QUALITY_HIGHEST);
+    $hyphenator->addDictionary($dictionary);
+
+    return $hyphenator;
+}
+
+/**
+ * Character offsets of the hyphens in a hyphenated word.
+ *
+ * An offset is the number of characters in front of the hyphen, so that the
+ * offsets of a word are comparable across hyphenations of the same word.
+ *
+ * @param string $hyphenated
+ *
+ * @return int[]
+ */
+function breakPositions($hyphenated)
+{
+    $positions = array();
+    $parts = explode(HYPHEN, $hyphenated);
+    $offset = 0;
+    $last = count($parts) - 1;
+    for ($i = 0; $i < $last; $i++) {
+        $offset += mb_strlen($parts[$i]);
+        $positions[] = $offset;
+    }
+
+    return $positions;
+}
+
+/**
+ * The hyphenation points a word list entry asks for, and the ones it forbids.
+ *
+ * Digits inside an entry work like they do in a TeX pattern: an odd digit
+ * allows a hyphenation point at that offset, an even digit forbids one. Most
+ * entries use 1 only, but a few hundred carry other digits.
+ *
+ * @param string $entry
+ *
+ * @return array{breaks: int[], inhibitions: int}
+ */
+function listPositions($entry)
+{
+    $breaks = array();
+    $inhibitions = 0;
+    $offset = 0;
+    $length = strlen($entry);
+    for ($i = 0; $i < $length; $i++) {
+        $byte = $entry[$i];
+        if ($byte >= '0' && $byte <= '9') {
+            if (((int) $byte) % 2 === 1) {
+                $breaks[] = $offset;
+            } else {
+                $inhibitions++;
+            }
+            continue;
+        }
+        // Count characters, not bytes: skip UTF-8 continuation bytes.
+        if ((ord($byte) & 0xC0) !== 0x80) {
+            $offset++;
+        }
+    }
+
+    return array('breaks' => $breaks, 'inhibitions' => $inhibitions);
+}
+
+$root = dirname(__DIR__);
+$patternFile = $root . '/' . PATTERN_FILE;
+$compoundFile = $root . '/' . COMPOUND_FILE;
+$hybridDirectory = isset($argv[1]) ? $argv[1] : $root . '/src/share/files/dictionaries';
+
+foreach (array($patternFile, $compoundFile) as $file) {
+    if (! is_file($file)) {
+        fwrite(STDERR, sprintf(
+            "%s is missing, run tools/updateHyphenationFilesFromTexHyphen.sh first\n",
+            $file
+        ));
+        exit(2);
+    }
+}
+
+/**
+ * Render a single source as a dictionary of its own, so that the comparison
+ * sees what that source does without the other one.
+ *
+ * @param string $directory
+ * @param string $source
+ *
+ * @return string
+ */
+function renderSingleSource($directory, $source)
+{
+    if (! is_dir($directory)) {
+        mkdir($directory, 0775, true);
+    }
+    file_put_contents(
+        $directory . '/hyph_' . LOCALE . '.dic',
+        "UTF-8\n" . file_get_contents($source)
+    );
+    Dictionary::setFileLocation($directory);
+    Dictionary::parseFile(LOCALE);
+
+    return $directory;
+}
+
+$patternDirectory = renderSingleSource($root . '/tmp/patterns-only', $patternFile);
+$listDirectory = renderSingleSource($root . '/tmp/list-only', $compoundFile);
+
+$combined = buildHyphenator($hybridDirectory);
+$patternsOnly = buildHyphenator($patternDirectory);
+$listOnly = buildHyphenator($listDirectory);
+
+echo 'comparing ' . $hybridDirectory . '/' . LOCALE . '.ini' . "\n";
+echo 'against   ' . $patternDirectory . '/' . LOCALE . '.ini' . "\n";
+echo 'and       ' . $listDirectory . '/' . LOCALE . '.ini' . "\n";
+
+$checked = 0;
+$artifacts = 0;
+$inhibitions = 0;
+$reported = false;
+$handle = fopen($compoundFile, 'r');
+while (false !== ($line = fgets($handle))) {
+    $entry = rtrim($line, "\r\n");
+    if ('' === $entry) {
+        continue;
+    }
+    $checked++;
+
+    $list = listPositions($entry);
+    $inhibitions += $list['inhibitions'];
+
+    $word = preg_replace('/[0-9]/u', '', $entry);
+    $combinedResult = $combined->hyphenate($word);
+    $combinedPositions = breakPositions($combinedResult);
+    if (array() === $combinedPositions) {
+        continue;
+    }
+
+    $patternResult = $patternsOnly->hyphenate($word);
+    $listResult = $listOnly->hyphenate($word);
+    $allowed = array_merge(
+        breakPositions($patternResult),
+        breakPositions($listResult),
+        $list['breaks']
+    );
+    if (array() === array_diff($combinedPositions, $allowed)) {
+        continue;
+    }
+
+    $artifacts++;
+    if (! $reported) {
+        echo "\n" . implode("\t", array('word', 'combined', 'patterns', 'list', 'list entry')) . "\n";
+        $reported = true;
+    }
+    echo implode("\t", array($word, $combinedResult, $patternResult, $listResult, $entry)) . "\n";
+}
+fclose($handle);
+
+printf("\nchecked %d words, %d artifacts\n", $checked, $artifacts);
+printf("%d inhibiting (even) digits in the word list\n", $inhibitions);
+
+exit($artifacts > 0 ? 1 : 0);
