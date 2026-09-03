@@ -6,20 +6,24 @@
  *
  * A dictionary built by tools/updateHyphenationFilesFromTexHyphen.sh is flat:
  * the entries of the compound word list sit in front of the patterns and are
- * matched like patterns, anywhere inside a word. That is what makes the word
- * list useful, and it is also the one thing that can go wrong.
+ * matched like patterns, anywhere inside a word.
  *
  * For every word of the list this tool hyphenates with three dictionaries: the
  * combined one, the patterns on their own and the word list on its own. A
  * hyphenation point that the combined dictionary produces while neither source
- * produces it on its own exists only because the two share one pattern space,
- * and gets reported.
+ * produces it on its own exists only because the two share one pattern space.
+ * That is a merge artifact, and it is what gets reported.
  *
- * Comparing against the word list as a whole matters: an entry is matched
- * anywhere inside a word, so a word is regularly hyphenated by entries other
- * than its own. "Bildung" is the example - the patterns forbid that point
- * (bil4da, bil4d5in, bil4d3r), and it comes from the entry bil1dung, which is
- * why every word containing "bildungs" depends on a foreign entry.
+ * What this tool does not judge is whether a point is orthographically right.
+ * A word list entry matches anywhere inside a word, so a word is regularly
+ * hyphenated by entries other than its own. "Bildung" is the example: the
+ * patterns forbid that point (bil4da, bil4d5in, bil4d3r), it comes from the
+ * entry bil1dung, and every word containing "bildungs" depends on it. Such
+ * points are a property of the word list itself, present with or without the
+ * patterns, and are accepted here. The summary counts how many words receive
+ * points from entries other than their own, so that exposure stays visible;
+ * whether those points are correct is the job of
+ * tests/GermanHyphenationTest.php.
  *
  * Run tools/updateHyphenationFilesFromTexHyphen.sh first; this reads the
  * intermediate files it leaves in tmp/.
@@ -190,6 +194,7 @@ echo 'and       ' . $listDirectory . '/' . LOCALE . '.ini' . "\n";
 
 $checked = 0;
 $artifacts = 0;
+$foreign = 0;
 $inhibitions = 0;
 $reported = false;
 $handle = fopen($compoundFile, 'r');
@@ -205,18 +210,19 @@ while (false !== ($line = fgets($handle))) {
 
     $word = preg_replace('/[0-9]/u', '', $entry);
     $combinedResult = $combined->hyphenate($word);
-    $combinedPositions = breakPositions($combinedResult);
-    if (array() === $combinedPositions) {
-        continue;
-    }
-
     $patternResult = $patternsOnly->hyphenate($word);
     $listResult = $listOnly->hyphenate($word);
-    $allowed = array_merge(
-        breakPositions($patternResult),
-        breakPositions($listResult),
-        $list['breaks']
-    );
+    $combinedPositions = breakPositions($combinedResult);
+    $patternPositions = breakPositions($patternResult);
+    $listOnlyPositions = breakPositions($listResult);
+
+    // Points the word list produces that neither the word's own entry nor the
+    // patterns ask for come from other entries. Counted, not judged.
+    if (array() !== array_diff($listOnlyPositions, $list['breaks'], $patternPositions)) {
+        $foreign++;
+    }
+
+    $allowed = array_merge($patternPositions, $listOnlyPositions, $list['breaks']);
     if (array() === array_diff($combinedPositions, $allowed)) {
         continue;
     }
@@ -231,6 +237,7 @@ while (false !== ($line = fgets($handle))) {
 fclose($handle);
 
 printf("\nchecked %d words, %d artifacts\n", $checked, $artifacts);
+printf("%d words receive points from word list entries other than their own (not judged here)\n", $foreign);
 printf("%d inhibiting (even) digits in the word list\n", $inhibitions);
 
 exit($artifacts > 0 ? 1 : 0);
