@@ -55,4 +55,21 @@ final class HyphenatorUserTest extends TestCase
 
         $this->assertSame($service, $service2);
     }
+
+    public function testSingleLetterPatternProducesHyphenationPoint(): void
+    {
+        $hyphenator = Hyphenator::factory();
+        $options = $hyphenator->getOptions();
+        $options->setHyphen('-');
+        $options->setLeftMin(2);
+        $options->setRightMin(2);
+        $options->setWordMin(6);
+        $options->setQuality(Hyphenator::QUALITY_HIGHEST);
+
+        $dictionary = new Dictionary();
+        $dictionary->addPattern('b', '10');
+        $hyphenator->addDictionary($dictionary);
+
+        $this->assertSame('Sil-ben', $hyphenator->hyphenate('Silben'));
+    }
 }
