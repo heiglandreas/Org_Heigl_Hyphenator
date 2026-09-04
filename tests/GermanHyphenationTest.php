@@ -19,10 +19,11 @@ use PHPUnit\Framework\TestCase;
  * the remaining words only the property this dictionary promises is asserted:
  * every hyphenation point that comes out has to be one of the points German
  * orthography allows. Those words are deliberately not compared exactly,
- * because WordToken::getMergedPattern() mixes byte offsets with character
- * offsets and drops hyphenation points. An exact comparison would freeze that
- * incomplete output as the expected one and turn this test red as soon as it
- * is fixed. The subset property stays valid either way.
+ * because Dictionary::getPatternsForWord() never looks up single-letter
+ * patterns such as `1b` and therefore drops hyphenation points; a separate
+ * pull request fixes that. An exact comparison would freeze that incomplete
+ * output as the expected one and turn this test red as soon as it is fixed.
+ * The subset property stays valid either way.
  */
 final class GermanHyphenationTest extends TestCase
 {
