@@ -1,5 +1,5 @@
 name: Build
-on: [push]
+on: [push, pull_request]
 permissions: {}
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -20,7 +20,7 @@ jobs:
           php-version: "8.5"
           tools: phive
       - name: Download codesniffer
-        run: phive --no-progress install --trust-gpg-keys 31C7E470E2138192,5E6DDE998AB73B8E,97B02DD8E5071466 phpcs
+        run: phive --no-progress install --trust-gpg-keys 31C7E470E2138192,5E6DDE998AB73B8E,97B02DD8E5071466,96E91A992CF22FF4 phpcs
       - name: check
         run: ./tools/phpcs
   test:
