@@ -204,7 +204,8 @@ class Dictionary
         $word = '.' . $word . '.';
         $strlen = mb_strlen($word);
         for ($i = 0; $i <= $strlen; $i ++) {
-            for ($j = 2; $j <= ($strlen-$i); $j++) {
+            // Length 1 included: pattern files carry single-letter patterns such as "1b".
+            for ($j = 1; $j <= ($strlen-$i); $j++) {
                 $substr = mb_substr($word, $i, $j);
                 $lowerSubstring = mb_strtolower($substr);
                 if (! isset($this->dictionary[$lowerSubstring])) {

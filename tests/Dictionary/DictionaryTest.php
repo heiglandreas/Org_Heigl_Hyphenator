@@ -90,6 +90,15 @@ final class DictionaryTest extends TestCase
         $this->assertEquals(array('täßt'=>'00020'), $result);
     }
 
+    public function testGettingPatternsForWordIncludesSingleLetterPatterns(): void
+    {
+        $dictionary = new Dictionary();
+        $dictionary->addPattern('b', '10');
+        $dictionary->addPattern('ben', '0200');
+
+        $this->assertSame(['b' => '10', 'ben' => '0200'], $dictionary->getPatternsForWord('Silben'));
+    }
+
     public function testSettingPatterns(): void
     {
         $rc = new ReflectionClass(Dictionary::class);
