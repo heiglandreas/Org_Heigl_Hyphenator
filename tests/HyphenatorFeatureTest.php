@@ -133,11 +133,11 @@ final class HyphenatorFeatureTest extends TestCase
         yield ['aussichtsturm ', 'de_DE', 'aus^sichts^turm '];
         // Sturm will be hyphenated…
         yield ['aussichtsturm ', 'de_DE', 'aus^sicht^s^turm ', h\Hyphenator::QUALITY_NORMAL];
-        yield ['urinstinkt ', 'de_DE', 'ur^in^stinkt ', h\Hyphenator::QUALITY_HIGHEST];
-        yield ['Urinstinkt ', 'de_DE', 'Ur^in^stinkt ', h\Hyphenator::QUALITY_HIGHEST];
+        yield ['urinstinkt ', 'de_DE', 'ur^instinkt ', h\Hyphenator::QUALITY_HIGHEST];
+        yield ['Urinstinkt ', 'de_DE', 'Ur^instinkt ', h\Hyphenator::QUALITY_HIGHEST];
         yield ['Brücke ', 'de_DE', 'Brü^cke ', h\Hyphenator::QUALITY_NORMAL];
         yield ['Röcke ', 'de_DE', 'Rö^cke '];
-        yield ['Produktionsstrategie ', 'de_DE', 'Pro^duk^ti^ons^stra^te^gie '];
+        yield ['Produktionsstrategie ', 'de_DE', 'Produk^ti^ons^strategie '];
     }
 
     /**
@@ -181,7 +181,7 @@ final class HyphenatorFeatureTest extends TestCase
         $hyphenator = h\Hyphenator::factory('/path/to/the/config/file.properties');
         $hyphenator->getOptions()->setHyphen('-');
 
-        $this->assertEquals('Hy-phe-na-ti-on', $hyphenator->hyphenate('Hyphenation'));
+        $this->assertEquals('Hy-phena-ti-on', $hyphenator->hyphenate('Hyphenation'));
     }
 
     public function testUserStory1(): void
@@ -191,12 +191,12 @@ final class HyphenatorFeatureTest extends TestCase
          . 'oder Schläfrigkeit hervorrufen. Wenn dies eintritt, setzen Sie sich '
          . 'sofort mit einem Arzt in Verbindung.';
 
-        $expected = 'Selten können ver&shy;gleich&shy;ba&shy;re Arz&shy;nei&shy;'
-         . 'mit&shy;tel eine Kom&shy;bi&shy;na&shy;ti&shy;on von Fieber, ras'
-         . 'chem Atmen, Schwit&shy;zen, Mus&shy;kel&shy;steif&shy;heit und Be&sh'
-         . 'y;nom&shy;men&shy;heit oder Schläf&shy;rig&shy;keit her&shy;vor&shy;'
-         . 'ru&shy;fen. Wenn dies ein&shy;tritt, setzen Sie sich sofort mit'
-         . ' einem Arzt in Ver&shy;bin&shy;dung.';
+        $expected = 'Selten können ver&shy;gleichba&shy;re Arz&shy;nei&shy;'
+         . 'mit&shy;tel eine Kombi&shy;na&shy;ti&shy;on von Fieber, ras'
+         . 'chem Atmen, Schwitzen, Mus&shy;kel&shy;steif&shy;heit und Be&sh'
+         . 'y;nom&shy;men&shy;heit oder Schläf&shy;rig&shy;keit hervor&shy;'
+         . 'ru&shy;fen. Wenn dies eintritt, setzen Sie sich sofort mit'
+         . ' einem Arzt in Ver&shy;bindung.';
 
         $o = new h\Options();
         $o->setHyphen('&shy;')

@@ -52,7 +52,9 @@ final class HyphenatorService
     {
         if (self::$instance === null) {
             self::$instance = new self(new Hyphenator(), [
-                'spender' => '08000000',
+                // Adds the hyphenation point in "spender" that the dictionary
+                // does not provide, so the custom pattern stays observable.
+                'spender' => '00001000',
             ]);
         }
 

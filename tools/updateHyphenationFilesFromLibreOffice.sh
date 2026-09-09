@@ -15,3 +15,7 @@ while read line; do
 done < <(find src/share/files/dictionaries -name "*_ANY*")
 
 tools/renderDicts
+
+# The copy above also replaced the locales that are built from hyph-utf8
+# patterns. Rebuild them so that they keep their dictionaries.
+tools/updateHyphenationFilesFromTexHyphen.sh
